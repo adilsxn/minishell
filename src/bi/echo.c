@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/08/23 12:14:55 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/09/11 12:13:55 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../inc/minishell.h"
 
-# include "../libft/inc/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <linux/limits.h>
+void ms_bi_echo(char *input, int nflag)
+{
+    int i;
 
-#endif
+    i = 0;
+    while (input[i] != 0)
+    {
+        if (!nflag)
+            ft_putstr_fd(input, 1);
+        if (nflag)
+        {
+            ft_putstr_fd(input, 1);
+            write(1, " ", 1);
+        }
+    }
+}
+
