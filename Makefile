@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acuva-nu <acuva-nu@student.42.fr>          +#+  +:+       +#+         #
+#    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/02/25 16:34:52 by acuva-nu         ###   ########.fr        #
+#    Updated: 2023/09/11 12:01:26 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-SRCS       = src/main.c 
+SRCS       = tests/main.c src/lexer.c src/lexer_pt2.c
 B_SRC      = 	
 OBJS       = ${SRCS:src/%.c=$(OBJ_DIR)/%.o}
 B_OBJS     = ${B_SRC:src/%.c=$(B_OBJ_DIR)/%.o}
