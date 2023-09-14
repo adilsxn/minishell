@@ -10,14 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 // TODO: create an enviroment type for the shell that should be given
 // to this function as param
 
-/*
- * 1. if no path is given and  $home is set in enviroment cd's depends on us
- * 2. if above but $home is set in enviroment then cd's to home
- * 3. if path begins with "/" 
- * 4. 
- * */
-void msh_bi_cd(char *path);
+/**/
+void msh_bi_cd(char *directory)
+{
+    char *env_path;
+    char *curpath;
+    char *pwd;
+    char *oldpwd;
+
+    env_path = NULL;
+    curpath = NULL;
+    pwd = NULL;
+    oldpwd = NULL;
+    if (directory == NULL)
+    {
+        env_path = getenv("HOME");
+        if (env_path == NULL)
+            ft_putstr_fd("The variable dosn't exit", 1);
+    }
+    if (ft_strequ(directory, "-"))
+    {
+        if (env_path == NULL)
+            ft_putstr_fd("The variable doesn't exist", 1);
+    }
+    if (ft_strchr(directory, '/'))
+    {
+        if (access(directory))
+    }
+}
