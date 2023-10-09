@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_pt2.c                                        :+:      :+:    :+:   */
+/*   lexer_list1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 16:52:25 by matilde           #+#    #+#             */
-/*   Updated: 2023/09/11 12:57:54 by matilde          ###   ########.fr       */
+/*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
+/*   Updated: 2023/10/04 19:03:25 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	add_lexer_node(char *str, int token, t_lexer **lexer_list)
+int	new_node(char *str, int token, t_lexer **lexer_list)
 {
 	t_lexer		*new_node;
 	t_lexer		*last_node;
@@ -36,4 +36,30 @@ int	add_lexer_node(char *str, int token, t_lexer **lexer_list)
 		new_node->prev = last_node;
 	}
 	return (0);
+}
+
+int	len_word(int i, char *str, t_lexer **lexer)
+{
+	int	count;
+
+	count = 0;
+	while (str[i + count] != '\0' && check_token(str[i + count], 0) == 0)
+	{
+		count += len_quote(i + count, str, 34);
+		count += len_quote(i + count, str, 39);
+		if (is_whitespace(str[i + count]) == 1)
+			break ;
+		else
+			count++;
+	}
+	if (check_token(str[i + count], 0) != 0)
+		new_node(NULL, check_token(str[i + count], str[i + count +1]), lexer);
+	else
+		new_node(ft_substr(str, i, count), 0, lexer);
+	if (check_token(str[i + count], str[i + count +1]) == LESS
+		|| check_token(str[i + count], str[i + count +1]) == GREAT)
+		count = 1;
+	else if (check_token(str[i + count], 0) != 0)
+		count = 2;
+	return (count);
 }
