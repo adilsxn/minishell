@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:12:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/04 18:57:35 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/09 21:18:58 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	count_pipes(t_lexer *lexer_list, t_tool *tool)
 	while (tmp)
 	{
 		if (tmp->token == PIPE)
-			tool->pipes += 1;
+			tool->pipes++;
 		tmp = tmp->next;
 	}
 }

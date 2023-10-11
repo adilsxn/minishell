@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/04 19:03:02 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 12:59:53 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	del_one(t_lexer **lst, int i)
 
 	start = *lst;
 	node = start;
-	if ((*lst)->i == 1)
+	if ((*lst)->i == i)
 	{
 		del_first(lst);
 		return ;

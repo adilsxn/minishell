@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:32:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/07 17:46:28 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 12:43:00 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,30 @@ t_parser_tool	init_parser_tool(t_lexer *lexer_list, t_tool *tool)
 	return (parser_tool);
 }
 
-int	init_tool(t_tool *tool)
+void	init_tool(t_tool *tool)
 {
 	tool->simple_cmd = NULL;
 	tool->lexer = NULL;
 	tool->reset = false;
-	tool->pid = NULL;
+	// tool->pid = NULL;
 //	tool->heredoc = false;
-	return (1);
 }
 
 //reset tool when encountered with pipe (new command)
-int	reset_tool(t_tool *tool)
+void	reset_tool(t_tool *tool)
 {
-	int	i;
+	// int	i;
 
-	i = -1;
+	// i = -1;
 	cmd_clear(&tool->simple_cmd);
 	free(tool->arg);
-	if (tool->pid)
-		free(tool->pid);
-	while (tool->path[++i])
-		free(tool->path[i]);
-	free(tool->path);
+	// if (tool->pid)
+	// 	free(tool->pid);
+	// while (tool->path[++i])
+	// 	free(tool->path[i]);
+	// free(tool->path);
 	init_tool(tool);
 	tool->reset = true;
-	return (1);
 }
 
 void	free_array(char **array)

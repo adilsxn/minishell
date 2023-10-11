@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/10/09 14:33:19 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 12:43:25 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }t_lexer;
 
-
 //parser
 typedef struct s_parser_tool
 {
@@ -55,13 +54,13 @@ typedef struct s_parser_tool
 typedef struct s_tool
 {
 	char					*arg;
-	char					**path;
+	//char					**path;
 	t_lexer					*lexer;
 	struct s_simple_cmd		*simple_cmd;
-	char					*pwd;
-	char					*old_pwd;
+	//char					*pwd;
+	//char					*old_pwd;
 	int						pipes;
-	int						*pid;
+	//int						*pid;
 	//bool					heredoc;
 	bool					reset;
 }t_tool;
@@ -91,16 +90,15 @@ void				del_first(t_lexer **lst);
 void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
 
-
 //parser
 int					parser(t_tool *tool);
 
 t_simple_cmd		*init_cmd(t_parser_tool *parser_tool);
 t_parser_tool		init_parser_tool(t_lexer *lexer_list, t_tool *tool);
-int					init_tool(t_tool *tool);
+void				init_tool(t_tool *tool);
 void				free_array(char **array);
 
-int					reset_tool(t_tool *tool);
+void				reset_tool(t_tool *tool);
 
 void				count_pipes(t_lexer *lexer_list, t_tool *tool);
 int					count_arg(t_lexer *lexer_list);
@@ -119,6 +117,5 @@ void				cmd_clear(t_simple_cmd **lst);
 void				rm_redirect(t_parser_tool *parser_tool);
 int					add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool);
 //char				*join_heredoc(char *str1, char *str2);
-
 
 #endif

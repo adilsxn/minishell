@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:34:02 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/10/09 19:41:03 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 16:45:57 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(void)
 {
 	t_lexer	*lexer_list = NULL;
-	char 	str[] = "cat > 'a'";
+	char 	str[] = "cat | 'a'";
 	int 	count;
 
 	count = -1;
@@ -30,27 +30,41 @@ int	main(void)
 	// 	lexer_list = lexer_list->next;
 	// }
 	// printf("%s\n", lexer_list->str);
-	t_tool *tool = malloc(sizeof(t_tool));
-	printf("0\n");
-	tool->lexer = lexer_list;
-	// while (tool->lexer->next)
+	t_tool tool;
+	init_tool(&tool);
+	tool.lexer = lexer_list;
+	// t_lexer	*tmp = tool.lexer;
+	// while (tmp)
 	// {
-	// 	if (tool->lexer->str)
-	// 		printf("%s\n", tool->lexer->str);
-	// 	if (tool->lexer->token != 0)
-	// 		printf("%i\n", tool->lexer->token);
-	// 	tool->lexer = tool->lexer->next;
+	// 	if (tmp->str)
+	// 		printf("%s\n", tmp->str);
+	// 	if (tmp->token != 0)
+	// 		printf("%i\n", tmp->token);
+	// 	tmp = tmp->next;
 	// }
-	//printf("%s\n", tool->lexer->str);
-	printf("2\n");
-	parser(tool);
-	printf("3\n");
-	// while (tool->simple_cmd->next)
-	// {
-	// 	if (tool->lexer->str)
-	// 		printf("%s\n", tool->simple_cmd->str);
-	// 	tool->simple_cmd = tool->simple_cmd->next;
-	// }
-	// printf("%s\n", tool->simple_cmd->str);
+	printf("what\n");
+	parser(&tool);
+	printf("yes\n");
+	int i = 0;
+	t_tool tool2 = tool;
+	while (tool.simple_cmd->str[i])
+	{
+		if (tool.simple_cmd->str[i])
+			printf("%s\n", tool.simple_cmd->str[i]);
+		i++;
+	}
+	while (tool.simple_cmd->redirect)
+	{
+		if (tool.simple_cmd->redirect->str)
+			printf("%s\n", tool.simple_cmd->redirect->str);
+		if (tool.simple_cmd->redirect->token)
+			printf("%i\n", tool.simple_cmd->redirect->token);
+		break ;
+	}
+	tool = tool2;
+	cmd_clear(&tool.simple_cmd);
+	// free_array(tool.simple_cmd->str);
+	// lst_clear(&tool.simple_cmd->redirect);
+	// lst_clear(&tool.lexer);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:48:03 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/09 18:10:49 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 16:46:28 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 //args: words and tokens input
 // put str(with args) in new cmd (simple command struct) and remove from lexer
 //str is an array of pointers
+//simple cmd struct has all args all cmds without redirections in str and
+//redirections in other parameter
 t_simple_cmd	*init_cmd(t_parser_tool *parser_tool)
 {
 	char	**str;
@@ -52,6 +54,8 @@ int	parser(t_tool *tool)
 {
 	t_simple_cmd	*node;
 	t_parser_tool	parser_tool;
+	//t_lexer 		*tmp;
+	//t_lexer 		*tmp2;
 
 	tool->simple_cmd = NULL;
 	count_pipes(tool->lexer, tool);
@@ -71,6 +75,25 @@ int	parser(t_tool *tool)
 			tool->simple_cmd = node;
 		else
 			add_cmd(&tool->simple_cmd, node);
+		//tmp = tool->lexer;
+		//tmp2 = parser_tool.lexer;
+		// while (tmp)
+		// {
+		// 	if (tmp->str)
+		// 		printf("%s\n", tmp->str);
+		// 	if (tmp->token != 0)
+		// 		printf("%i\n", tmp->token);
+		// 	tmp = tmp->next;
+		// }
+		// printf("first over, second:\n");
+		// while (tmp2)
+		// {
+		// 	if (tmp2->str)
+		// 		printf("%s\n", tmp2->str);
+		// 	if (tmp2->token != 0)
+		// 		printf("%i\n", tmp2->token);
+		// 	tmp2 = tmp2->next;
+		// }
 		tool->lexer = parser_tool.lexer;
 	}
 	return (0);

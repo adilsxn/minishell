@@ -6,12 +6,11 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:43 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/09 14:32:11 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/11 14:03:09 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 // char	*join_heredoc(char *str1, char *str2)
 // {
 // 	char	*ret;
@@ -26,20 +25,22 @@
 // 	return (ret);
 // }
 
-
-
 //redirect has str (cmd) and the token ( > or < or >> or <<) (redirections)
 //and then remove from lexer, since its already in redirection
 //only accesible in parsertool redirect
 int	add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool)
 {
-    int i;
+	int		i;
+	int		index_1;
+	int		index_2;
 
-	i = new_node(tmp->next->str, tmp->token, &parser_tool->redirect);
+	i = new_node(ft_strdup(tmp->next->str), tmp->token, &parser_tool->redirect);
 	if (i == -1)
 		return (ft_error(0, parser_tool->tool, parser_tool->lexer));
-	del_one(&parser_tool->lexer, tmp->i);
-	del_one(&parser_tool->lexer, tmp->next->i);
+	index_1 = tmp->i;
+	index_2 = tmp->next->i;
+	del_one(&parser_tool->lexer, index_1);
+	del_one(&parser_tool->lexer, index_2);
 	parser_tool->nb_redirect++;
 	return (0);
 }
@@ -48,6 +49,7 @@ int	add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool)
 //if theres nothing after redirect token then error
 //if redirect token, then add new redirect and rm redirect again
 //token is already defined as < or <<
+//rm redirection tokens from the lexer to process and handle them separately
 void	rm_redirect(t_parser_tool *parser_tool)
 {
 	t_lexer	*tmp;
@@ -60,7 +62,9 @@ void	rm_redirect(t_parser_tool *parser_tool)
 	if (!tmp->next)
 		ft_error(0, parser_tool->tool, parser_tool->lexer);
 	if (tmp->next->token)
+	{
 		double_token_error(parser_tool->tool);
+	}
 	if ((tmp->token >= GREAT && tmp->token <= LESS_LESS))
 		add_new_redirect(tmp, parser_tool);
 	rm_redirect(parser_tool);
