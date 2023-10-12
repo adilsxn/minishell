@@ -6,20 +6,20 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/10/04 19:33:23 by matilde          ###   ########.fr        #
+#    Updated: 2023/10/12 12:31:28 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = 	src/lexer/remove1.c \
-				src/lexer/word_token1.c \
-				src/lexer/lexer_list1.c \
-				src/parser/init1.c \
-				src/parser/redirect1.c \
-				src/parser/simple_cmd1.c \
-				src/parser/error1.c \
+SRCS       = 	src/lexer/remove.c \
+				src/lexer/word_token.c \
+				src/lexer/lexer_list.c \
+				src/parser/init.c \
+				src/parser/redirect.c \
+				src/parser/simple_cmd.c \
+				src/parser/error.c \
 				src/lexer/main.c  \
-				src/parser/parser1.c  \
-				src/parser/pipes1.c \
+				src/parser/parser.c  \
+				src/parser/pipes.c \
 				
 
 OBJ_DIR = build/obj

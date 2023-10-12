@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simple_cmd1.c                                      :+:      :+:    :+:   */
+/*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:55 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/11 16:20:07 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:33:24 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ t_simple_cmd	*cmd_new(char **str, int nb_redirect, t_lexer *redirect)
 	if (!new_element)
 		return (0);
 	new_element->str = str;
-	//new_element->builtin = builtin_arr(str[0]);
-	//new_element->hd_file_name = NULL;
 	new_element->nb_redirect = nb_redirect;
 	new_element->redirect = redirect;
 	new_element->next = NULL;
 	new_element->prev = NULL;
-	//free_array(str);
 	return (new_element);
 }
 
@@ -95,8 +92,6 @@ void	cmd_clear(t_simple_cmd **lst)
 		lst_clear(&redirect_tmp);
 		if ((*lst)->str)
 			free((*lst)->str);
-		// if ((*lst)->hd_file_name)
-		// 	free((*lst)->hd_file_name);
 		free(*lst);
 		*lst = tmp;
 	}

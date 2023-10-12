@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/10/11 12:43:25 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 11:16:44 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,16 @@ typedef struct s_parser_tool
 typedef struct s_tool
 {
 	char					*arg;
-	//char					**path;
 	t_lexer					*lexer;
 	struct s_simple_cmd		*simple_cmd;
-	//char					*pwd;
-	//char					*old_pwd;
 	int						pipes;
-	//int						*pid;
-	//bool					heredoc;
 	bool					reset;
 }t_tool;
 
 typedef struct s_simple_cmd
 {
 	char					**str;
-	//int						(*builtin)(t_tool *, struct s_simple_cmd *);
 	int						nb_redirect;
-	//char					*hd_file_name;
 	t_lexer					*redirect;
 	struct s_simple_cmd		*next;
 	struct s_simple_cmd		*prev;
@@ -79,7 +72,6 @@ typedef struct s_simple_cmd
 //lexer
 int					is_whitespace(char c);
 int					count_spaces(char *str, int i);
-
 int					new_node(char *str, int token, t_lexer **lexer_list);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
@@ -92,17 +84,15 @@ void				lst_clear(t_lexer **lst);
 
 //parser
 int					parser(t_tool *tool);
-
 t_simple_cmd		*init_cmd(t_parser_tool *parser_tool);
 t_parser_tool		init_parser_tool(t_lexer *lexer_list, t_tool *tool);
 void				init_tool(t_tool *tool);
 void				free_array(char **array);
-
 void				reset_tool(t_tool *tool);
 
 void				count_pipes(t_lexer *lexer_list, t_tool *tool);
 int					count_arg(t_lexer *lexer_list);
-t_lexer				*find_next_cmd(t_lexer *lexer_lst);
+//t_lexer				*find_next_cmd(t_lexer *lexer_lst);
 
 int					pipe_error(t_tool *tool);
 int					ft_error(int error, t_tool *tool, t_lexer *lexer_list);
@@ -110,12 +100,9 @@ int					double_token_error(t_tool *tool);
 
 t_simple_cmd		*cmd_new(char **str, int nb_redirect, t_lexer *redirect);
 void				add_cmd(t_simple_cmd **lst, t_simple_cmd *new);
-//void				cmd_rm_first(t_simple_cmd **lst);
 void				cmd_clear(t_simple_cmd **lst);
-//t_simple_cmd		*cmd_first(t_simple_cmd *map);
 
 void				rm_redirect(t_parser_tool *parser_tool);
 int					add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool);
-//char				*join_heredoc(char *str1, char *str2);
 
 #endif

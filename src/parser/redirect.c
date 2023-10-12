@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect1.c                                        :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:43 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/11 14:03:09 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:32:15 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-// char	*join_heredoc(char *str1, char *str2)
-// {
-// 	char	*ret;
-// 	char	*tmp;
-
-// 	if (!str2)
-// 		return (ft_strdup(str1));
-// 	tmp = ft_strjoin(str1, " ");
-// 	ret = ft_strjoin(tmp, str2);
-// 	free(tmp);
-// 	free(str2);
-// 	return (ret);
-// }
 
 //redirect has str (cmd) and the token ( > or < or >> or <<) (redirections)
 //and then remove from lexer, since its already in redirection
@@ -31,16 +18,16 @@
 int	add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool)
 {
 	int		i;
-	int		index_1;
-	int		index_2;
+	int		i1;
+	int		i2;
 
 	i = new_node(ft_strdup(tmp->next->str), tmp->token, &parser_tool->redirect);
 	if (i == -1)
 		return (ft_error(0, parser_tool->tool, parser_tool->lexer));
-	index_1 = tmp->i;
-	index_2 = tmp->next->i;
-	del_one(&parser_tool->lexer, index_1);
-	del_one(&parser_tool->lexer, index_2);
+	i1 = tmp->i;
+	i2 = tmp->next->i;
+	del_one(&parser_tool->lexer, i1);
+	del_one(&parser_tool->lexer, i2);
 	parser_tool->nb_redirect++;
 	return (0);
 }
@@ -69,3 +56,7 @@ void	rm_redirect(t_parser_tool *parser_tool)
 		add_new_redirect(tmp, parser_tool);
 	rm_redirect(parser_tool);
 }
+
+// char	*join_hdoc(char *str1, char *str2)
+// {
+// }

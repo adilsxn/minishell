@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes1.c                                           :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:12:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/09 21:18:58 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:32:19 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	count_arg(t_lexer *lexer_list)
 }
 
 // last command before pipe
-t_lexer	*find_next_cmd(t_lexer *lexer_lst)
-{
-	while (lexer_lst && lexer_lst->token != PIPE)
-		lexer_lst = lexer_lst->next;
-	return (lexer_lst);
-}
+// t_lexer	*find_next_cmd(t_lexer *lexer_lst)
+// {
+// 	while (lexer_lst && lexer_lst->token != PIPE)
+// 		lexer_lst = lexer_lst->next;
+// 	return (lexer_lst);
+// }
