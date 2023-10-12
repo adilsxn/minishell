@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:43 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:32:15 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 15:58:15 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	rm_redirect(t_parser_tool *parser_tool)
 	while (tmp && tmp->token == 0)
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
+	{
 		return ;
+	}
 	if (!tmp->next)
 		ft_error(0, parser_tool->tool, parser_tool->lexer);
 	if (tmp->next->token)

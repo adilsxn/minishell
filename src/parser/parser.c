@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:48:03 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:48:29 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:39:58 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,11 @@ int	parser(t_tool *tool)
 {
 	t_simple_cmd	*node;
 	t_parser_tool	parser_tool;
-	//t_lexer 		*tmp;
-	//t_lexer 		*tmp2;
 
 	tool->simple_cmd = NULL;
 	count_pipes(tool->lexer, tool);
 	if (tool->lexer->token == PIPE)
 		return (double_token_error(tool));
-	// tmp = tool->lexer;
-	// while (tmp)
-	// {
-	// 	if (tmp->str)
-	// 		printf("%s\n", tmp->str);
-	// 	if (tmp->token != 0)
-	// 		printf("%i\n", tmp->token);
-	// 	tmp = tmp->next;
-	// }
 	while (tool->lexer)
 	{
 		if (tool->lexer && tool->lexer->token == PIPE)

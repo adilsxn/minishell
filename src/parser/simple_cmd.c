@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:55 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:33:24 by matilde          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:40:31 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,6 @@ t_simple_cmd	*cmd_new(char **str, int nb_redirect, t_lexer *redirect)
 	new_element->prev = NULL;
 	return (new_element);
 }
-
-// char	**copy_str_array(char **str)
-// {
-// 	int		size = get_str_array_size(str);
-// 	char 	**copy = (char **)malloc(sizeof(char *) * (size + 1));
-// 	int		i;
-
-// 	if (!copy)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i++ < size)
-// 	{
-// 		copy[i] = strdup(str[i]);
-// 		if (!copy[i])
-// 		{
-// 			free_str_array(copy, i);
-// 			free(copy);
-// 			return NULL;
-// 		}
-// 	}
-// 	copy[size] = NULL;
-// 	return (copy);
-// }
 
 void	add_cmd(t_simple_cmd **lst, t_simple_cmd *new)
 {
@@ -111,4 +88,27 @@ void	cmd_clear(t_simple_cmd **lst)
 // 		i++;
 // 	}
 // 	return (map);
+// }
+//
+// char	**copy_str_array(char **str)
+// {
+// 	int		size = get_str_array_size(str);
+// 	char 	**copy = (char **)malloc(sizeof(char *) * (size + 1));
+// 	int		i;
+
+// 	if (!copy)
+// 		return (NULL);
+// 	i = 0;
+// 	while (i++ < size)
+// 	{
+// 		copy[i] = strdup(str[i]);
+// 		if (!copy[i])
+// 		{
+// 			free_str_array(copy, i);
+// 			free(copy);
+// 			return NULL;
+// 		}
+// 	}
+// 	copy[size] = NULL;
+// 	return (copy);
 // }
