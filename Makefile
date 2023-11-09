@@ -6,7 +6,7 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/10/12 12:31:28 by matilde          ###   ########.fr        #
+#    Updated: 2023/11/09 18:12:35 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,15 @@ SRCS       = 	src/lexer/remove.c \
 				src/parser/redirect.c \
 				src/parser/simple_cmd.c \
 				src/parser/error.c \
-				src/lexer/main.c  \
 				src/parser/parser.c  \
 				src/parser/pipes.c \
-				
+				src/expander/expand.c \
+				src/expander/expand_utils.c \
+				src/expander/expand_utilspt2.c \
+				src/env/env.c \
+				tests/main.c \
+				src/env/export.c \
+				src/env/env3.c \
 
 OBJ_DIR = build/obj
 OBJS = $(SRCS:.c=.o)
