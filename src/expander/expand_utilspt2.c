@@ -6,11 +6,10 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/09 11:41:57 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 19:44:53 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
 #include "../../inc/global.h"
 
 //incrementing the i, to skip over it

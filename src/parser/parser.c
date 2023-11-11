@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:48:03 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 16:39:58 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 18:14:00 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_simple_cmd	*init_cmd(t_parser_tool *parser_tool)
 	args = count_arg(parser_tool->lexer);
 	str = ft_calloc(args + 1, sizeof(char *));
 	if (!str)
-		ft_error(1, parser_tool->tool, parser_tool->lexer);
+		ft_error(1, parser_tool->tool);
 	tmp = parser_tool->lexer;
 	while (args > 0)
 	{
@@ -67,7 +67,7 @@ int	parser(t_tool *tool)
 		parser_tool = init_parser_tool(tool->lexer, tool);
 		node = init_cmd(&parser_tool);
 		if (!node)
-			ft_error(0, tool, parser_tool.lexer);
+			ft_error(0, tool);
 		if (!tool->simple_cmd)
 			tool->simple_cmd = node;
 		else
