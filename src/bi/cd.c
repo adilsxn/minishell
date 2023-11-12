@@ -33,15 +33,22 @@ void msh_bi_cd(char *directory)
     {
         env_path = getenv("HOME");
         if (env_path == NULL)
-            ft_putstr_fd("The variable dosn't exit", 1);
+            ft_putstr_fd("The variable dosn't exit\n", 1);
     }
     if (ft_strequ(directory, "-"))
     {
+        env_path = getenv("OLDPWD");
         if (env_path == NULL)
-            ft_putstr_fd("The variable doesn't exist", 1);
+            ft_putstr_fd("The variable doesn't exist\n", 1);
+    }
+    if (ft_strequ(directory, ".."))
+    {
+        env_path = getenv("PWD");
+        if (env_path == NULL)
+            ft_putstr_fd("The variable doesn't exist\n", 1);
     }
     if (ft_strchr(directory, '/'))
     {
-        if (access(directory))
+        if ()
     }
 }

@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   mk_msh_envlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+       */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/08/23 12:14:55 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/11/10 16:59:26 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/11/10 16:59:26 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../../inc/minishell.h"
 
-# include "../libft/inc/libft.h"
-# include "msh_env.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <linux/limits.h>
+t_msh_envlist *mk_msh_envlist(void)
+{
+    t_msh_envlist *list;
 
-#endif
+    list = malloc(sizeof(*list));
+    if (!list)
+        return (NULL);
+    list->head = NULL;
+    list->size = 0;
+
+    return (list);
+}
+
