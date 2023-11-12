@@ -6,11 +6,11 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:32:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/08 17:16:35 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 18:27:03 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/global.h"
 
 t_parser_tool	init_parser_tool(t_lexer *lexer_list, t_tool *tool)
 {
@@ -28,6 +28,7 @@ void	init_tool(t_tool *tool)
 	tool->simple_cmd = NULL;
 	tool->lexer = NULL;
 	tool->reset = false;
+	g_global.in_cmd = 0;
 }
 
 void	reset_tool(t_tool *tool)
@@ -36,6 +37,7 @@ void	reset_tool(t_tool *tool)
 	free(tool->arg);
 	init_tool(tool);
 	tool->reset = true;
+	minishell_loop(tool);
 }
 
 void	free_array(char **array)

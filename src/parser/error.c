@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:31 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:32:36 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 18:13:47 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	double_token_error(t_tool *tool)
 	return (1);
 }
 
-int	ft_error(int error, t_tool *tool, t_lexer *lexer_list)
+int	ft_error(int error, t_tool *tool)
 {
-	lst_clear(&lexer_list);
+	lst_clear(&tool->lexer);
 	if (error == 0)
 		ft_putstr_fd("lexer null error\n", 2);
 	else if (error == 1)
@@ -62,7 +62,7 @@ int	pipe_error(t_tool *tool)
 {
 	if (tool->lexer == NULL)
 	{
-		ft_error(0, tool, tool->lexer);
+		ft_error(0, tool);
 		return (1);
 	}
 	if (tool->lexer->token == PIPE)

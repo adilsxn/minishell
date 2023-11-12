@@ -6,7 +6,7 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/11/09 18:12:35 by matilde          ###   ########.fr        #
+#    Updated: 2023/11/11 19:19:55 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,8 @@ SRCS       = 	src/lexer/remove.c \
 				src/expander/expand.c \
 				src/expander/expand_utils.c \
 				src/expander/expand_utilspt2.c \
-				src/env/env.c \
 				tests/main.c \
-				src/env/export.c \
-				src/env/env3.c \
+				src/executor/minishell_loop.c \
 
 OBJ_DIR = build/obj
 OBJS = $(SRCS:.c=.o)
@@ -34,7 +32,8 @@ INCS 	   = inc/
 NAME       = minishell
 
 CC         = cc
-CFLAGS     = -g -Wall -Wextra -Werror
+CFLAGS     = -g -Wall -Wextra -Werror -I/usr/include/readline -lreadline
+
 LDFLAGS	   = -L./libft -lft
 RM         = rm -rf
 

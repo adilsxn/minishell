@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/09 18:12:14 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 19:20:56 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include <stdio.h>
 # include <readline/readline.h>
-# include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include "global.h"
 
 # include "../libft/inc/libft.h"
 
@@ -97,7 +97,7 @@ void				reset_tool(t_tool *tool);
 void				count_pipes(t_lexer *lexer_list, t_tool *tool);
 int					count_arg(t_lexer *lexer_list);
 int					pipe_error(t_tool *tool);
-int					ft_error(int error, t_tool *tool, t_lexer *lexer_list);
+int					ft_error(int error, t_tool *tool);
 int					double_token_error(t_tool *tool);
 
 t_simple_cmd		*cmd_new(char **str, int nb_redirect, t_lexer *redirect);
@@ -119,18 +119,13 @@ size_t				equal_sign(char *str);
 char				*check_dollar(t_tool *tool, char *str);
 int					loop_dollar_sign(t_tool *tool, char *s, char **tmp, int j);
 char				**expander(t_tool *tool, char **str);
+char				*expander_str(t_tool *tool, char *str);
+t_simple_cmd		*call_expander(t_tool *tool, t_simple_cmd *cmd);
 
-//env
-int					find_pwd(t_tool *tool);
-char				*find_path(char **env);
-int					parse_env(t_tool *tool);
-int					check_var(t_tool *tool, char *str);
-int					check_param(char *str);
-char				**loop_add_var(char **array, char **final, char *str);
-char				**add_var(char **array, char *str);
-int					exportation(t_tool *tool, t_simple_cmd *cmd);
-int					export_error(char *c);
-int					envi(t_tool *tool);
-int					check_identifier(char c);
+//minishell loop
+int					minishell_loop(t_tool *tool);
+
+int					find_quote(char *line, int i, int *nb_quote, int quote);
+int					count_quote(char *line);
 
 #endif

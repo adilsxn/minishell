@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/09 18:28:55 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/11 19:23:09 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	loop_dollar_sign(t_tool *tool, char *str, char **tmp, int j)
 
 //export makes a variable available to other processes
 //started from the current shell session
-//str is already broken into diffent cmds
+//str is already broken into diffent cmd
 char	**expander(t_tool *tool, char **str)
 {
 	int		i;
@@ -107,4 +107,37 @@ char	**expander(t_tool *tool, char **str)
 		i++;
 	}
 	return (str);
+}
+
+char	*expander_str(t_tool *tool, char *str)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
+		&& str[dollar_sign(str)] != '\0')
+	{
+		tmp = check_dollar(tool, str);
+		free(str);
+		str = tmp;
+	}
+	str = del_quote(str, '\"');
+	str = del_quote(str, '\'');
+	return (str);
+}
+
+t_simple_cmd	*call_expander(t_tool *tool, t_simple_cmd *cmd)
+{
+	t_lexer	*start;
+
+	cmd->str = expander(tool, cmd->str);
+	start = cmd->redirect;
+	while (cmd->redirect)
+	{
+		if (cmd->redirect->token != LESS_LESS)
+			cmd->redirect->str = expander_str(tool, cmd->redirect->str);
+		cmd->redirect = cmd->redirect->next;
+	}
+	cmd->redirect = start;
+	return (cmd);
 }
