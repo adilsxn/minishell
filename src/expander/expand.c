@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:23:09 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:52:11 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ char	*expander_str(t_tool *tool, char *str)
 	return (str);
 }
 
+//expansion + redirection
 t_simple_cmd	*call_expander(t_tool *tool, t_simple_cmd *cmd)
 {
 	t_lexer	*start;

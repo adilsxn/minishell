@@ -6,11 +6,11 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:44:53 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 20:11:33 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/global.h"
+#include "../../inc/minishell.h"
 
 //incrementing the i, to skip over it
 size_t	equal_sign(char *str)
@@ -30,7 +30,7 @@ size_t	equal_sign(char *str)
 int	question_mark(char **tmp)
 {
 	free(*tmp);
-	*tmp = ft_itoa(g_global.error_nb);
+	*tmp = ft_itoa(1);
 	return (ft_strlen(*tmp) + 1);
 }
 
@@ -57,4 +57,14 @@ char	**ft_arrdup(char **arr)
 		i++;
 	}
 	return (array2);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
 }

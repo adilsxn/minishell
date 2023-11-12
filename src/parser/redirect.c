@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:43 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:20:14 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:52:50 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,11 @@ void	rm_redirect(t_parser_tool *parser_tool)
 	while (tmp && tmp->token == 0)
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
-	{
 		return ;
-	}
 	if (!tmp->next)
 		ft_error(0, parser_tool->tool);
 	if (tmp->next->token)
-	{
 		double_token_error(parser_tool->tool);
-	}
 	if ((tmp->token >= GREAT && tmp->token <= LESS_LESS))
 		add_new_redirect(tmp, parser_tool);
 	rm_redirect(parser_tool);

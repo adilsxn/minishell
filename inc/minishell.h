@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/11 19:20:56 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 20:10:34 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include "global.h"
 
 # include "../libft/inc/libft.h"
 

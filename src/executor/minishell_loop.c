@@ -6,19 +6,18 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:46:15 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 20:57:21 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/global.h"
+#include "../../inc/minishell.h"
 
 int	minishell_loop(t_tool *tool)
 {
 	char	*tmp;
 	size_t	count;
 
-	count = -1;
-	tool->arg = readline("minishell");
+	tool->arg = readline("minishell: ");
 	tmp = ft_strtrim(tool->arg, " ");
 	free(tool->arg);
 	tool->arg = tmp;
@@ -34,6 +33,7 @@ int	minishell_loop(t_tool *tool)
 	}
 	if (count_quote(tool->arg) == 1)
 		return (ft_error(2, tool));
+	count = -1;
 	while (++count < ft_strlen(tool->arg))
 	{
 		count += len_word(count, tool->arg, &tool->lexer);
@@ -41,7 +41,6 @@ int	minishell_loop(t_tool *tool)
 			return (ft_error(1, tool));
 	}
 	parser(tool);
-	g_global.in_cmd = 1;
 	if (tool->pipes == 0)
 		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
 	else
@@ -55,7 +54,6 @@ int	minishell_loop(t_tool *tool)
 				break ;
 		}
 	}
-	g_global.in_cmd = 0;
 	reset_tool(tool);
 	return (1);
 }
