@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:32:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 18:27:03 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 19:15:29 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 #include "../../inc/global.h"
 
 t_parser_tool	init_parser_tool(t_lexer *lexer_list, t_tool *tool)

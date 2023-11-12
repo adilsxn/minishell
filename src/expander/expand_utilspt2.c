@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utilspt2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:44:53 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 19:20:44 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 #include "../../inc/global.h"
 
 //incrementing the i, to skip over it

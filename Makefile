@@ -10,49 +10,40 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = 	src/lexer/remove.c \
-				src/lexer/word_token.c \
-				src/lexer/lexer_list.c \
-				src/parser/init.c \
-				src/parser/redirect.c \
-				src/parser/simple_cmd.c \
-				src/parser/error.c \
-				src/parser/parser.c  \
-				src/parser/pipes.c \
-				src/expander/expand.c \
-				src/expander/expand_utils.c \
-				src/expander/expand_utilspt2.c \
-				tests/main.c \
-				src/executor/minishell_loop.c \
+#Append/add the filename.c to the variable below 
+SRCS       = 	remove.c  word_token.c  lexer_list.c  init.c redirect.c  \
+				simple_cmd.c error.c parser.c  pipes.c expand.c          \
+				expand_utils.c expand_utilspt2.c main.c minishell_loop.c 
 
-OBJ_DIR = build/obj
-OBJS = $(SRCS:.c=.o)
+#Add any missing folder containing a .c to the vpath
+vpath %.c src src/executor src/expander src/lexer src/parser tests 
+OBJ_DIR = ./obj
+OBJS = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
 INCS 	   = inc/
 NAME       = minishell
 
 CC         = cc
-CFLAGS     = -g -Wall -Wextra -Werror -I/usr/include/readline -lreadline
+CFLAGS     = -g -Wall -Wextra -Werror
 
-LDFLAGS	   = -L./libft -lft
+LDFLAGS	   = -L./libft -lft -lreadline
 RM         = rm -rf
 
 all: ${NAME}
 
-$(OBJ_DIR)/%.o: %.c | DIRECTORIES
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS) ${LDFLAGS}
+$(OBJ_DIR)/%.o: %.c 
+	@mkdir -p ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS) ${LDFLAGS}
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJS} 
 	@echo "Compiling minishell"
 	@make -s -C libft
-	${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
+	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
 	@echo "minishell created"
 
-DIRECTORIES:
-	mkdir -p ${OBJ_DIR}
 
 clean:
-	${RM} ${OBJS} 
+	${RM} ${OBJ_DIR} 
 	make clean -s -C libft
 
 fclean: clean

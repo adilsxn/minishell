@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include "global.h"
 
 # include "../libft/inc/libft.h"
 

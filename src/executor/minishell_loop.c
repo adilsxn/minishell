@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 19:46:15 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/12 19:20:27 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 #include "../../inc/global.h"
 
 int	minishell_loop(t_tool *tool)
