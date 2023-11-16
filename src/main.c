@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 12:34:02 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/08/06 20:29:18 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/11/12 22:41:11 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/11/12 22:41:11 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
 
-int	main(void)
+
+int main(int argc, char **argv, char **envp)
 {
-	ft_putstr("Hello, world!\n");
-	return (0);
+
 }

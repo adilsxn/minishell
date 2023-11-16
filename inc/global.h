@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   global.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 20:00:57 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/09/11 21:35:50 by matilde          ###   ########.fr       */
+/*   Created: 2023/11/09 11:39:49 by matilde           #+#    #+#             */
+/*   Updated: 2023/11/12 19:19:06 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GLOBAL_H
+# define GLOBAL_H
 
-size_t	ft_strlen(const char *str)
+
+typedef struct s_global
 {
-	size_t	counter;
+	int	error_nb;
+	int	in_cmd;
+}t_global;
 
-	counter = 0;
-	if (!str)
-		return (0);
-	while (str[counter])
-		counter++;
-	return (counter);
-}
+static t_global    g_global;
+
+#endif
