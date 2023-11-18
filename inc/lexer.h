@@ -13,25 +13,31 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-typedef enum e_kind
+#define PIPE '|'
+#define REDIRECT_IN '>'
+#define REDIRECT_OUT '<'
+#define SINGLE_QUOTE '\''
+#define DOUBLE_QUOTE '"'
+
+typedef enum e_type
 {
-	PIPE,
-	REDIRECT_IN,
-    REDIRECT_OUT,
-    REDIRECT_APPND,
-    REDIRECT_HD,
-    COUNT,
-    WORD,
-}t_kind;
+	tk_PIPE,
+	tk_REDIRECT_IN,
+    tk_REDIRECT_OUT,
+    tk_REDIRECT_APPND,
+    tk_REDIRECT_HD,
+    tk_COUNT,
+    tk_WORD,
+}t_type;
 
 typedef struct s_token
 {
 	char			*data;
-	t_kind		token;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
+	t_type		type;
+	struct s_token	*next;
+	struct s_token	*prev;
 }t_token;
 
-t_token mk_token(t_kind kind, char *value, t_token *prev);
-void free_token(t_token *token);
+t_token *mk_token(t_type type, char *data, t_token *last);
+void del_tokens(t_token *token);
 #endif 
