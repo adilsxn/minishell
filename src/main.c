@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:41:11 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 22:41:11 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/11/12 22:39:41 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/11/12 22:39:41 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 
+#include "../"
 
-int main(int argc, char **argv, char **envp)
+int main (int argc, char **argv, char **envp)
 {
-
 }
