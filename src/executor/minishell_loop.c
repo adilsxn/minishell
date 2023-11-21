@@ -19,7 +19,7 @@ int	minishell_loop(t_tool *tool)
 	size_t	count;
 
 	count = -1;
-	tool->arg = readline("minishell");
+	tool->arg = readline("minishell: ");
 	tmp = ft_strtrim(tool->arg, " ");
 	free(tool->arg);
 	tool->arg = tmp;
@@ -41,7 +41,8 @@ int	minishell_loop(t_tool *tool)
 		if (count == 0)
 			return (ft_error(1, tool));
 	}
-	parser(tool);
+	printf("%s\n", tool->lexer->str);
+	printf("%i\n", parser(tool));
 	g_global.in_cmd = 1;
 	if (tool->pipes == 0)
 		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
@@ -56,6 +57,7 @@ int	minishell_loop(t_tool *tool)
 				break ;
 		}
 	}
+	printf("%s\n", tool->simple_cmd->str[0]);
 	g_global.in_cmd = 0;
 	reset_tool(tool);
 	return (1);

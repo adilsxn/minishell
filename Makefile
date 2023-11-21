@@ -6,14 +6,14 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/11/11 19:19:55 by matilde          ###   ########.fr        #
+#    Updated: 2023/11/21 15:59:00 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Append/add the filename.c to the variable below 
 SRCS       = 	remove.c  word_token.c  lexer_list.c  init.c redirect.c  \
 				simple_cmd.c error.c parser.c  pipes.c expand.c          \
-				expand_utils.c expand_utilspt2.c main.c minishell_loop.c 
+				expand_utils.c expand_utilspt2.c minishell_loop.c main.c
 
 #Add any missing folder containing a .c to the vpath
 vpath %.c src src/executor src/expander src/lexer src/parser tests 
