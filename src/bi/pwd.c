@@ -13,12 +13,9 @@
 #include "../../inc/minishell.h"
 
 // TODO: adapt the func to the shell env(not created yet)
-void   ms_bi_pwd(void)
+int   ms_pwd(t_tool *tools, t_simple_cmd *args)
 {
-    char buffer[PATH_MAX];
-
-    if (getcwd(buffer, sizeof(buffer)) == NULL)
-        perror("pwd: ");
-    else
-        ft_putstr_fd(buffer, 1);
+    (void)args;
+    ft_putendl_fd(get_env(tools->ourenv, "PWD")->value, 1);
+    return (EXIT_SUCCESS)
 }

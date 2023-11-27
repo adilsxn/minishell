@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <stdio.h>
 #include <stdlib.h>
 //TODO: implement hash tables/ red black treees 
 //to store the env variables
@@ -26,14 +27,59 @@
  *  it does the former plus assigns it a new value
  *  -- if no var name is given then it prints the all the global vars*/
 
-
-typedef struct s_sh{
-    char *var;
-}t_sh;
-
-int msh_bi_export(t_sh *env, void *value)
+static int valid_key(char *key)
 {
-    env->var = (char *)value;
-    return(EXIT_SUCCESS);
+    if (!key)
+        return (0);
+    while(*key != '\0')
+    {
+        if ((ft_isalnum(*key) == 0) && (*key != '_'))
+            return (0);
+        key++;
+    }
+    return(1);
+}
+
+static int real_export(char *input, t_env *env)
+{
+    const char *sign;
+    const char *key;
+    const char *data;
+    int valid;
+
+    sign = ft_strchr(input, '=');
+    if (!sign)
+        return (0);
+    if (sign == input)
+    {
+        perror("export: invallid key");
+        return (1);
+    }
+    key = ft_substr(input, 0, sign, - env);
+    valid =  valid_key((char *)key);
+    if (!valid)
+        perror("export: invallid key");
+    else
+    {
+        data = ft_strdup(sign + 1);
+        set_env(env, key, data);
+        free((void *) data);
+    }
+    free((void *)key);
+    return (valid != 0);
+}
+
+int msh_export(t_tool *tools, t_simple_cmd *args)
+{
+    int ret_code;
+
+    ret_code = 0;
+    while(*(args->str)  != NULL)
+    {
+        if (real_export( *(args->str) != 0))
+            ret_code = 1;
+        (args->str)++;
+    }
+    return(ret_code);
 }
 

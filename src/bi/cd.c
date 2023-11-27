@@ -11,44 +11,35 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
-#include <unistd.h>
+
 
 // TODO: create an enviroment type for the shell that should be given
 // to this function as param
 
 /**/
-void msh_bi_cd(char *directory)
+static void update_env(t_env *env)
 {
-    char *env_path;
-    char *curpath;
-    char *pwd;
-    char *oldpwd;
+    const char *pwd;
 
-    env_path = NULL;
-    curpath = NULL;
-    pwd = NULL;
-    oldpwd = NULL;
-    if (directory == NULL)
+    pwd = getcwd(NULL, 0);
+    set_env("OLDPWD", get_env("PWD")->value);
+    set_env("PWD", pwd);
+    free((char *)pwd);
+}
+
+int msh_cd(t_tool *tools, t_simple_cmd *simple_cmd)
+{
+    const char *path;
+    
+    if (!simple_cmd->str[1])
+            path = get_env(tools->ourenv, "HOME")->value;
+    else 
+        path = *(simple_cmd->str);
+    if (chdir(path) == -1)
     {
-        env_path = getenv("HOME");
-        if (env_path == NULL)
-            ft_putstr_fd("The variable dosn't exit\n", 1);
+        perror("error");
+        return (1);
     }
-    if (ft_strequ(directory, "-"))
-    {
-        env_path = getenv("OLDPWD");
-        if (env_path == NULL)
-            ft_putstr_fd("The variable doesn't exist\n", 1);
-    }
-    if (ft_strequ(directory, ".."))
-    {
-        env_path = getenv("PWD");
-        if (env_path == NULL)
-            ft_putstr_fd("The variable doesn't exist\n", 1);
-    }
-    if (ft_strchr(directory, '/'))
-    {
-        if ()
-    }
+    update_env(tools->ourenv);
+    return (0);
 }

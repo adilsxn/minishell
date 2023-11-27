@@ -12,9 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-//TODO: this neeed further testing 
+//TODO: TO BE DONE AT THE END OF THE PROJECT 
 
-int msh_bi_exit(int return_code)
+int msh_exit(int return_code)
 {
     if (return_code)
         exit(return_code);

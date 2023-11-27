@@ -16,9 +16,16 @@
  * if name is a var or function they are unset(meaning what? their
  * value is deleted or in the case of funcs they become unaccessible?)*/
 
-int msh_bi_unset (void *env, char *name)
+int msh_unset (t_tool *tools, t_simple_cmd *args)
 {
+    int i;
 
+    i = 1;
+    while (args->str[i] != NULL)
+    {
+        unset_env(tools->ourenv, args->str[i]);
+        i++;
+    }
     return (EXIT_SUCCESS);
 }
 
