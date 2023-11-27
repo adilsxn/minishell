@@ -22,6 +22,9 @@
 
 # include "../libft/inc/libft.h"
 
+
+
+
 //lexer
 typedef enum s_token
 {
@@ -50,6 +53,14 @@ typedef struct s_parser_tool
 	struct s_tool	*tool;
 }t_parser_tool;
 
+typedef struct s_env
+{
+    const char *key;
+    const char *value;
+    struct s_env *next;
+    struct s_env *prev;
+} t_env;
+
 typedef struct s_tool
 {
 	char					*arg;
@@ -61,7 +72,19 @@ typedef struct s_tool
 	char					**path;
 	int						pipes;
 	bool					reset;
+    t_env                   *our_env;
 }t_tool;
+
+/*-----------------ENV------------------------*/
+
+int init_env(char **envp, t_env **env);
+t_env *set_env(t_env *env, const char *key, const char *value);
+int unset_env(t_env *env, const char *key);
+t_env *get_env(t_env *env, const char *key);
+// int traverse_msh_env(t_msh_envlist *list);
+int del_env(t_env *env);
+/*-----------------ENV------------------------*/
+
 
 typedef struct s_simple_cmd
 {
