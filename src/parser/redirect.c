@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:43 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 17:52:50 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/27 15:44:33 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool)
 //if redirect token, then add new redirect and rm redirect again
 //token is already defined as < or <<
 //rm redirect tokens from the lexer to process and handle them separately
+//but add redirect to parser_tool, 
 void	rm_redirect(t_parser_tool *parser_tool)
 {
 	t_lexer	*tmp;

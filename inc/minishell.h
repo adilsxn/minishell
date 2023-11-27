@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 20:10:34 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/27 20:34:56 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ typedef struct s_tool
 	t_lexer					*lexer;
 	struct s_simple_cmd		*simple_cmd;
 	char					**env;
-	char					*pwd;
-	char					*old_pwd;
-	char					**path;
+	bool					heredoc;
 	int						pipes;
 	bool					reset;
 }t_tool;
@@ -67,6 +65,7 @@ typedef struct s_simple_cmd
 {
 	char					**str;
 	int						nb_redirect;
+	char					*hd_file;
 	t_lexer					*redirect;
 	struct s_simple_cmd		*next;
 	struct s_simple_cmd		*prev;
@@ -102,6 +101,7 @@ int					double_token_error(t_tool *tool);
 t_simple_cmd		*cmd_new(char **str, int nb_redirect, t_lexer *redirect);
 void				add_cmd(t_simple_cmd **lst, t_simple_cmd *new);
 void				cmd_clear(t_simple_cmd **lst);
+t_simple_cmd		*first_simple_cmd(t_simple_cmd *map);
 void				rm_redirect(t_parser_tool *parser_tool);
 int					add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool);
 
@@ -123,8 +123,22 @@ t_simple_cmd		*call_expander(t_tool *tool, t_simple_cmd *cmd);
 
 //minishell loop
 int					minishell_loop(t_tool *tool);
+int					minishell_loop2(t_tool *tool);
+void				minishell_loop3(t_tool *tool);
 
 int					find_quote(char *line, int i, int *nb_quote, int quote);
 int					count_quote(char *line);
+
+//heredoc
+int					check_fd_heredoc(t_tool *tool, int end[2], \
+					t_simple_cmd *cmd);
+char				*create_hd_file(void);
+int					send_heredoc(t_tool *tool, t_simple_cmd *cmd);
+int					ft_heredoc(t_tool *tool, t_lexer *heredoc, char *file);
+int					create_heredoc(t_lexer *heredoc, bool quote, t_tool *tool, \
+					char *file);
+
+//redirections
+int					check_redirect(t_simple_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:55 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 17:58:59 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/24 17:15:25 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,13 @@ void	cmd_clear(t_simple_cmd **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+}
+
+t_simple_cmd	*first_simple_cmd(t_simple_cmd *cmd)
+{
+	if (!cmd)
+		return (NULL);
+	while (cmd->prev != NULL)
+		cmd = cmd->prev;
+	return (cmd);
 }

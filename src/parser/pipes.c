@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:12:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 16:33:22 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:52:24 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_arg(t_lexer *lexer_list)
 	tmp = lexer_list;
 	while (tmp && tmp->token != PIPE)
 	{
-		if (tmp->i > 0)
+		if (tmp->i >= 0)
 			i++;
 		tmp = tmp->next;
 	}

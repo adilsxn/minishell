@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:32:32 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 20:11:27 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/26 18:55:39 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_tool(t_tool *tool)
 	tool->simple_cmd = NULL;
 	tool->lexer = NULL;
 	tool->reset = false;
+	tool->heredoc = false;
 }
 
 void	reset_tool(t_tool *tool)

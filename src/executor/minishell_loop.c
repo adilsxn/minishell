@@ -6,16 +6,19 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 20:57:21 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/27 20:34:28 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+//trim to remove spaces from begining and end
+//if the entire pointer tool->arg is NULL, exit
+//if the first char of the str pointed to by tool->arg is the null character,
+//ask for another arg
 int	minishell_loop(t_tool *tool)
 {
 	char	*tmp;
-	size_t	count;
 
 	tool->arg = readline("minishell: ");
 	tmp = ft_strtrim(tool->arg, " ");
@@ -33,6 +36,17 @@ int	minishell_loop(t_tool *tool)
 	}
 	if (count_quote(tool->arg) == 1)
 		return (ft_error(2, tool));
+	if (minishell_loop2(tool) == 0)
+		reset_tool(tool);
+	return (1);
+}
+
+//heredoc already checks the redirection,
+//so if theres another redirection its an error
+int	minishell_loop2(t_tool *tool)
+{
+	size_t	count;
+
 	count = -1;
 	while (++count < ft_strlen(tool->arg))
 	{
@@ -42,56 +56,34 @@ int	minishell_loop(t_tool *tool)
 	}
 	parser(tool);
 	if (tool->pipes == 0)
+	{
 		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
+		send_heredoc(tool, tool->simple_cmd);
+		if (tool->simple_cmd->redirect != NULL)
+			if (check_redirect(tool->simple_cmd) == 1)
+				exit(1);
+	}
 	else
-	{
-		while (tool->simple_cmd)
-		{
-			tool->simple_cmd = call_expander(tool, tool->simple_cmd);
-			if (tool->simple_cmd->next)
-				tool->simple_cmd = tool->simple_cmd->next;
-			else
-				break ;
-		}
-	}
-	reset_tool(tool);
-	return (1);
-}
-
-//minimum number of quotes has to be 2
-//return the number to advance the str already checked
-int	find_quote(char *line, int i, int *nb_quote, int quote)
-{
-	int	j;
-
-	j = i + 1;
-	*nb_quote += 1;
-	while (line[j] && line[j] != quote)
-		j++;
-	if (line[j] == quote)
-		*nb_quote += 1;
-	return (j - i);
-}
-
-//if == 1 meaning no balanced number of quotes
-//if == 0 meaning balanced number of quotes
-int	count_quote(char *line)
-{
-	int	i;
-	int	s;
-	int	d;
-
-	s = 0;
-	d = 0;
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] == 34)
-			i += find_quote(line, i, &d, 34);
-		if (line[i] == 39)
-			i += find_quote(line, i, &s, 39);
-	}
-	if ((d > 0 && d % 2 != 0) || (s > 0 && s % 2 != 0))
-		return (1);
+		minishell_loop3(tool);
 	return (0);
+}
+
+void	minishell_loop3(t_tool *tool)
+{
+	int	fd_in;
+	int	end[2];
+
+	while (tool->simple_cmd)
+	{
+		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
+		send_heredoc(tool, tool->simple_cmd);
+		if (tool->simple_cmd->prev)
+			close(fd_in);
+		fd_in = check_fd_heredoc(tool, end, tool->simple_cmd);
+		if (tool->simple_cmd->next)
+			tool->simple_cmd = tool->simple_cmd->next;
+		else
+			break ;
+	}
+	tool->simple_cmd = first_simple_cmd(tool->simple_cmd);
 }

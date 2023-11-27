@@ -6,13 +6,13 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:48:03 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/11 18:14:00 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/27 15:48:54 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//first rm redirection
+//first rm redirection from lexer, and put it in parser_tools
 //args: words and tokens input
 //put str(with args) in new cmd (simple command struct) and remove from lexer
 //simple cmd struct has all args all cmds without redirections in str and
