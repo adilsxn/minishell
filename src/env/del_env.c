@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mk_msh_envlist.c                                   :+:      :+:    :+:   */
+/*   del_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 16:59:26 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/10 16:59:26 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/11/27 16:11:54 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/11/27 16:11:54 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_msh_envlist *mk_msh_envlist(void)
+int del_env(t_env *env)
 {
-    t_msh_envlist *list;
+    t_env *tmp;
+    t_env *next;
 
-    list = malloc(sizeof(*list));
-    if (!list)
-        return (NULL);
-    list->head = NULL;
-    list->size = 0;
-
-    return (list);
+    tmp = env;
+    while(tmp != NULL)
+    {
+        next = tmp->next;
+        free((void *)tmp->key);
+        free((void *)tmp->value);
+        free(tmp); 
+        tmp = next;
+    }
+    return (0);
 }
-

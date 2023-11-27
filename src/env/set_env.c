@@ -34,7 +34,7 @@ static t_env *update_env(t_env *env, const char *value)
     return (env);
 }
 
-t_env *set_env(t_env *env, const char *key, const char *value)
+    t_env *set_env(t_env *env, const char *key, const char *value)
 {
     t_env *tmp;
 

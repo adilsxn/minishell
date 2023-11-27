@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdbool.h>
-#include "env.h"
 
 # include "../libft/inc/libft.h"
 
@@ -78,11 +77,12 @@ typedef struct s_tool
 
 /*-----------------ENV------------------------*/
 
-t_env *set_env(const char *key, const char *value);
-int unset_env(const char *key);
+int init_env(char **envp, t_env **env);
+t_env *set_env(t_env *env, const char *key, const char *value);
+int unset_env(t_env *env, const char *key);
 t_env *get_env(t_env *env, const char *key);
 // int traverse_msh_env(t_msh_envlist *list);
-int del_env(void);
+int del_env(t_env *env);
 /*-----------------ENV------------------------*/
 
 

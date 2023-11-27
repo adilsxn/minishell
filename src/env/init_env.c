@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse_msh_env.c                                 :+:      :+:    :+:   */
+/*   del_msh_envlist.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 18:02:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 18:02:56 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/11/12 17:37:05 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/11/12 17:37:05 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
+#include <stdlib.h>
 
-int traverse_msh_env(t_msh_envlist *list)
+int init_env(char **envp, t_env **env)
 {
-    t_msh_env *iter;
+    const char *key;
+    const char *data;
+    const char *sign;
 
-    if (!list)
-        return (1);
-    iter = list->head;
-    while (iter != NULL)
+    while (*envp != NULL)
     {
-        printf("%s=%s\n", iter->key, iter->value);
-        iter = iter->next;
+        sign = ft_strchr(*envp, '=');
+        key = ft_substr(*envp, 0, sign - *envp);
+        data = ft_strdup(sign + 1);
+        *env = set_env(*env, key, data);
+        free((void *)key);
+        free((void *)data);
+        envp++;
     }
     return (0);
 }
-

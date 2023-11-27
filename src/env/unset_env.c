@@ -10,35 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int del_msh_env(t_msh_envlist *list, const char *key)
+int unset_env(t_env *env, const char *key)
 {
-    t_msh_env *tmp;
-    t_msh_env *before_env;
-    t_msh_env *after_env;
-
-    if (!list || !key)
+    t_env *tmp;
+    
+    tmp = get_env(env, key);
+    if (tmp == NULL)
         return (1);
-    tmp = list->head;
-    before_env = NULL;
-    after_env = NULL;
-    while (tmp != NULL)
-    {
-        if (tmp->next->key != key)
-            break ;
-        else
-            tmp = tmp->next;
-    }
-    if (!tmp)
-        return (1);
-    before_env = tmp;
-    if (before_env->next->next == NULL)
-        after_env = NULL;
+    if (tmp->next != NULL)
+        tmp->prev->next = tmp->next;
     else
-        after_env = before_env->next->next;
-    free(before_env->next);
-    list->size--;
-    before_env->next = after_env;
+        env = tmp->next;
+    if (tmp->next != NULL)
+        tmp->next->prev = tmp->prev;
+    tmp->prev = NULL;
+    tmp->next = NULL;
+    free((void *)tmp->key);
+    free((void *)tmp->value);
+    free(tmp);
     return (0);
 }
