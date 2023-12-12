@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
 
 int init_env(char **envp, t_env **env)
 {

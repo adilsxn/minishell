@@ -26,6 +26,7 @@ t_parser_tool	init_parser_tool(t_lexer *lexer_list, t_tool *tool)
 void	init_tool(t_tool *tool)
 {
 	tool->simple_cmd = NULL;
+	tool->our_env = NULL;
 	tool->lexer = NULL;
 	tool->reset = false;
 	tool->heredoc = false;

@@ -13,10 +13,10 @@
 SRCS       = 	remove.c  word_token.c  lexer_list.c  init.c redirect.c  \
 				simple_cmd.c error.c parser.c  pipes.c expand.c          \
 				expand_utils.c expand_utilspt2.c main.c minishell_loop.c \
-				utils.c heredoc.c redirection.c
+				utils.c heredoc.c redirection.c get_env.c set_env.c init_env.c env.c 
 
 #Add any missing folder containing a .c to the vpath
-vpath %.c tests src/executor src/expander src/lexer src/parser src/heredoc src/redirections
+vpath %.c tests src/executor src/expander src/lexer src/parser src/heredoc src/redirections src/env
 OBJ_DIR = ./obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
@@ -39,6 +39,7 @@ ${NAME}: ${OBJS}
 	@echo "Compiling minishell"
 	@make -s -C libft
 	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
+	${RM} ${OBJ_DIR}
 	@echo "minishell created"
 
 
@@ -48,7 +49,6 @@ clean:
 
 fclean: clean
 	${RM} ${NAME} 
-	${RM} ${OBJ_DIR}
 	make fclean -s -C libft
 	@echo "minishell deleted"
 

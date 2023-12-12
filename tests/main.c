@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:34:02 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/11/12 20:17:34 by matilde          ###   ########.fr       */
+/*   Updated: 2023/12/12 22:13:04 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //These environment variables arent considered command-line 
 //arguments and are typically provided by the shell 
 //or the operating system when the program is executed
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	t_tool	tool;
 
@@ -24,8 +24,11 @@ int	main(int argc, char **argv, char **env)
 		printf("The program does not accept arguments.\n");
 		return (1);
 	}
-	tool.env = ft_arrdup(env);
 	init_tool(&tool);
-	minishell_loop(&tool);
+	if (init_env(envp, &(tool.our_env)) == 1)
+		return (1);
+	// tool.env = ft_arrdup(env);
+	// minishell_loop(&tool);
+	env(tool.our_env, argc, argv);
 	return (0);
 }
