@@ -20,7 +20,7 @@ int env(t_env *env, int ac, char **args)
     while (iter != NULL)
     {
         printf("%s=%s\n", iter->key, iter->value);
-        iter = iter->next;
+        iter = iter->prev;
     }
     (void)ac;
     (void)args;

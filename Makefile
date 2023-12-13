@@ -40,6 +40,7 @@ ${NAME}: ${OBJS}
 	@make -s -C libft
 	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
 	${RM} ${OBJ_DIR}
+	make clean -s -C libft
 	@echo "minishell created"
 
 
