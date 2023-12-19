@@ -27,8 +27,8 @@ int	main(int argc, char **argv, char **envp)
 	init_tool(&tool);
 	if (init_env(envp, &(tool.our_env)) == 1)
 		return (1);
-	// tool.env = ft_arrdup(env);
-	// minishell_loop(&tool);
-	env(tool.our_env, argc, argv);
+	tool.env = ft_arrdup(envp);
+	//minishell_loop(&tool);
+	msh_env(&tool, NULL);
 	return (0);
 }

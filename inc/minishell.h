@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/28 13:30:59 by matilde          ###   ########.fr       */
+/*   Updated: 2023/12/18 22:34:22 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,21 @@ typedef struct s_simple_cmd
 }t_simple_cmd;
 
 int init_env(char **envp, t_env **env);
-t_env *set_env(t_env *env, const char *key, const char *value);
+t_env *set_env(t_env **env, const char *key, const char *value);
 int unset_env(t_env *env, const char *key);
 t_env *get_env(t_env *env, const char *key);
-int env(t_env *env, int ac, char **args);
  // int traverse_msh_env(t_msh_envlist *list);
 int del_env(t_env *env);
+
+//bi
+int msh_cd(t_tool *tools, t_simple_cmd *args);
+int msh_echo(t_tool *tools, t_simple_cmd *args);
+int msh_env(t_tool *tools, t_simple_cmd *args);
+int msh_exit(t_tool *tools, t_simple_cmd *args);
+int msh_export(t_tool *tools, t_simple_cmd *args);
+int msh_pwd(t_tool *tools, t_simple_cmd *args);
+int msh_unset(t_tool *tools, t_simple_cmd *args);
+
 
 //lexer
 int					is_whitespace(char c);

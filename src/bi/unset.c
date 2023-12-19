@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse_msh_env.c                                 :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 18:02:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 18:02:56 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/09/14 22:23:24 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/09/14 22:23:24 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+/*NOTE: In short the inverse of export
+ * if name is a var or function they are unset(meaning what? their
+ * value is deleted or in the case of funcs they become unaccessible?)*/
 
-int env(t_tool *tool, t_simple_cmd *simple_cmd)
+int msh_unset (t_tool *tools, t_simple_cmd *args)
 {
-    t_env *iter;
+    int i;
 
-    (void)simple_cmd;
-    iter = tool->our_env;
-    while (iter != NULL)
+    i = 1;
+    while (args->str[i] != NULL)
     {
-        printf("%s=%s\n", iter->key, iter->value);
-        iter = iter->next;
+        unset_env(tools->our_env, args->str[i]);
+        i++;
     }
     return (EXIT_SUCCESS);
 }

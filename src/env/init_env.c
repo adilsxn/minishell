@@ -23,7 +23,7 @@ int init_env(char **envp, t_env **env)
         sign = ft_strchr(*envp, '=');
         key = ft_substr(*envp, 0, sign - *envp);
         data = ft_strdup(sign + 1);
-        *env = set_env(*env, key, data);
+        set_env(env, key, data);
         free((void *)key);
         free((void *)data);
         envp++;

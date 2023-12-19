@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse_msh_env.c                                 :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 18:02:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 18:02:56 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/09/11 13:45:03 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/12/18 22:18:50 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int env(t_tool *tool, t_simple_cmd *simple_cmd)
+// TODO: adapt the func to the shell env(not created yet)
+int   msh_pwd(t_tool *tools, t_simple_cmd *args)
 {
-    t_env *iter;
-
-    (void)simple_cmd;
-    iter = tool->our_env;
-    while (iter != NULL)
-    {
-        printf("%s=%s\n", iter->key, iter->value);
-        iter = iter->next;
-    }
+    (void)args;
+    ft_putendl_fd(get_env(tools->our_env, "PWD")->value, 1);
     return (EXIT_SUCCESS);
 }
-

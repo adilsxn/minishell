@@ -36,22 +36,22 @@ static t_env *update_env(t_env *env, const char *value)
     return (env);
 }
 
-    t_env *set_env(t_env *env, const char *key, const char *value)
+    t_env *set_env(t_env **env, const char *key, const char *value)
 {
     t_env *tmp;
 
     tmp = NULL;
     if (!key || !value)
         return (NULL);
-    if (env == NULL)
+    if (*env == NULL)
     {
-        env = mk_env(key, value, NULL);
-        return (env);
+        *env = mk_env(key, value, NULL);
+        return (*env);
     }
-    tmp = get_env(env, key);
+    tmp = get_env(*env, key);
     if (tmp)
         return (update_env(tmp, value));
-    tmp = env;
+    tmp = *env;
     while (tmp->next != NULL)
         tmp = tmp->next;
     tmp->next = mk_env(key, value, tmp);

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse_msh_env.c                                 :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 18:02:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/12 18:02:56 by acuva-nu         ###   ########.fr       */
+/*   Created: 2023/09/14 22:37:34 by acuva-nu          #+#    #+#             */
+/*   Updated: 2023/09/14 22:37:34 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int env(t_tool *tool, t_simple_cmd *simple_cmd)
+//TODO: TO BE DONE AT THE END OF THE PROJECT 
+
+int msh_exit(int return_code)
 {
-    t_env *iter;
-
-    (void)simple_cmd;
-    iter = tool->our_env;
-    while (iter != NULL)
-    {
-        printf("%s=%s\n", iter->key, iter->value);
-        iter = iter->next;
-    }
-    return (EXIT_SUCCESS);
+    if (return_code)
+        exit(return_code);
+    else
+        exit(0);
 }
-
