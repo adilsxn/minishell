@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:34:02 by vgoncalv          #+#    #+#             */
 /*   Updated: 2023/12/12 22:13:04 by acuva-nu         ###   ########.fr       */
@@ -25,10 +25,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	init_tool(&tool);
-	if (init_env(envp, &(tool.our_env)) == 1)
 		return (1);
 	tool.env = ft_arrdup(envp);
-	//minishell_loop(&tool);
-	msh_env(&tool, NULL);
+	minishell_loop(&tool);
 	return (0);
 }

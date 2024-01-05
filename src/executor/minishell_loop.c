@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/28 13:35:26 by matilde          ###   ########.fr       */
+/*   Updated: 2023/12/27 21:33:26 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	minishell_loop(t_tool *tool)
 		exit(0);
 	}
 	if (tool->arg[0] == '\0')
-	{
-		reset_tool(tool);
-		return (1);
-	}
+		return (reset_tool(tool), 1);
+	add_history(tool->arg);
 	if (count_quote(tool->arg) == 1)
 		return (ft_error(2, tool));
 	if (minishell_loop2(tool) == 0)
@@ -42,6 +40,7 @@ int	minishell_loop(t_tool *tool)
 }
 
 //heredoc already checks the redirection,
+//which heredoc ?
 //so if theres another redirection its an error
 int	minishell_loop2(t_tool *tool)
 {
@@ -54,20 +53,26 @@ int	minishell_loop2(t_tool *tool)
 		if (count == 0)
 			return (ft_error(1, tool));
 	}
+    t_lexer *i;
+    while (i != NULL)
 	parser(tool);
 	if (tool->pipes == 0)
 	{
+		// what exactly happens here ?
 		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
+		// what exactly happens here ?
 		send_heredoc(tool, tool->simple_cmd);
 		if (tool->simple_cmd->redirect != NULL)
+		// what exactly happens here ?
 			if (check_redirect(tool->simple_cmd) == 1)
 				exit(1);
 	}
 	else
+	// what is this function doing ?
 		minishell_loop3(tool);
 	return (0);
 }
-
+// what is this function doing ?
 void	minishell_loop3(t_tool *tool)
 {
 	int	fd_in;
@@ -75,15 +80,19 @@ void	minishell_loop3(t_tool *tool)
 
 	while (tool->simple_cmd)
 	{
+		// why are we calling this function ?
 		tool->simple_cmd = call_expander(tool, tool->simple_cmd);
+		// why are we calling this function ?
 		send_heredoc(tool, tool->simple_cmd);
 		if (tool->simple_cmd->prev)
 			close(fd_in);
+		// what is this function doing ?
 		fd_in = check_fd_heredoc(tool, end, tool->simple_cmd);
 		if (tool->simple_cmd->next)
 			tool->simple_cmd = tool->simple_cmd->next;
 		else
 			break ;
 	}
+	// what is happening here ?
 	tool->simple_cmd = first_simple_cmd(tool->simple_cmd);
 }

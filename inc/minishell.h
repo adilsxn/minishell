@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/12/18 22:34:22 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:04:54 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <readline/readline.h>
+#include <readline/history.h>
+# include <stddef.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -40,6 +42,18 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }t_lexer;
+
+typedef void (*t_func)();
+typedef struct s_tree
+{
+	bool   root;
+	bool   heredoc;
+	char  *token;
+    t_token kind;
+	t_func   f;
+	struct s_tree *left;
+	struct s_tree *right;
+} t_tree;
 
 typedef struct s_env
 {

@@ -21,6 +21,7 @@ static int update_env(t_env *env)
     set_env(&env, "OLDPWD", get_env(env, "PWD")->value);
     set_env(&env, "PWD", pwd);
     free((char *)pwd);
+    return (0);
 }
 
 int msh_cd(t_tool *tools, t_simple_cmd *args)
