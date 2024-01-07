@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 17:08:30 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/27 19:01:24 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/29 20:44:22 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_fd_heredoc(t_tool *tool, int end[2], t_simple_cmd *cmd)
 {
 	int	fd_in;
 
-	if (tool->heredoc)
+	if (tool->heredoc == true)
 	{
 		close(end[0]);
 		fd_in = open(cmd->hd_file, O_RDONLY);

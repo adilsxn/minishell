@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/22 15:55:57 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/07 22:48:00 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	else
 		new_node(ft_substr(str, i, count), 0, lexer);
 	if (check_token(str[i + count], str[i + count +1]) == LESS
-		|| check_token(str[i + count], str[i + count +1]) == GREAT)
+		|| check_token(str[i + count], str[i + count +1]) == GREAT \
+		|| check_token(str[i + count], 0) == PIPE)
 		count = 1;
 	else if (check_token(str[i + count], 0) != 0)
 		count = 2;

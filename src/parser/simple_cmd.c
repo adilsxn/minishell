@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:55 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/24 17:15:25 by matilde          ###   ########.fr       */
+/*   Updated: 2023/12/04 14:13:08 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_simple_cmd	*cmd_new(char **str, int nb_redirect, t_lexer *redirect)
 	new_element->str = str;
 	new_element->nb_redirect = nb_redirect;
 	new_element->redirect = redirect;
+	new_element->hd_file = NULL;
 	new_element->next = NULL;
 	new_element->prev = NULL;
 	return (new_element);

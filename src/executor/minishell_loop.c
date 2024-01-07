@@ -6,16 +6,19 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/28 13:35:26 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/07 22:49:47 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+//readline dynamically allocates memory for each input, so free after
 //trim to remove spaces from begining and end
 //if the entire pointer tool->arg is NULL, exit
 //if the first char of the str pointed to by tool->arg is the null character,
 //ask for another arg
+//when press Enter on the terminal without entering any other char
+//the input buffer is an empty string ("")
 int	minishell_loop(t_tool *tool)
 {
 	char	*tmp;
@@ -54,6 +57,9 @@ int	minishell_loop2(t_tool *tool)
 		if (count == 0)
 			return (ft_error(1, tool));
 	}
+	printf("%s\n", tool->lexer->str);
+	printf("%i\n", tool->lexer->token);
+	printf("%s\n", tool->lexer->next->next->str);
 	parser(tool);
 	if (tool->pipes == 0)
 	{

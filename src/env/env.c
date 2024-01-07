@@ -26,4 +26,3 @@ int env(t_env *env, int ac, char **args)
     (void)args;
     return (0);
 }
-
