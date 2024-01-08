@@ -43,17 +43,14 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }t_lexer;
 
-typedef void (*t_func)();
-typedef struct s_tree
-{
-	bool   root;
-	bool   heredoc;
-	char  *token;
-    t_token kind;
-	t_func   f;
-	struct s_tree *left;
-	struct s_tree *right;
-} t_tree;
+
+typedef enum e_order {
+    MINUS = -1,
+    PPE,
+    RDR,
+    CMD,
+} t_order;
+
 
 typedef struct s_env
 {
@@ -63,6 +60,17 @@ typedef struct s_env
 	struct s_env *next;
 } t_env;
 //parser
+typedef struct s_tree
+{
+    bool   root;
+    bool   heredoc;
+    char  *token;
+    t_order kind;
+    void (*func_ptr)(struct s_tree *tree, t_env *env);
+    struct s_tree *left;
+    struct s_tree *right;
+} t_tree;
+
 typedef struct s_parser_tool
 {
 	t_lexer			*lexer;
@@ -124,25 +132,7 @@ void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
 
 //parser
-int					parser(t_tool *tool);
-t_simple_cmd		*init_cmd(t_parser_tool *parser_tool);
-t_parser_tool		init_parser_tool(t_lexer *lexer_list, t_tool *tool);
-void				init_tool(t_tool *tool);
-void				free_array(char **array);
-void				reset_tool(t_tool *tool);
 
-void				count_pipes(t_lexer *lexer_list, t_tool *tool);
-int					count_arg(t_lexer *lexer_list);
-int					pipe_error(t_tool *tool);
-int					ft_error(int error, t_tool *tool);
-int					double_token_error(t_tool *tool);
-
-t_simple_cmd		*cmd_new(char **str, int nb_redirect, t_lexer *redirect);
-void				add_cmd(t_simple_cmd **lst, t_simple_cmd *new);
-void				cmd_clear(t_simple_cmd **lst);
-t_simple_cmd		*first_simple_cmd(t_simple_cmd *map);
-void				rm_redirect(t_parser_tool *parser_tool);
-int					add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool);
 
 //expander
 size_t				dollar_sign(char *str);
@@ -161,23 +151,10 @@ char				*expander_str(t_tool *tool, char *str);
 t_simple_cmd		*call_expander(t_tool *tool, t_simple_cmd *cmd);
 
 //minishell loop
-int					minishell_loop(t_tool *tool);
-int					minishell_loop2(t_tool *tool);
-void				minishell_loop3(t_tool *tool);
-
-int					find_quote(char *line, int i, int *nb_quote, int quote);
-int					count_quote(char *line);
-
-//heredoc
-int					check_fd_heredoc(t_tool *tool, int end[2], \
-					t_simple_cmd *cmd);
-char				*create_hd_file(void);
-int					send_heredoc(t_tool *tool, t_simple_cmd *cmd);
-int					ft_heredoc(t_tool *tool, t_lexer *heredoc, char *file);
-int					create_heredoc(t_lexer *heredoc, bool quote, t_tool *tool, \
-					char *file);
-
-//redirections
-int					check_redirect(t_simple_cmd *cmd);
+void rdir_o(t_tree *tree);
+void rdir_i(t_tree *tree);
+void appnd(t_tree *tree);
+void hdoc(t_tree *tree, t_env *env);
+void exec_pipe(t_tree *tree, t_env *env);
 
 #endif

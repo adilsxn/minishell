@@ -17,7 +17,7 @@ static void assign_type(t_order type, t_tree *it, bool hdflag)
 {
     extern void exec_rdr(t_tree *tree, t_env* env);
     extern void exec_ppe(t_tree *tree, t_env* env);    
-    extern void exec_wrd(t_tree *tree, t_env* env);
+    extern void exec_cmd(t_tree *tree, t_env* env);
 
     it->kind = type;
     if (type == RDR)
@@ -25,7 +25,7 @@ static void assign_type(t_order type, t_tree *it, bool hdflag)
     else if (type == PPE)
         it->f = exec_ppe;
     else 
-        it->f = exec_wrd;
+        it->f = exec_cmd;
     if (hdflag == true)
         it->heredoc = true;
     else
@@ -44,13 +44,13 @@ t_tree *make_leaf(t_lexer *lexem)
     if (lexem->token == LESS 
          || lexem->token == GREAT 
          || lexem->token == GREAT_GREAT)
-        assign_type(RDR, &it, false);
+        assign_type(RDR, it, false);
     else if (lexem->token == LESS_LESS)
-        assign_type(RDR, &it, true);
+        assign_type(RDR, it, true);
     else if (lexem->token == PIPE)
-        assign_type(PPE, &it, false);
+        assign_type(PPE, it, false);
     else
-        assign_type(WRD, &it, false);
+        assign_type(CMD, it, false);
     it->root = false;
     it->token = lexem->str;
     it->left = NULL;
@@ -58,7 +58,14 @@ t_tree *make_leaf(t_lexer *lexem)
     return (it);
 }
 
+
 t_tree *leaf_insert(t_tree *it, t_tree *tree)
 {
     /* TODO: create insertion case for lower, greater and equal */
+    t_tree *root;
+
+    if (tree == NULL)
+        return (it);
+    root = tree;
+
 }
