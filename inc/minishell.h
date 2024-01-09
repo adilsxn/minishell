@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/28 13:30:59 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/28 15:53:10 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_tool
 	char					**env;
 	bool					heredoc;
 	int						pipes;
-	bool					reset;
 }t_tool;
 
 typedef struct s_simple_cmd

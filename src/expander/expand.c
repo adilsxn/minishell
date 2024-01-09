@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 17:52:11 by matilde          ###   ########.fr       */
+/*   Updated: 2023/11/28 16:17:04 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	loop_dollar_sign(t_tool *tool, char *str, char **tmp, int j)
 //export makes a variable available to other processes
 //started from the current shell session
 //str is already broken into diffent cmd
+//quotes are not removed for export command
 char	**expander(t_tool *tool, char **str)
 {
 	int		i;

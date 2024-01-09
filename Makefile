@@ -6,7 +6,7 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/11/28 13:38:35 by matilde          ###   ########.fr        #
+#    Updated: 2023/11/28 15:54:48 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ ${NAME}: ${OBJS}
 	@make -s -C libft
 	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
 	@echo "minishell created"
-
 
 clean:
 	${RM} ${OBJ_DIR} 

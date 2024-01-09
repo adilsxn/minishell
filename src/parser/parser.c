@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:48:03 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/28 13:36:44 by matilde          ###   ########.fr       */
+/*   Updated: 2023/12/04 13:57:56 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ t_simple_cmd	*init_cmd(t_parser_tool *parser_tool)
 	return (cmd_new(str, parser_tool->nb_redirect, parser_tool->redirect));
 }
 
-// check for double pipes : error 
-// transfer from lexerlist to simple cmd before and after pipe
+//check for double pipes : error 
+//transfer from lexerlist to simple cmd before and after pipe
 //assign the node as the first command in the tool->simple_cmd list.
-// If tool->simple_cmd is not NULL, adds the node to the end of the list
+//If tool->simple_cmd is not NULL, adds the node to the end of the list
 //update tool->lexer with parser_tool->lexer, since tokens are removed
 int	parser(t_tool *tool)
 {
