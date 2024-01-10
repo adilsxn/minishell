@@ -66,7 +66,7 @@ typedef struct s_tree
     bool   heredoc;
     char  *token;
     t_order kind;
-    void (*func_ptr)(struct s_tree *tree, t_env *env);
+    void (*f)(struct s_tree *tree, t_env *env);
     struct s_tree *left;
     struct s_tree *right;
 } t_tree;
@@ -132,6 +132,11 @@ void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
 
 //parser
+t_tree *make_leaf(t_lexer *lexem);
+t_tree *tree_insert(t_tree *tree, t_tree *it);
+bool is_complete(t_tree *tree);
+t_tree* parser(t_tool *shell);
+
 
 
 //expander
@@ -156,5 +161,7 @@ void rdir_i(t_tree *tree);
 void appnd(t_tree *tree);
 void hdoc(t_tree *tree, t_env *env);
 void exec_pipe(t_tree *tree, t_env *env);
+void tree_exec(t_tree *tree, t_env *env)
+
 
 #endif

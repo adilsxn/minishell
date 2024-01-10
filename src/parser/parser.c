@@ -59,13 +59,23 @@ t_tree *make_leaf(t_lexer *lexem)
 }
 
 
-t_tree *leaf_insert(t_tree *it, t_tree *tree)
+t_tree* parser(t_tool *shell)
 {
-    /* TODO: create insertion case for lower, greater and equal */
-    t_tree *root;
+    t_tree *tree;
+    t_tree *it;
+    t_lexer *i;
 
-    if (tree == NULL)
-        return (it);
-    root = tree;
-
+    tree = NULL;
+    it = NULL;
+    i = shell->lexer;
+    while(i != NULL)
+    {
+        it = make_leaf(i);
+        if (it == NULL)
+            printf("Error: Parsing");
+        tree = tree_insert(tree, it);
+        i = i->next;
+    }
+    tree->root = true;
+    return (tree);
 }
