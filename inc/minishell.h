@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/12/30 23:04:54 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:45:02 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ typedef enum e_order {
     CMD,
 } t_order;
 
+typedef struct e_state
+{
+	char *state;
+	int ret_code;
+}t_state;
 
 typedef struct s_env
 {
@@ -71,35 +76,19 @@ typedef struct s_tree
     struct s_tree *right;
 } t_tree;
 
-typedef struct s_parser_tool
-{
-	t_lexer			*lexer;
-	t_lexer			*redirect;
-	int				nb_redirect;
-	struct s_tool	*tool;
-}t_parser_tool;
 
 typedef struct s_tool
 {
 	char					*arg;
 	t_lexer					*lexer;
-	struct s_simple_cmd		*simple_cmd;
+	t_tree					*tree;
 	char					**env;
-	bool					heredoc;
-	int						pipes;
 	bool					reset;
 	t_env					*our_env;
 }t_tool;
 
-typedef struct s_simple_cmd
-{
-	char					**str;
-	int						nb_redirect;
-	char					*hd_file;
-	t_lexer					*redirect;
-	struct s_simple_cmd		*next;
-	struct s_simple_cmd		*prev;
-}t_simple_cmd;
+
+extern t_state g_state;
 
 int init_env(char **envp, t_env **env);
 t_env *set_env(t_env **env, const char *key, const char *value);
