@@ -30,7 +30,7 @@ static pid_t out_proc(t_tree *tree, t_env *env, int fd[2])
         if (dup2(fd[1], STDOUT_FILENO) == -1)
             printf("error\n");
         close(fd[1]);
-        tree->f(tree, env);
+        tree->fn(tree, env);
         exit(0);
     }
     return (pid);
@@ -51,7 +51,7 @@ static pid_t in_proc(t_tree *tree, t_env *env, int fd[2])
         if (dup2(fd[0], STDIN_FILENO) == -1)
             printf("error\n");
         close(fd[0]);
-        tree->f(tree, env);
+        tree->fn(tree, env);
         exit(0);
     }
     return (pid);

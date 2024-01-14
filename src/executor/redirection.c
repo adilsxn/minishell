@@ -11,11 +11,8 @@
 /* ************************************************************************** */
 
 # include "../../inc/minishell.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
 
-void rdir_o(t_tree *tree)
+static void rdir_o(t_tree *tree)
 {
     int fd_o;
 
@@ -26,7 +23,7 @@ void rdir_o(t_tree *tree)
     close(fd_o);
 }
 
-void rdir_i(t_tree *tree)
+static void rdir_i(t_tree *tree)
 {
     int fd_i;
 
@@ -37,7 +34,7 @@ void rdir_i(t_tree *tree)
     close(fd_i);
 }
 
-void appnd(t_tree *tree)
+static void appnd(t_tree *tree)
 {
     int fd_a;
 
@@ -48,7 +45,7 @@ void appnd(t_tree *tree)
     close(fd_a);
 }
 
-void hdoc(t_tree *tree, t_env *env)
+static void hdoc(t_tree *tree, t_env *env)
 {
     int fd_hd;
     char *input;
@@ -66,13 +63,20 @@ void hdoc(t_tree *tree, t_env *env)
     free(input);
     close(fd_hd);
     fd_hd = open(".tmp_hd", O_RDONLY, S_IRWXU);
-    if (fd == -1)
+    if (fd_hd == -1)
         printf("Error on hdoc\n");
     dup2(fd_hd, STDIN_FILENO);
     close(fd_hd);
 }
 
-/*TODO: Integrate this function on header fiels 
- * Plus add the order enum
- * also create the signal and cmd_finder and builtin executer
- * fix globals return codes*/
+void exec_rdr(t_tree *tree, t_env *env)
+{
+    if (ft_strequ(tree->token, ">"))
+        rdir_o(tree);
+    else if (ft_strequ(tree->token, "<"))
+        rdir_i(tree);
+    else if (ft_strequ(tree->token, ">>"))
+       appnd(tree);
+    if (ft_strequ(tree->token, ">"))
+        hdoc(tree, env);
+}
