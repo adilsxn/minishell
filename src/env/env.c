@@ -12,12 +12,11 @@
 
 #include "../../inc/minishell.h"
 
-int env(t_tool *tool, t_simple_cmd *simple_cmd)
+int env(t_env *env)
 {
     t_env *iter;
-
-    (void)simple_cmd;
-    iter = tool->our_env;
+    
+    iter = env;
     while (iter != NULL)
     {
         printf("%s=%s\n", iter->key, iter->value);

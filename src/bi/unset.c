@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+/*TODO: Need to refine the builtins and work on signals and the expander*/
+
 /*NOTE: In short the inverse of export
  * if name is a var or function they are unset(meaning what? their
  * value is deleted or in the case of funcs they become unaccessible?)*/

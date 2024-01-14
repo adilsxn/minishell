@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/12/18 22:42:01 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/14 21:35:27 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void printerx(int i, char **str, int fd)
         
 }
 
-int msh_echo(t_tool *tools, t_simple_cmd *args)
+int msh_echo(char **args)
 {
     int nflag;
     int i;
 
     i = 1;
     nflag = 1;
-    if (args->str[i] != NULL && (ft_strequ(args->str[i][0], "-n") == 0))
+    if (args[i] != NULL && (ft_strequ(args->str[i][0], "-n") == 0))
     {
         nflag = 0;
         i++;

@@ -3,20 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
+#    By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2023/11/28 13:38:35 by matilde          ###   ########.fr        #
+#    Updated: 2024/01/14 21:14:58 by acuva-nu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = 	remove.c  word_token.c  lexer_list.c  init.c redirect.c  \
-				simple_cmd.c error.c parser.c  pipes.c expand.c          \
-				expand_utils.c expand_utilspt2.c main.c minishell_loop.c \
-				utils.c heredoc.c redirection.c get_env.c set_env.c init_env.c env.c 
+SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c tree_utils.c   \
+			 tree_utils_2.c parser.c error.c remove.c lexer_utils.c lexer_list.c       \
+			 cmd_finder.c cmd_args.c command.c pipe.c redirection.c minishell_loop.c   \
+			 pwd.c echo.c unset.c exit.c export.c cd.c builtins.c main.c sngl_child.c  \
+			 sgnl_hd_parent.c sgnl_parent.c sgnl_hd_child.c setup_sgnl.c sgnl_prompt.c \
+			 expand_utilspt2.c expand_utils.c expand.c
 
 #Add any missing folder containing a .c to the vpath
-vpath %.c tests src/executor src/expander src/lexer src/parser src/heredoc src/redirections src/env
+vpath %.c src/executor src/expander src/bi src/lexer src/parser  src/env
 OBJ_DIR = ./obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 

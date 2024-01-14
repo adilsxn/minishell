@@ -24,12 +24,12 @@ static int update_env(t_env *env)
     return (0);
 }
 
-int msh_cd(t_tool *tools, t_simple_cmd *args)
+int msh_cd(char **args, t_env *env)
 {
     const char *path;
     
-    if (args->str[1] == NULL)
-            path = get_env(tools->our_env, "HOME")->value;
+    if (args[1] == NULL)
+            path = get_env(env, "HOME")->value;
     else 
         path = *(args->str);
     if (chdir(path) == -1)
@@ -37,6 +37,6 @@ int msh_cd(t_tool *tools, t_simple_cmd *args)
         perror("error: cd failed\n");
         return (1);
     }
-    update_env(tools->our_env);
+    update_env(env);
     return (0);
 }
