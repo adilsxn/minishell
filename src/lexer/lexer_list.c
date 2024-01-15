@@ -41,7 +41,7 @@ int	new_node(char *str, int token, t_lexer **lexer_list)
 int	len_word(int i, char *str, t_lexer **lexer)
 {
 	int	count;
-;
+
 	count = 0;
 	while (str[i + count] != '\0' && check_token(str[i + count], 0) == 0)
 	{
@@ -57,7 +57,7 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	else
 		new_node(ft_substr(str, i, count), 0, lexer);
 	if (check_token(str[i + count], str[i + count +1]) == LESS
-		|| check_token(str[i + count], str[i + count +1]) == GREAT
+		|| check_token(str[i + count], str[i + count +1]) == GREAT \
 		|| check_token(str[i + count], 0) == PIPE)
 		count = 1;
 	else if (check_token(str[i + count], 0) != 0)

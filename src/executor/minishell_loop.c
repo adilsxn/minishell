@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:26:06 by matilde           #+#    #+#             */
-/*   Updated: 2023/12/27 21:33:26 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:35:52 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+//readline dynamically allocates memory for each input, so free after
 //trim to remove spaces from begining and end
 //if the entire pointer tool->arg is NULL, exit
 //if the first char of the str pointed to by tool->arg is the null character,
 //ask for another arg
+//when press Enter on the terminal without entering any other char
+//the input buffer is an empty string ("")
 int	minishell_loop(t_tool *tool)
 {
 	char	*tmp;

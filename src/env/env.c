@@ -24,4 +24,3 @@ int env(t_env *env)
     }
     return (EXIT_SUCCESS);
 }
-

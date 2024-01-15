@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/01/14 21:14:58 by acuva-nu         ###   ########.fr        #
+#    Updated: 2024/01/15 20:34:05 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ ${NAME}: ${OBJS}
 	${RM} ${OBJ_DIR}
 	make clean -s -C libft
 	@echo "minishell created"
-
 
 clean:
 	${RM} ${OBJ_DIR} 
