@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/28 15:53:10 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/15 20:35:00 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <stdio.h>
 # include <readline/readline.h>
+#include <readline/history.h>
+# include <stddef.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -41,34 +45,67 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }t_lexer;
 
-//parser
-typedef struct s_parser_tool
+
+typedef enum e_order {
+    MINUS = -1,
+    PPE,
+    RDR,
+    CMD,
+} t_order;
+
+typedef struct e_state
 {
-	t_lexer			*lexer;
-	t_lexer			*redirect;
-	int				nb_redirect;
-	struct s_tool	*tool;
-}t_parser_tool;
+	char *state;
+	int ret_code;
+}t_state;
+
+typedef struct s_env
+{
+	const char *key;
+	const char *value;
+	struct s_env *prev;
+	struct s_env *next;
+} t_env;
+//parser
+typedef struct s_tree
+{
+    bool   root;
+    bool   heredoc;
+    char  *token;
+    t_order kind;
+    void (*fn)(struct s_tree *tree, t_env *env);
+    struct s_tree *left;
+    struct s_tree *right;
+} t_tree;
+
 
 typedef struct s_tool
 {
 	char					*arg;
 	t_lexer					*lexer;
-	struct s_simple_cmd		*simple_cmd;
-	char					**env;
-	bool					heredoc;
-	int						pipes;
+	t_tree					*tree;
+	t_env					*env;
 }t_tool;
 
-typedef struct s_simple_cmd
-{
-	char					**str;
-	int						nb_redirect;
-	char					*hd_file;
-	t_lexer					*redirect;
-	struct s_simple_cmd		*next;
-	struct s_simple_cmd		*prev;
-}t_simple_cmd;
+
+extern t_state g_state;
+
+int init_env(char **envp, t_env **env);
+t_env *set_env(t_env **env, const char *key, const char *value);
+int unset_env(t_env *env, const char *key);
+t_env *get_env(t_env *env, const char *key);
+ // int traverse_msh_env(t_msh_envlist *list);
+int del_env(t_env *env);
+
+//bi
+int msh_cd(char **args, t_env *env);
+int msh_echo(t_tool *tools);
+int msh_env(t_env *env);
+int msh_exit(t_tool *tools);
+int msh_export(t_env *env, char **args);
+int msh_pwd(t_env *env);
+int msh_unset (t_env *env, char **args);
+
 
 //lexer
 int					is_whitespace(char c);
@@ -84,25 +121,13 @@ void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
 
 //parser
-int					parser(t_tool *tool);
-t_simple_cmd		*init_cmd(t_parser_tool *parser_tool);
-t_parser_tool		init_parser_tool(t_lexer *lexer_list, t_tool *tool);
-void				init_tool(t_tool *tool);
-void				free_array(char **array);
-void				reset_tool(t_tool *tool);
+t_tree *make_leaf(t_lexer *lexem);
+void tree_print(t_tree *tree);
+t_tree *tree_insert(t_tree *tree, t_tree *it);
+bool is_complete(t_tree *tree);
+t_tree* parser(t_tool *shell);
 
-void				count_pipes(t_lexer *lexer_list, t_tool *tool);
-int					count_arg(t_lexer *lexer_list);
-int					pipe_error(t_tool *tool);
-int					ft_error(int error, t_tool *tool);
-int					double_token_error(t_tool *tool);
 
-t_simple_cmd		*cmd_new(char **str, int nb_redirect, t_lexer *redirect);
-void				add_cmd(t_simple_cmd **lst, t_simple_cmd *new);
-void				cmd_clear(t_simple_cmd **lst);
-t_simple_cmd		*first_simple_cmd(t_simple_cmd *map);
-void				rm_redirect(t_parser_tool *parser_tool);
-int					add_new_redirect(t_lexer *tmp, t_parser_tool *parser_tool);
 
 //expander
 size_t				dollar_sign(char *str);
@@ -118,26 +143,15 @@ char				*check_dollar(t_tool *tool, char *str);
 int					loop_dollar_sign(t_tool *tool, char *s, char **tmp, int j);
 char				**expander(t_tool *tool, char **str);
 char				*expander_str(t_tool *tool, char *str);
-t_simple_cmd		*call_expander(t_tool *tool, t_simple_cmd *cmd);
+//t_simple_cmd		*call_expander(t_tool *tool, t_simple_cmd *cmd);
 
 //minishell loop
-int					minishell_loop(t_tool *tool);
-int					minishell_loop2(t_tool *tool);
-void				minishell_loop3(t_tool *tool);
+char **build_av(t_tree *tree);
+char	*cmd_finder(t_tree *tree, t_env *env);
+void exec_rdr(t_tree *tree, t_env *env);
+void exec_pipe(t_tree *tree, t_env *env);
+void tree_exec(t_tree *tree, t_env *env);
+void exec_cmd(t_tree *tree, t_env *env);
 
-int					find_quote(char *line, int i, int *nb_quote, int quote);
-int					count_quote(char *line);
-
-//heredoc
-int					check_fd_heredoc(t_tool *tool, int end[2], \
-					t_simple_cmd *cmd);
-char				*create_hd_file(void);
-int					send_heredoc(t_tool *tool, t_simple_cmd *cmd);
-int					ft_heredoc(t_tool *tool, t_lexer *heredoc, char *file);
-int					create_heredoc(t_lexer *heredoc, bool quote, t_tool *tool, \
-					char *file);
-
-//redirections
-int					check_redirect(t_simple_cmd *cmd);
 
 #endif

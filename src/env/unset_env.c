@@ -19,7 +19,7 @@ int unset_env(t_env *env, const char *key)
     tmp = get_env(env, key);
     if (tmp == NULL)
         return (1);
-    if (tmp->next != NULL)
+    if (tmp->prev != NULL)
         tmp->prev->next = tmp->next;
     else
         env = tmp->next;

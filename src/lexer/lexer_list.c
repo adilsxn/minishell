@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/07 22:48:00 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/04 20:29:20 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	{
 		count += len_quote(i + count, str, 34);
 		count += len_quote(i + count, str, 39);
-		if (is_whitespace(str[i + count]) == 1)
+		if (ft_isspace(str[i + count]) == 1)
 			break ;
 		else
 			count++;
