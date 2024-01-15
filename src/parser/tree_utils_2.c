@@ -12,6 +12,20 @@
 
 # include "../../inc/minishell.h"
 
+void tree_print(t_tree *tree)
+{
+    int i;
+
+    i = -1;
+    if (tree == NULL)
+        return ;
+    tree_print(tree->left);
+    printf("\n");
+    while (++i < 5)
+        printf("-");
+    printf("%s\n", tree->token);
+    tree_print(tree->left);
+}
 static bool is_syntax_mixed(t_tree *tree)
 {
     t_tree *left;
@@ -69,7 +83,7 @@ void tree_exec(t_tree *tree, t_env *env)
     if (fd[0] == -1 || fd[1] == -1)
         printf("Error while duping std fd's");
     if (is_complete(tree) == false)
-        printf("Syntax error\n");
+        perror("Syntax error\n");
     else
         tree->fn(tree, env);
     rollback(fd[0], fd[1]);

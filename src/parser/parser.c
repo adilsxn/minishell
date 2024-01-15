@@ -36,7 +36,6 @@ static void assign_type(t_order type, t_tree *it, bool hdflag)
 t_tree *make_leaf(t_lexer *lexem)
 {
     t_tree *it;
-    char *content;
 
     it = malloc(sizeof(*it));
     if (it == NULL)
@@ -59,7 +58,7 @@ t_tree *make_leaf(t_lexer *lexem)
 }
 
 
-t_tree* parser(t_tool *shell, t_lexer *lexems)
+t_tree* parser(t_tool *shell)
 {
     t_tree *tree;
     t_tree *it;
@@ -67,7 +66,7 @@ t_tree* parser(t_tool *shell, t_lexer *lexems)
 
     tree = NULL;
     it = NULL;
-    i = lexems;
+    i = shell->lexer;
     while(i != NULL)
     {
         it = make_leaf(i);

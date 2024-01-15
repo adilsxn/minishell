@@ -14,7 +14,7 @@
 
 //TODO: TO BE DONE AT THE END OF THE PROJECT 
 
-int msh_exit(int return_code)
+int msh_exit(t_tool *shell)
 {
     if (return_code)
         exit(return_code);

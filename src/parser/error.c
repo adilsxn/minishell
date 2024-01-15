@@ -28,7 +28,7 @@ int	double_token_error(t_tool *tool)
 	else
 		ft_putstr_fd("\n", 2);
 	lst_clear(&tool->lexer);
-	reset_tool(tool);
+	//reset_tool(tool);
 	return (1);
 }
 
@@ -53,7 +53,7 @@ int	ft_error(int error, t_tool *tool)
 		ft_putstr_fd("infile: No such file or directory\n", 2);
 	else if (error == 8)
 		ft_putendl_fd("Path does not exist", 2);
-	reset_tool(tool);
+	//reset_tool(tool);
 	return (1);
 }
 

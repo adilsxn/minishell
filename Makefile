@@ -35,7 +35,7 @@ all: ${NAME}
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p ${OBJ_DIR}
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS) ${LDFLAGS}
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS)
 
 ${NAME}: ${OBJS} 
 	@echo "Compiling minishell"

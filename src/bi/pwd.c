@@ -13,9 +13,8 @@
 #include "../../inc/minishell.h"
 
 // TODO: adapt the func to the shell env(not created yet)
-int   msh_pwd(t_tool *tools, t_simple_cmd *args)
+int   msh_pwd(t_env *env)
 {
-    (void)args;
-    ft_putendl_fd(get_env(tools->our_env, "PWD")->value, 1);
+    ft_putendl_fd((char *)get_env(env, "PWD")->value, 1);
     return (EXIT_SUCCESS);
 }

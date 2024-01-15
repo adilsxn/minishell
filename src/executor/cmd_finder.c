@@ -65,7 +65,7 @@ char	*cmd_finder(t_tree *tree, t_env *env)
 	char	*path;
 	int		i;
 
-	paths = useful_paths(get_env(env, "PATH")->value);
+	paths = useful_paths((char *)get_env(env, "PATH")->value);
 	i = -1;
 	while (paths[++i])
 	{

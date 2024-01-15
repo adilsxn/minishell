@@ -67,16 +67,18 @@ static int real_export(char *input, t_env *env)
     return (valid == 0);
 }
 
-int msh_export(t_tool *tools, t_simple_cmd *args)
+int msh_export(t_env *env, char **args)
 {
+    int i;
     int ret_code;
 
+    i = 1;
     ret_code = 0;
-    while(*(args->str)  != NULL)
+    while(args[i]  = NULL)
     {
-        if (real_export( *(args->str), tools->our_env) != 0)
+        if (real_export( args[i], env) != 0)
             ret_code = 1;
-        (args->str)++;
+        i++;
     }
     return(ret_code);
 }

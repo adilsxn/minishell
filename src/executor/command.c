@@ -45,8 +45,8 @@ void exec_cmd(t_tree *tree, t_env *env)
     char **argv;
 
     if (builtin) //builtin
-        exec_bi(tree, env);
+        status = exec_bi(tree, env);
     else
-        exec_bin(tree, env);
+        status = exec_bin(tree, env);
     
 }

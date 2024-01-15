@@ -35,7 +35,16 @@ static int minishell_loop(t_tool *shell)
         if (len_word(i, input, &shell->lexer) == -1)
             return (-1);
     free(input);
-    parser(shell);
+    //expander called here
+    // t_lexer *k = shell->lexer;
+    // while (k != NULL)
+    // {
+    //     printf("%s\n", k->str);
+    //     k = k->next;
+    // }
+    //parser
+    //tree_exec
+    //reset_tool
 }
 
 int main (int ac, char **av, char **envp)
@@ -47,6 +56,7 @@ int main (int ac, char **av, char **envp)
         printf("No args accepted\n");
         exit(0);
     }
+    //init_tool
     init_env(envp, &shell.env);
     minishell_loop(&shell);
     return (0);

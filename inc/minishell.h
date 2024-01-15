@@ -17,6 +17,8 @@
 # include <readline/readline.h>
 #include <readline/history.h>
 # include <stddef.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -98,11 +100,11 @@ int del_env(t_env *env);
 //bi
 int msh_cd(char **args, t_env *env);
 int msh_echo(t_tool *tools);
-int msh_env(t_tool *tools);
+int msh_env(t_env *env);
 int msh_exit(t_tool *tools);
-int msh_export(t_tool *tools);
-int msh_pwd(t_tool *tools);
-int msh_unset(t_tool *tools);
+int msh_export(t_env *env, char **args);
+int msh_pwd(t_env *env);
+int msh_unset (t_env *env, char **args);
 
 
 //lexer
@@ -120,6 +122,7 @@ void				lst_clear(t_lexer **lst);
 
 //parser
 t_tree *make_leaf(t_lexer *lexem);
+void tree_print(t_tree *tree);
 t_tree *tree_insert(t_tree *tree, t_tree *it);
 bool is_complete(t_tree *tree);
 t_tree* parser(t_tool *shell);

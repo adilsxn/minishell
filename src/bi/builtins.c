@@ -13,21 +13,21 @@
 #include "../../inc/minishell.h"
 
 
-void *builtins(t_tool *tools, t_simple_cmd *args)
+void *builtins(t_env *env, char **args)
 {
-    if (ft_strequ(args->str[0], "echo"))
+    if (ft_strequ(*args, "echo"))
         return (msh_echo(tools, args));
-    else if (ft_strequ(args->str[0], "pwd"))
-        return (msh_pwd(tools, args));
-    else if (ft_strequ(args->str[0], "env"))
-        return (msh_env(tools, args));
-    else if (ft_strequ(args->str[0], "export"))
-        return (msh_export(tools, args));
-    else if (ft_strequ(args->str[0], "unset"))
-        return (msh_unset(tools, args));
-    else if (ft_strequ(args->str[0], "exit"))
+    else if (ft_strequ(*args, "pwd"))
+        return (msh_pwd(env));
+    else if (ft_strequ(*args, "env"))
+        return (msh_env(env));
+    else if (ft_strequ(*args, "export"))
+        return (msh_export(env, args));
+    else if (ft_strequ(*args, "unset"))
+        return (msh_unset(env, args));
+    else if (ft_strequ(*args, "exit"))
         return (msh_exit(tools, args));
-    else if (ft_strequ(args->str[0], "cd"))
+    else if (ft_strequ(*args, "cd"))
         return (msh_cd(tools, args));
     else
         return (NULL);
