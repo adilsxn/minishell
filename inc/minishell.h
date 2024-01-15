@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/14 00:28:53 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/14 23:12:21 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ typedef struct s_tool
 	char					*arg;
 	t_lexer					*lexer;
 	t_tree					*tree;
-	char					**env;
-	bool					reset;
-	t_env					*our_env;
+	t_env					*env;
 }t_tool;
 
 
@@ -98,7 +96,7 @@ t_env *get_env(t_env *env, const char *key);
 int del_env(t_env *env);
 
 //bi
-int msh_cd(t_tool *tools);
+int msh_cd(char **args, t_env *env);
 int msh_echo(t_tool *tools);
 int msh_env(t_tool *tools);
 int msh_exit(t_tool *tools);

@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 # include "../../inc/minishell.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <unistd.h>
 
 static bool is_syntax_mixed(t_tree *tree)
 {
@@ -74,7 +71,7 @@ void tree_exec(t_tree *tree, t_env *env)
     if (is_complete(tree) == false)
         printf("Syntax error\n");
     else
-        tree->f(tree, env);
+        tree->fn(tree, env);
     rollback(fd[0], fd[1]);
 }
 

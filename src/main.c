@@ -6,13 +6,17 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/14 19:50:31 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/14 22:55:08 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
 #include <stdlib.h>
+static int exit_shell (t_tool *shell)
+{
 
+    exit (EXIT_SUCCESS);
+}
 static int minishell_loop(t_tool *shell)
 {
     int i;
@@ -34,7 +38,7 @@ static int minishell_loop(t_tool *shell)
     parser(shell);
 }
 
-int main (int ac, char **av, char **env)
+int main (int ac, char **av, char **envp)
 {
     t_tool shell;
 
@@ -43,8 +47,7 @@ int main (int ac, char **av, char **env)
         printf("No args accepted\n");
         exit(0);
     }
-    shell.env = ft_arrdup(env);
-    init_env(env, &shell.our_env);
+    init_env(envp, &shell.env);
     minishell_loop(&shell);
     return (0);
 }

@@ -21,11 +21,11 @@ static void assign_type(t_order type, t_tree *it, bool hdflag)
 
     it->kind = type;
     if (type == RDR)
-        it->f = exec_rdr;
+        it->fn = exec_rdr;
     else if (type == PPE)
-        it->f = exec_ppe;
+        it->fn = exec_ppe;
     else 
-        it->f = exec_cmd;
+        it->fn = exec_cmd;
     if (hdflag == true)
         it->heredoc = true;
     else
@@ -59,7 +59,7 @@ t_tree *make_leaf(t_lexer *lexem)
 }
 
 
-t_tree* parser(t_tool *shell)
+t_tree* parser(t_tool *shell, t_lexer *lexems)
 {
     t_tree *tree;
     t_tree *it;
@@ -67,7 +67,7 @@ t_tree* parser(t_tool *shell)
 
     tree = NULL;
     it = NULL;
-    i = shell->lexer;
+    i = lexems;
     while(i != NULL)
     {
         it = make_leaf(i);

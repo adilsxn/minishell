@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/14 21:35:27 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/14 23:17:23 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int msh_echo(char **args)
 
     i = 1;
     nflag = 1;
-    if (args[i] != NULL && (ft_strequ(args->str[i][0], "-n") == 0))
+    if (args[i] != NULL)
+    {
+        ft_putchar_fd('\n', 1);
+        return (EXIT_SUCCESS);
+    }
+    if (ft_strequ(args[1], "-n") == 0))
     {
         nflag = 0;
         i++;
