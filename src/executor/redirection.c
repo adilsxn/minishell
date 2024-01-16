@@ -50,6 +50,7 @@ static void hdoc(t_tree *tree, t_env *env)
     int fd_hd;
     char *input;
 
+    (void)env;
     fd_hd = open(".tmp_hd", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
     if (fd_hd == -1)
         printf("Error on hdoc\n");

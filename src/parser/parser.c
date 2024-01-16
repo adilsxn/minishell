@@ -83,6 +83,6 @@ t_tree* parser(t_lexer *lexems)
         tree = tree_insert(tree, it);
         i = i->next;
     }
-    tree->roo  = true;
+    tree->root  = true;
     return (tree);
 }

@@ -11,13 +11,8 @@
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
-#include <stdlib.h>
-static int exit_shell (t_tool *shell)
-{
 
-    exit (EXIT_SUCCESS);
-}
-static int minishell_loop(t_tool *shell, t_lexer *list)
+static void  minishell_loop(t_tool *shell)
 {
     int i;
     char *input;
@@ -31,9 +26,9 @@ static int minishell_loop(t_tool *shell, t_lexer *list)
         exit (EXIT_SUCCESS);
     }
     add_history(input);
-    while (++i < ft_strlen(input))
+    while ((size_t)++i < ft_strlen(input))
         if (len_word(i, input, &shell->lexer) == -1)
-            return (-1);
+            return ;
     free(input);
     //expander called here
     // t_lexer *k = shell->lexer;
@@ -42,9 +37,8 @@ static int minishell_loop(t_tool *shell, t_lexer *list)
     //     printf("%s\n", k->str);
     //     k = k->next;
     // }
-    shell->tree = parser(list);
+    shell->tree = parser(shell->lexer);
     tree_exec(shell->tree, shell->env);
-    exit(0);
     //reset_tool
 }
 

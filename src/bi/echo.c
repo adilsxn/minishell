@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void printerx(int i, char **str, int fd)
+static void printerx(int i, char **str)
 {
     while(str[i])
         ft_putstr_fd(str[i++], 1);
@@ -35,7 +35,7 @@ int msh_echo(char **args)
     }
     if (ft_strequ(args[1], "-n") == 0)
         nflag = 0;
-    printerx(i, args, 1);
+    printerx(i, args);
     if (nflag)
         ft_putstr_fd("\n", 1);
     return (EXIT_SUCCESS);

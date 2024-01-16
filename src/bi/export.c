@@ -53,14 +53,14 @@ static int real_export(char *input, t_env *env)
         perror("export: invalid key");
         return (1);
     }
-    key = ft_substr(input, 0, sign - env);
+    key = ft_substr(input, 0, sign - input);
     valid =  valid_key((char *)key);
     if (valid == 1)
         perror("export: invalid key");
     else
     {
         data = ft_strdup(sign + 1);
-        set_env(env, key, data);
+        set_env(&env, key, data);
         free((void *) data);
     }
     free((void *)key);
@@ -74,7 +74,7 @@ int msh_export(t_env *env, char **args)
 
     i = 1;
     ret_code = 0;
-    while(args[i]  = NULL)
+    while(args[i] != NULL)
     {
         if (real_export( args[i], env) != 0)
             ret_code = 1;

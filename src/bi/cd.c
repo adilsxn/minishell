@@ -27,7 +27,6 @@ static int update_env(t_env *env)
 int msh_cd(char **args, t_env *env)
 {
     const char *path;
-    char *curr_dir;
     
     if (args[1] == NULL)
             path = get_env(env, "HOME")->value;
