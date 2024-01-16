@@ -74,7 +74,7 @@ static void rollback(int fd0, int fd1)
     close(fd1);
 }
 
-void tree_exec(t_tree *tree, t_env *env)
+void tree_exec(t_tool *tool)
 {
     int fd[2];
 

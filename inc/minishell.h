@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/15 20:35:00 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/16 10:54:23 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_tree
     bool   heredoc;
     char  *token;
     t_order kind;
-    void (*fn)(struct s_tree *tree, t_env *env);
+    void (*fn)(t_tool *tool);
     struct s_tree *left;
     struct s_tree *right;
 } t_tree;
@@ -101,7 +101,7 @@ int del_env(t_env *env);
 int msh_cd(char **args, t_env *env);
 int msh_echo(t_tool *tools);
 int msh_env(t_env *env);
-int msh_exit(t_tool *tools);
+int msh_exit(t_tool *tool);
 int msh_export(t_env *env, char **args);
 int msh_pwd(t_env *env);
 int msh_unset (t_env *env, char **args);
@@ -122,6 +122,7 @@ void				lst_clear(t_lexer **lst);
 
 //parser
 t_tree *make_leaf(t_lexer *lexem);
+void tree_delete(t_tree *tree);
 void tree_print(t_tree *tree);
 t_tree *tree_insert(t_tree *tree, t_tree *it);
 bool is_complete(t_tree *tree);
@@ -148,10 +149,10 @@ char				*expander_str(t_tool *tool, char *str);
 //minishell loop
 char **build_av(t_tree *tree);
 char	*cmd_finder(t_tree *tree, t_env *env);
-void exec_rdr(t_tree *tree, t_env *env);
-void exec_pipe(t_tree *tree, t_env *env);
-void tree_exec(t_tree *tree, t_env *env);
-void exec_cmd(t_tree *tree, t_env *env);
+void exec_rdr(t_tool *tool);
+void exec_pipe(t_tool *tool);
+void tree_exec(t_tool *tool);
+void exec_cmd(t_tool *tool);
 
 
 #endif

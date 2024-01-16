@@ -57,6 +57,14 @@ t_tree *make_leaf(t_lexer *lexem)
     return (it);
 }
 
+void tree_delete(t_tree *tree)
+{
+    if (tree == NULL)
+        return ;
+    tree_delete(tree->left);
+    tree_delete(tree->right);
+    free(tree);
+}
 
 t_tree* parser(t_tool *shell)
 {
