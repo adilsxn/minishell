@@ -3,19 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
+#    By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/01/15 20:34:05 by matilde          ###   ########.fr        #
+#    Updated: 2024/01/16 17:12:49 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c tree_utils.c   \
 			 tree_utils_2.c parser.c error.c remove.c lexer_utils.c lexer_list.c       \
 			 cmd_finder.c cmd_args.c command.c pipe.c redirection.c  \
-			 pwd.c echo.c unset.c exit.c export.c cd.c builtins.c main.c sngl_child.c  \
-			 sgnl_hd_parent.c sgnl_parent.c sgnl_hd_child.c setup_sgnl.c sgnl_prompt.c \
-			 expand_utilspt2.c expand_utils.c expand.c main.c
+			 pwd.c echo.c unset.c exit.c export.c cd.c builtins.c main.c  \
+			 setup_sgnl.c  expand_utilspt2.c expand_utils.c expand.c main.c
 
 #Add any missing folder containing a .c to the vpath
 vpath %.c src/ src/signals src/executor src/expander src/bi src/lexer src/parser  src/env

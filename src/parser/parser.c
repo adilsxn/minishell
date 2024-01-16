@@ -12,18 +12,17 @@
 
 #include "../../inc/minishell.h"
 
-
 static void assign_type(t_order type, t_tree *it, bool hdflag)
 {
     extern void exec_rdr(t_tree *tree, t_env* env);
-    extern void exec_ppe(t_tree *tree, t_env* env);    
+    extern void exec_pipe(t_tree *tree, t_env* env);    
     extern void exec_cmd(t_tree *tree, t_env* env);
 
     it->kind = type;
     if (type == RDR)
         it->fn = exec_rdr;
     else if (type == PPE)
-        it->fn = exec_ppe;
+        it->fn = exec_pipe;
     else 
         it->fn = exec_cmd;
     if (hdflag == true)
@@ -31,7 +30,6 @@ static void assign_type(t_order type, t_tree *it, bool hdflag)
     else
         it->heredoc = false;
 }
-
 
 t_tree *make_leaf(t_lexer *lexem)
 {

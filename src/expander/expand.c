@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/15 20:36:23 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/16 17:18:46 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //question mark function and loop_if_dollar change the tmp
 //i increments after these functions or not if the functions return 0
 //i increments after assigning str[i] to tmp2 and then update tmp
-char	*check_dollar(t_tool *tool, char *str)
+char	*check_dollar(t_env *env, char *str)
 {
 	int		i;
 	char	*tmp;
@@ -31,7 +31,7 @@ char	*check_dollar(t_tool *tool, char *str)
 			i += question_mark(&tmp);
 		else if (str[i] == '$' && (str[i + 1] != ' ' && (str[i + 1] != '"' \
 					|| str[i + 2] != '\0')) && str[i + 1] != '\0')
-			i += loop_dollar_sign(tool, str, &tmp, i);
+			i += loop_dollar_sign(env, str, tmp, i);
 		else
 		{
 			tmp2 = char_to_str(str[i++]);
@@ -51,32 +51,18 @@ char	*check_dollar(t_tool *tool, char *str)
 //minus j to be the len after the dollar and before the equal sign
 //atribute the value of the env(key) to tmp transforming it to its correspondent
 //return an int to increment the i in the original function
-int	loop_dollar_sign(t_tool *tool, char *str, char **tmp, int j)
+int	loop_dollar_sign(t_env *env, char *str, char *tmp, int j)
 {
-	int		i;
 	int		final;
-	char	*tmp2;
-	char	*tmp3;
-
-	i = 0;
+	
 	final = 0;
-	while (tool->env[i])
-	{
-		if (ft_strncmp(str + j + 1, tool->env[i], \
-			equal_sign(tool->env[i]) - 1) == 0 && after_dollar_len(str, j) \
-			- j == (int)equal_sign(tool->env[i]))
-		{
-			tmp2 = ft_strdup(tool->env[i] + equal_sign(tool->env[i]));
-			tmp3 = ft_strjoin(*tmp, tmp2);
-			free(*tmp);
-			*tmp = tmp3;
-			free(tmp2);
-			final = equal_sign(tool->env[i]);
-		}
-		i++;
-	}
+	env = get_env(env, str + j + 1);
+	if (env->key)
+		final = ft_strlen(env->key) + 1;
 	if (final == 0)
-		final = after_dollar_len(str, j) - j;
+		final = ft_strlen(env->value);
+	free(tmp);
+	tmp = (char *)env->value;
 	return (final);
 }
 
@@ -84,33 +70,7 @@ int	loop_dollar_sign(t_tool *tool, char *str, char **tmp, int j)
 //started from the current shell session
 //str is already broken into diffent cmd
 //quotes are not removed for export command
-char	**expander(t_tool *tool, char **str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = NULL;
-	while (str[i] != NULL)
-	{
-		if (str[i][dollar_sign(str[i]) - 2] != '\'' && dollar_sign(str[i]) != 0
-			&& str[i][dollar_sign(str[i])] != '\0')
-		{
-			tmp = check_dollar(tool, str[i]);
-			free(str[i]);
-			str[i] = tmp;
-		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
-		{
-			str[i] = del_quote(str[i], '\"');
-			str[i] = del_quote(str[i], '\'');
-		}
-		i++;
-	}
-	return (str);
-}
-
-char	*expander_str(t_tool *tool, char *str)
+char	*expander(t_env *env, char *str)
 {
 	char	*tmp;
 
@@ -118,28 +78,11 @@ char	*expander_str(t_tool *tool, char *str)
 	if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
 		&& str[dollar_sign(str)] != '\0')
 	{
-		tmp = check_dollar(tool, str);
+		tmp = check_dollar(env, str);
 		free(str);
 		str = tmp;
 	}
 	str = del_quote(str, '\"');
 	str = del_quote(str, '\'');
 	return (str);
-}
-
-//expansion + redirection
-t_simple_cmd	*call_expander(t_tool *tool, t_simple_cmd *cmd)
-{
-	t_lexer	*start;
-
-	cmd->str = expander(tool, cmd->str);
-	start = cmd->redirect;
-	while (cmd->redirect)
-	{
-		if (cmd->redirect->token != LESS_LESS)
-			cmd->redirect->str = expander_str(tool, cmd->redirect->str);
-		cmd->redirect = cmd->redirect->next;
-	}
-	cmd->redirect = start;
-	return (cmd);
 }

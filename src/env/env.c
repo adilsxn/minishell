@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int env(t_env *env)
+int msh_env(t_env *env)
 {
     t_env *iter;
     

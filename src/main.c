@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/16 10:50:05 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:38:43 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ static void  minishell_loop(t_tool *shell)
     input = ft_strtrim(input, " ");
     if (!input || !*input)
     {
-        ft_putendl_fd("exit", STDOUT_FILENO);
-        exit (EXIT_SUCCESS);
+        ft_putendl_fd("exit", 1);
+        exit (0);
     }
     add_history(input);
     while ((size_t)++i < ft_strlen(input))
         if (len_word(i, input, &shell->lexer) == -1)
             return ;
     free(input);
-    //expander called here
+    while (shell->lexer) 
+    {
+        expander(shell->env, shell->lexer->str);
+        printf("%s", shell->lexer->str);
+        shell->lexer->next = shell->lexer->next;
+    }
     // t_lexer *k = shell->lexer;
     // while (k != NULL)
     // {
@@ -39,13 +44,14 @@ static void  minishell_loop(t_tool *shell)
     // }
     shell->tree = parser(shell->lexer);
     tree_exec(shell->tree, shell->env);
-    //reset_tool
+    //reset_tool();
 }
 
 int main (int ac, char **av, char **envp)
 {
     t_tool shell;
-
+    
+    shell = (t_tool){NULL, NULL, NULL, NULL};
     if (ac != 1 || av[1])
     {
         printf("No args accepted\n");
