@@ -23,7 +23,7 @@ void tree_print(t_tree *tree)
     perror("\n");
     while (++i < 5)
         perror("-");
-    perror("%s\n", tree->token);
+    printf("%s\n", tree->token);
     tree_print(tree->left);
 }
 static bool is_syntax_mixed(t_tree *tree)
