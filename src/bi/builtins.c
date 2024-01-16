@@ -13,22 +13,24 @@
 #include "../../inc/minishell.h"
 
 
-void *builtins(t_env *env, char **args)
+int exec_bi(char **argv, t_tree *tree, t_env *env)
 {
-    if (ft_strequ(*args, "echo"))
-        return (msh_echo(tools, args));
-    else if (ft_strequ(*args, "pwd"))
-        return (msh_pwd(env));
-    else if (ft_strequ(*args, "env"))
-        return (msh_env(env));
-    else if (ft_strequ(*args, "export"))
-        return (msh_export(env, args));
-    else if (ft_strequ(*args, "unset"))
-        return (msh_unset(env, args));
-    else if (ft_strequ(*args, "exit"))
-        return (msh_exit(tools, args));
-    else if (ft_strequ(*args, "cd"))
-        return (msh_cd(tools, args));
-    else
-        return (NULL);
+    int ret;
+
+    ret = 0;
+    if (ft_strequ(*argv, "echo"))
+        ret = msh_echo(argv);
+    else if (ft_strequ(*argv, "pwd"))
+         ret = msh_pwd(env);
+    else if (ft_strequ(*argv, "env"))
+         ret = msh_env(env);
+    else if (ft_strequ(*argv, "export"))
+         ret = msh_export(env, argv);
+    else if (ft_strequ(*argv, "unset"))
+         ret = msh_unset(env, argv);
+    else if (ft_strequ(*argv, "exit"))
+         ret = msh_exit(tree, env);
+    else if (ft_strequ(*argv, "cd"))
+         ret = msh_cd(argv, env);
+    return (ret);
 }

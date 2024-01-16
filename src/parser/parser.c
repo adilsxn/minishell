@@ -66,7 +66,7 @@ void tree_delete(t_tree *tree)
     free(tree);
 }
 
-t_tree* parser(t_tool *shell)
+t_tree* parser(t_lexer *lexems)
 {
     t_tree *tree;
     t_tree *it;
@@ -74,15 +74,15 @@ t_tree* parser(t_tool *shell)
 
     tree = NULL;
     it = NULL;
-    i = shell->lexer;
+    i = lexems;
     while(i != NULL)
     {
         it = make_leaf(i);
         if (it == NULL)
-            printf("Error: Parsing");
+            perror("Error: Parsing");
         tree = tree_insert(tree, it);
         i = i->next;
     }
-    tree->root = true;
+    tree->roo  = true;
     return (tree);
 }

@@ -73,7 +73,7 @@ typedef struct s_tree
     bool   heredoc;
     char  *token;
     t_order kind;
-    void (*fn)(t_tool *tool);
+    void (*fn)(struct s_tree *tree, t_env *env);
     struct s_tree *left;
     struct s_tree *right;
 } t_tree;
@@ -99,12 +99,13 @@ int del_env(t_env *env);
 
 //bi
 int msh_cd(char **args, t_env *env);
-int msh_echo(t_tool *tools);
+int msh_echo(char **args);
 int msh_env(t_env *env);
-int msh_exit(t_tool *tool);
+int msh_exit(t_tree *tree, t_env *env);
 int msh_export(t_env *env, char **args);
 int msh_pwd(t_env *env);
 int msh_unset (t_env *env, char **args);
+int exec_bi(char **argv, t_tree *tree, t_env *env);
 
 
 //lexer
@@ -126,7 +127,7 @@ void tree_delete(t_tree *tree);
 void tree_print(t_tree *tree);
 t_tree *tree_insert(t_tree *tree, t_tree *it);
 bool is_complete(t_tree *tree);
-t_tree* parser(t_tool *shell);
+t_tree* parser(t_lexer *lexems);
 
 
 
@@ -149,10 +150,10 @@ char				*expander_str(t_tool *tool, char *str);
 //minishell loop
 char **build_av(t_tree *tree);
 char	*cmd_finder(t_tree *tree, t_env *env);
-void exec_rdr(t_tool *tool);
-void exec_pipe(t_tool *tool);
-void tree_exec(t_tool *tool);
-void exec_cmd(t_tool *tool);
+void exec_rdr(t_tree *tree, t_env *env);
+void exec_pipe(t_tree *tree, t_env *env);
+void tree_exec(t_tree *tree, t_env *env);
+void exec_cmd(t_tree *tree, t_env *env);
 
 
 #endif

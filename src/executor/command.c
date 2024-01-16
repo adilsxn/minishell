@@ -11,31 +11,35 @@
 /* ************************************************************************** */
 
 # include "../../inc/minishell.h"
+#include <sys/wait.h>
 
-static exec_bi(t_tree *tree, t_env *env);
-static exec_bin(t_tree *tree, t_env *env)
+static int exec_bin(char **av, t_tree *tree, t_env *env)
 {
     pid_t pid;
     int sts;
+    int ret;
     char *cmdpath;
-    char **argv;
 
+    sts = 0;
+    ret = 0;
     cmdpath = cmd_finder(tree, env);
-    argv = build_av(tree);
+    if (cmdpath == NULL)
+        perror("command not found\n");
     pid = fork();
     if (pid == -1)
-        ft_putstr_fd("Error: fork failed\n", 2);
+        perror("Error: fork failed\n");
     else if (pid == 0)
     {
-        if (execve(cmdpath, argv, NULL) == -1)
-            ft_putstr_fd("Error: execve failed\n", 2);
+        if (execve(cmdpath, av, NULL) == -1)
+            perror("Error: execve failed\n");
+        free(cmdpath);
     }
+    waitpid(pid, &sts, 0);
+    if (WIFEXITED(sts))
+        ret = WEXITSTATUS(sts);
     else
-    {
-        waitpid(pid, &sts, 0);
-        if (WIFEXITED(sts))
-            printf("Child %d exited with code %d\n", pid, WEXITSTATUS(sts));
-    }   
+        ret = WIFSIGNALED(sts);
+    return (ret);
 }
 
 void exec_cmd(t_tree *tree, t_env *env)
@@ -44,9 +48,11 @@ void exec_cmd(t_tree *tree, t_env *env)
     char *cmd;
     char **argv;
 
+    argv = build_av(tree);
+    status = 0;
     if (builtin) //builtin
-        status = exec_bi(tree, env);
+        status = exec_bi(argv, tree, env);
     else
-        status = exec_bin(tree, env);
-    
+        status = exec_bin(argv, tree, env);
+   set_env(&env, "?", ft_itoa(status));
 }

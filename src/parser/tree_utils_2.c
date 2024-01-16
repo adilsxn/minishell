@@ -20,10 +20,10 @@ void tree_print(t_tree *tree)
     if (tree == NULL)
         return ;
     tree_print(tree->left);
-    printf("\n");
+    perror("\n");
     while (++i < 5)
-        printf("-");
-    printf("%s\n", tree->token);
+        perror("-");
+    perror("%s\n", tree->token);
     tree_print(tree->left);
 }
 static bool is_syntax_mixed(t_tree *tree)
@@ -66,22 +66,22 @@ static void rollback(int fd0, int fd1)
 
     ret = dup2(fd0, STDIN_FILENO);
     if (ret == -1)
-        printf("Error while returning fd's");
+        perror("Error while returning fd's");
     ret = dup2(fd1, STDOUT_FILENO);
     if (ret == -1)
-        printf("Error while returning fd's");
+        perror("Error while returning fd's");
     close(fd0);
     close(fd1);
 }
 
-void tree_exec(t_tool *tool)
+void tree_exec(t_tree *tree, t_env *env)
 {
     int fd[2];
 
     fd[0] = dup(STDIN_FILENO);
     fd[1] = dup(STDOUT_FILENO);
     if (fd[0] == -1 || fd[1] == -1)
-        printf("Error while duping std fd's");
+        perror("Error: while duping std fd's");
     if (is_complete(tree) == false)
         perror("Syntax error\n");
     else

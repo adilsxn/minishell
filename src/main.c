@@ -17,7 +17,7 @@ static int exit_shell (t_tool *shell)
 
     exit (EXIT_SUCCESS);
 }
-static int minishell_loop(t_tool *shell)
+static int minishell_loop(t_tool *shell, t_lexer *list)
 {
     int i;
     char *input;
@@ -42,8 +42,9 @@ static int minishell_loop(t_tool *shell)
     //     printf("%s\n", k->str);
     //     k = k->next;
     // }
-    //parser
-    //tree_exec
+    shell->tree = parser(list);
+    tree_exec(shell->tree, shell->env);
+    exit(0);
     //reset_tool
 }
 

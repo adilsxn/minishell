@@ -14,10 +14,9 @@
 
 //TODO: TO BE DONE AT THE END OF THE PROJECT 
 
-int msh_exit(t_tool *shell)
+int msh_exit(t_tree *tree, t_env *env)
 {
-    if (return_code)
-        exit(return_code);
-    else
-        exit(0);
+    tree_delete(tree);
+    del_env(env);
+    return (EXIT_SUCCESS);
 }

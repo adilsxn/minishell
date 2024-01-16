@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <string.h>
 
 /*Code adapted from github.com/adilsxn/pipex*/
 
@@ -65,8 +66,10 @@ char	*cmd_finder(t_tree *tree, t_env *env)
 	char	*path;
 	int		i;
 
-	paths = useful_paths((char *)get_env(env, "PATH")->value);
 	i = -1;
+    if (ft_strchr(tree->token, '/') != NULL)
+        return (tree->token);
+    paths = useful_paths((char *)get_env(env, "PATH")->value);
 	while (paths[++i])
 	{
 		path = ft_strjoin(paths[i], tree->token);
