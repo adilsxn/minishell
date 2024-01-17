@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/17 13:32:27 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:47:09 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void  minishell_loop(t_tool *shell)
 	free(input);
 	while (shell->lexer) 
 	{
-		expander(shell->env, shell->lexer->str);
+		shell->lexer->str = expander(shell->env, shell->lexer->str);
 		printf("expander: %s\n", shell->lexer->str);
 		shell->lexer = shell->lexer->next;
 	}
@@ -75,7 +75,7 @@ int main(int ac, char **av, char **envp)
 		exit(0);
 	}
 	//init_tool
-	setup_sgnl();
+	//setup_sgnl();
 	init_env(envp, &shell.env);
 	minishell_loop(&shell);
 	return (0);

@@ -21,9 +21,9 @@ t_env *get_env(t_env *env, const char *key)
     {
         tmp = tmp->next;
     }
-    if (!ft_strncmp(key, "USER", 6))
-    {
-        printf("env2: %s\n", tmp->key);
-    }
+    // if (!ft_strncmp(key, "USER", 6))
+    // {
+    //     printf("env2: %s\n", tmp->key);
+    // }
     return (tmp);
 }
