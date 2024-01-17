@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/17 13:47:09 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:41:26 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ static void  minishell_loop(t_tool *shell)
 	}
 	shell->lexer = lexi;
 	free(input);
-	while (shell->lexer) 
+	while (shell->lexer)
 	{
-		shell->lexer->str = expander(shell->env, shell->lexer->str);
-		printf("expander: %s\n", shell->lexer->str);
+		if (shell->lexer->str)
+		{
+			shell->lexer->str = expander(shell->env, shell->lexer->str);
+			printf("expander: %s\n", shell->lexer->str);
+		}
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
