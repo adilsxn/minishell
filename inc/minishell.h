@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/16 17:14:28 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:34:19 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
 void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
+int					ft_error(int error, t_tool *tool);
 
 //parser
 t_tree 				*make_leaf(t_lexer *lexem);
@@ -154,6 +155,11 @@ void 				exec_rdr(t_tree *tree, t_env *env);
 void 				exec_pipe(t_tree *tree, t_env *env);
 void 				tree_exec(t_tree *tree, t_env *env);
 void 				exec_cmd(t_tree *tree, t_env *env);
+
+void	setup_sgnl(void);
+
+
+
 
 
 

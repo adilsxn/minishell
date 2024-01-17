@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/16 17:18:46 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:25:12 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@ char	*check_dollar(t_env *env, char *str)
 	return (tmp);
 }
 
+char *get_key(char *str)
+{
+	int i;
+	char *begin;
+
+	begin = ft_strchr(str, '$');
+	if (begin != NULL && *begin == '$' ) 
+		begin++;
+	i = 0;
+	while(begin[i] != '\0' && !ft_isspace(begin[i]))
+		i++;
+	begin[i] = '\0';
+	return (ft_substr(begin, 0, i));
+}
+
 //after the dollar sign
 //env=value
 //comparing env with str, str[i] + 1 so its not $
@@ -54,9 +69,12 @@ char	*check_dollar(t_env *env, char *str)
 int	loop_dollar_sign(t_env *env, char *str, char *tmp, int j)
 {
 	int		final;
-	
+	(void)	j;
+
+
 	final = 0;
-	env = get_env(env, str + j + 1);
+
+	env = get_env(env, get_key(str));
 	if (env->key)
 		final = ft_strlen(env->key) + 1;
 	if (final == 0)
