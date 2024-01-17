@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/17 14:36:33 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/17 16:30:02 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ char *get_key(char *str)
 	begin = ft_strchr(str, '$');
 	if (begin == NULL)
 		return (NULL);
-	if (begin != NULL && *begin == '$' ) 
+	if (begin != NULL && *begin == '$')
 		begin++;
 	i = 0;
 	while(begin[i] != '\0' && !ft_isspace(begin[i]))
 		i++;
+	if (begin[i - 1] == '"')
+		i--;
 	begin[i] = '\0';
 	return (ft_substr(begin, 0, i));
 }
@@ -92,15 +94,18 @@ char	*expander(t_env *env, char *str)
 	if (tmp == NULL)
 		return (NULL);
 	env = get_env(env, get_key(str));
+	if (env == NULL)
+		return (NULL);
 	free(str);
 	str = (char *)env->value;
 	return (str);
 }
 
 //char	*tmp;
+// if (str[dollar_sign(str) - 2] == '\'' && dollar_sign(str) == 0
+// 	&& str[dollar_sign(str)] == '\0')
+// 	return (NULL);
 // tmp = NULL;
-// if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
-// 	&& str[dollar_sign(str)] != '\0')
 // {
 // 	tmp = check_dollar(env, str);
 // 	free(str);
