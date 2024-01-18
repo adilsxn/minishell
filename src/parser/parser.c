@@ -49,7 +49,8 @@ t_tree *make_leaf(t_lexer *lexem)
     else
         assign_type(CMD, it, false);
     it->root = false;
-    it->token = lexem->str;
+    if (lexem->str != NULL)
+        it->token = ft_strdup(lexem->str);
     it->left = NULL;
     it->right = NULL;
     return (it);

@@ -22,13 +22,13 @@ static pid_t out_proc(t_tree *tree, t_env *env, int fd[2])
 
     pid = fork();
     if (pid == -1)
-        printf("error: spawning the out process\n");
+        perror("error: spawning the out process ->");
     if (pid == 0)
     {
         /*TODO: add signal handler*/
         close(fd[0]);
         if (dup2(fd[1], STDOUT_FILENO) == -1)
-            printf("error\n");
+            perror("error ->");
         close(fd[1]);
         tree->fn(tree, env);
         exit(0);
@@ -43,13 +43,13 @@ static pid_t in_proc(t_tree *tree, t_env *env, int fd[2])
 
     pid = fork();
     if (pid == -1)
-        printf("error: spawning the in process\n");
+        perror("error: spawning the out process");
     if (pid == 0)
     {
         /*TODO: add signal handler*/
         close(fd[1]);
         if (dup2(fd[0], STDIN_FILENO) == -1)
-            printf("error\n");
+            perror("error ->");
         close(fd[0]);
         tree->fn(tree, env);
         exit(0);
@@ -63,11 +63,11 @@ void exec_pipe(t_tree *tree, t_env *env)
     pid_t child[2];
 
     if (pipe(fd) == -1)
-        printf("Error: while opening pipes");
-    child[0] = out_proc(tree, env, fd);
+        perror("Error: while opening pipes ->");
+    child[0] = out_proc(tree->right, env, fd);
     waitpid(child[0], NULL, 0);
     close(fd[1]);
-    child[1] = in_proc(tree, env, fd);
+    child[1] = in_proc(tree->left, env, fd);
     waitpid(child[1], NULL, 0);
     close(fd[0]);
     /*TODO: Add signal handler for projects*/

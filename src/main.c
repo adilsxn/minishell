@@ -16,7 +16,7 @@ static void  minishell_loop(t_tool *shell)
 {
 	int i;
 	char *input;
-	t_lexer *lexi = NULL;
+	// t_lexer *lexi = NULL;
 
 	i = -1;
 	input = readline("minishell> ");
@@ -36,14 +36,14 @@ static void  minishell_loop(t_tool *shell)
 			return ;
 		}
 	}
-	lexi = shell->lexer;
+    free(input);
+	/* lexi = shell->lexer;
 	while (shell->lexer)
 	{
 		printf("lexer: %s\n", shell->lexer->str);
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
-	free(input);
 	while (shell->lexer)
 	{
 		if (shell->lexer->str)
@@ -60,9 +60,7 @@ static void  minishell_loop(t_tool *shell)
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
-
-
-	
+ */
 	// t_lexer *k = shell->lexer;
 	// while (k != NULL)
 	// {

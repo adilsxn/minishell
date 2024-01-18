@@ -18,7 +18,7 @@ static void rdir_o(t_tree *tree)
 
     fd_o = open(tree->left->token, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
         if (fd_o == -1)
-            printf("Error while opening outfile\n");
+            perror("Error while opening outfile\n");
     dup2(fd_o, STDOUT_FILENO);
     close(fd_o);
 }
@@ -29,7 +29,7 @@ static void rdir_i(t_tree *tree)
 
     fd_i = open(tree->left->token, O_RDONLY);
         if (fd_i == -1)
-            printf("Error while opening outfile\n");
+            perror("Error while opening outfile\n");
     dup2(fd_i, STDIN_FILENO);
     close(fd_i);
 }
@@ -40,7 +40,7 @@ static void appnd(t_tree *tree)
 
     fd_a = open(tree->left->token, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
     if (fd_a == -1)
-        printf("Error while appending outfile\n");
+        perror("Error while appending outfile\n");
     dup2(fd_a, STDOUT_FILENO);
     close(fd_a);
 }
@@ -53,19 +53,19 @@ static void hdoc(t_tree *tree, t_env *env)
     (void)env;
     fd_hd = open(".tmp_hd", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
     if (fd_hd == -1)
-        printf("Error on hdoc\n");
+        perror("Error on hdoc\n");
     while (true)
     {
         input = readline("heredoc> ");
         if (!input || !ft_strncmp(input, tree->left->token, FOPEN_MAX))
             break ;
-        expander(env, input);
+        //expander(env, input);
     }
     free(input);
     close(fd_hd);
     fd_hd = open(".tmp_hd", O_RDONLY, S_IRWXU);
     if (fd_hd == -1)
-        printf("Error on hdoc\n");
+        perror("Error on hdoc\n");
     dup2(fd_hd, STDIN_FILENO);
     close(fd_hd);
 }
