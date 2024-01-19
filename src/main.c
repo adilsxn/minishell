@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/17 16:29:23 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:37:18 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void  minishell_loop(t_tool *shell)
 {
 	int i;
 	char *input;
-	// t_lexer *lexi = NULL;
+	t_lexer *lexi = NULL;
 
 	i = -1;
 	input = readline("minishell> ");
@@ -37,7 +37,7 @@ static void  minishell_loop(t_tool *shell)
 		}
 	}
     free(input);
-	/* lexi = shell->lexer;
+	lexi = shell->lexer;
 	while (shell->lexer)
 	{
 		printf("lexer: %s\n", shell->lexer->str);
@@ -53,14 +53,19 @@ static void  minishell_loop(t_tool *shell)
 				if (shell->lexer->str[0] != 39 && shell->lexer->str[ft_strlen(shell->lexer->str) - 1] != 39)
 				{
 					shell->lexer->str = expander(shell->env, shell->lexer->str);
+					shell->lexer->str = del_quotes(shell->lexer->str, '\"');
 					printf("expander: %s\n", shell->lexer->str);
+				}
+				else
+				{
+					shell->lexer->str = del_quotes(shell->lexer->str, 39);
+					printf("lexer: %s\n", shell->lexer->str);
 				}
 			}
 		}
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
- */
 	// t_lexer *k = shell->lexer;
 	// while (k != NULL)
 	// {
@@ -69,7 +74,9 @@ static void  minishell_loop(t_tool *shell)
 	// }
 	shell->tree = parser(shell->lexer);
 	free(shell->lexer);
+	printf("\nseg fault here\n");
 	tree_exec(shell->tree, shell->env);
+	printf("seg fault here1\n");
 	//reset_tool();
 }
 

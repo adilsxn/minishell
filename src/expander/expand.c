@@ -3,14 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/17 16:30:02 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:36:49 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char *get_key(char *str)
+{
+	int i;
+	char *begin;
+
+	begin = ft_strchr(str, '$');
+	if (begin == NULL)
+		return (NULL);
+	if (begin != NULL && *begin == '$')
+		begin++;
+	i = 0;
+	while(begin[i] != '\0' && !ft_isspace(begin[i]) && begin[i] != 47 && begin[i] != '"' && begin[i] != '$')
+		i++;
+	return (ft_substr(begin, 0, i));
+}
+
+char	*expander(t_env *env, char *str)
+{
+	char	*tmp;
+	char *tmp2;
+	char *tmp3;
+	char *tmp4 = NULL;
+	t_env *env1 = NULL;
+
+	tmp = get_key(str);
+	if (tmp == NULL)
+		return (str);
+	env = get_env(env, tmp);
+	if (env == NULL)
+		return (str);
+	tmp2 = ft_substr(str, ft_strlen(tmp) + 1, ft_strlen(str) - ft_strlen(tmp) - 1);
+	if (tmp2 != NULL)
+	{
+		tmp3 = get_key(tmp2);
+		if (tmp3 != NULL)
+		{
+			env1 = get_env(env, tmp3);
+			if (env1 != NULL)
+				tmp4 = ft_strjoin(env->value, env1->value);
+		}
+		else
+			tmp4 = ft_strjoin(env->value, tmp2);
+		str = tmp4;
+		return (str);
+	}
+	free(str);
+	str = (char *)env->value;
+	return (str);
+}
+
 //question mark function and loop_if_dollar change the tmp
 //i increments after these functions or not if the functions return 0
 //i increments after assigning str[i] to tmp2 and then update tmp
@@ -67,40 +118,6 @@
 //started from the current shell session
 //str is already broken into diffent cmd
 //quotes are not removed for export command
-char *get_key(char *str)
-{
-	int i;
-	char *begin;
-
-	begin = ft_strchr(str, '$');
-	if (begin == NULL)
-		return (NULL);
-	if (begin != NULL && *begin == '$')
-		begin++;
-	i = 0;
-	while(begin[i] != '\0' && !ft_isspace(begin[i]))
-		i++;
-	if (begin[i - 1] == '"')
-		i--;
-	begin[i] = '\0';
-	return (ft_substr(begin, 0, i));
-}
-
-char	*expander(t_env *env, char *str)
-{
-	char	*tmp;
-
-	tmp = get_key(str);
-	if (tmp == NULL)
-		return (NULL);
-	env = get_env(env, get_key(str));
-	if (env == NULL)
-		return (NULL);
-	free(str);
-	str = (char *)env->value;
-	return (str);
-}
-
 //char	*tmp;
 // if (str[dollar_sign(str) - 2] == '\'' && dollar_sign(str) == 0
 // 	&& str[dollar_sign(str)] == '\0')

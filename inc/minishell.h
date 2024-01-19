@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/17 13:50:51 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:40:26 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int					new_node(char *str, int token, t_lexer **lexer_list);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list);
+char				*del_quotes(char *str, char c);
 
 void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
