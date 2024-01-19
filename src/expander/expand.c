@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/19 14:36:49 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:03:59 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,18 @@ char	*expander(t_env *env, char *str)
 	char	*tmp;
 	char *tmp2;
 	char *tmp3;
-	char *tmp4 = NULL;
-	t_env *env1 = NULL;
+	char *tmp4;
+	t_env *env1;
 
+	tmp4 = NULL;
+	env1 = NULL;
 	tmp = get_key(str);
 	if (tmp == NULL)
 		return (str);
 	env = get_env(env, tmp);
 	if (env == NULL)
 		return (str);
+	str = del_quotes(str, '\"');
 	tmp2 = ft_substr(str, ft_strlen(tmp) + 1, ft_strlen(str) - ft_strlen(tmp) - 1);
 	if (tmp2 != NULL)
 	{
@@ -51,6 +54,8 @@ char	*expander(t_env *env, char *str)
 			env1 = get_env(env, tmp3);
 			if (env1 != NULL)
 				tmp4 = ft_strjoin(env->value, env1->value);
+			else
+				tmp4 = ft_strjoin(env->value, tmp2);
 		}
 		else
 			tmp4 = ft_strjoin(env->value, tmp2);
