@@ -41,7 +41,7 @@ static t_tree *greater(t_tree *root, t_tree *it)
     }
     if (root->kind == RDR)
     {
-        if (root->left != NULL)
+        if (root->left == NULL)
             root->left = tree_insert(root->left, it);
         else
             root->right = tree_insert(root->right, it);
