@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/19 16:46:35 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:59:52 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char *get_key(char *str)
 {
 	int i;
 	i = 0;
-	while(str[i] != '\0' && !ft_isspace(str[i]) && str[i] != 47 && str[i] != '"' && str[i] != '\'' && str[i] != '$')
+	while(str[i] != '\0' && !ft_isspace(str[i]) && str[i] != 47 && str[i] != '"' && str[i] != '\'' && str[i] != '=')
 		i++;
 	return (ft_substr(str, 0, i));
 }
@@ -44,19 +44,21 @@ char	*expander(t_env *env, char *str)
 	while(str1[i] != NULL)
 	{
 		tmp = get_key(str1[i]);
-		if (tmp == NULL)
-			return (str2);
-		env2 = get_env(env, tmp);
-		if (env2 == NULL)
-			return (str2);
-		str3 = (char *)env2->value;
-		if (i > 0)
+		if (tmp != NULL)
 		{
-			str2 = ft_strjoin(str2, str3);
-			str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp));
-		}
-		else
-			str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp));
+			env2 = get_env(env, tmp);
+			if (env2 != NULL)
+			{
+				str3 = (char *)env2->value;
+				if (i > 0)
+				{
+					str2 = ft_strjoin(str2, str3);
+					str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp));
+				}
+				else
+					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp));
+			}
+		}	
 		i++;
 		tmp = NULL;
 		env2 = NULL;
