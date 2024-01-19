@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/19 15:03:59 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:46:35 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,58 +15,71 @@
 char *get_key(char *str)
 {
 	int i;
-	char *begin;
-
-	begin = ft_strchr(str, '$');
-	if (begin == NULL)
-		return (NULL);
-	if (begin != NULL && *begin == '$')
-		begin++;
 	i = 0;
-	while(begin[i] != '\0' && !ft_isspace(begin[i]) && begin[i] != 47 && begin[i] != '"' && begin[i] != '$')
+	while(str[i] != '\0' && !ft_isspace(str[i]) && str[i] != 47 && str[i] != '"' && str[i] != '\'' && str[i] != '$')
 		i++;
-	return (ft_substr(begin, 0, i));
+	return (ft_substr(str, 0, i));
 }
+//	char *str;
+//str = ft_strchr(str, '$');
+// if (str == NULL)
+// 	return (NULL);
+// if (str != NULL && *str == '$')
+// 	str++;
 
 char	*expander(t_env *env, char *str)
 {
 	char	*tmp;
-	char *tmp2;
-	char *tmp3;
-	char *tmp4;
-	t_env *env1;
+	t_env *env2;
+	char **str1;
+	char *str2;
+	char *str3;
+	int i;
 
-	tmp4 = NULL;
-	env1 = NULL;
-	tmp = get_key(str);
-	if (tmp == NULL)
-		return (str);
-	env = get_env(env, tmp);
-	if (env == NULL)
-		return (str);
+	env2 = NULL;
+	i = 0;
 	str = del_quotes(str, '\"');
-	tmp2 = ft_substr(str, ft_strlen(tmp) + 1, ft_strlen(str) - ft_strlen(tmp) - 1);
-	if (tmp2 != NULL)
+	str1 = ft_split(str, '$');
+	str2 = str1[0];
+	while(str1[i] != NULL)
 	{
-		tmp3 = get_key(tmp2);
-		if (tmp3 != NULL)
+		tmp = get_key(str1[i]);
+		if (tmp == NULL)
+			return (str2);
+		env2 = get_env(env, tmp);
+		if (env2 == NULL)
+			return (str2);
+		str3 = (char *)env2->value;
+		if (i > 0)
 		{
-			env1 = get_env(env, tmp3);
-			if (env1 != NULL)
-				tmp4 = ft_strjoin(env->value, env1->value);
-			else
-				tmp4 = ft_strjoin(env->value, tmp2);
+			str2 = ft_strjoin(str2, str3);
+			str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp));
 		}
 		else
-			tmp4 = ft_strjoin(env->value, tmp2);
-		str = tmp4;
-		return (str);
+			str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp));
+		i++;
+		tmp = NULL;
+		env2 = NULL;
+		str3 = NULL;
 	}
-	free(str);
-	str = (char *)env->value;
-	return (str);
+	return (str2);
 }
 
+// if (tmp2 != NULL)
+// {
+// 	tmp3 = get_key(tmp2);
+// 	if (tmp3 != NULL)
+// 	{
+// 		env1 = get_env(env, tmp3);
+// 		if (env1 != NULL)
+// 			tmp4 = ft_strjoin(env2->value, env1->value);
+// 		else
+// 			tmp4 = ft_strjoin(env2->value, tmp2);
+// 	}
+// 	else
+// 		tmp4 = ft_strjoin(env2->value, tmp2);
+// str = tmp4;
+// return (str);
 //question mark function and loop_if_dollar change the tmp
 //i increments after these functions or not if the functions return 0
 //i increments after assigning str[i] to tmp2 and then update tmp
