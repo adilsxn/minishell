@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/20 16:20:08 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 18:15:41 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int					question_mark(char **tmp);
 char				**ft_arrdup(char **arr);
 size_t				equal_sign(char *str);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
+char				**ft_split2(char const *s, char c);
 
 // char				*check_dollar(t_env *env, char *str);
 // int					loop_dollar_sign(t_env *env, char *s, char *tmp, int j);

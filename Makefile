@@ -6,7 +6,7 @@
 #    By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/01/16 17:12:49 by matde-je         ###   ########.fr        #
+#    Updated: 2024/01/20 16:50:22 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,6 @@ ${NAME}: ${OBJS}
 	@echo "Compiling minishell"
 	@make -s -C libft
 	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
-	${RM} ${OBJ_DIR}
-	make clean -s -C libft
 	@echo "minishell created"
 
 clean:

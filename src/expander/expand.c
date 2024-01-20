@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/20 16:24:20 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 18:18:17 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 char *get_key(char *str)
 {
 	int i;
-
+	char *str1;
+	
+	str1 = ft_strchr(str, '$');
+	if (str1 == NULL)
+		return (NULL);
+	if (str1 != NULL && *str1 == '$')
+		str1++;
 	i = 0;
-	while(str[i] != '\0' && !ft_isspace(str[i]) && str[i] != 47 && str[i] != '"' && str[i] != '\'' && str[i] != '=')
+	while(str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47 && str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
 		i++;
-	return (ft_substr(str, 0, i));
+	return (ft_substr(str1, 0, i));
 }
-//	char *str;
-//str = ft_strchr(str, '$');
-// if (str == NULL)
-// 	return (NULL);
-// if (str != NULL && *str == '$')
-// 	str++;
 
 char	*expander(t_env *env, char *str)
 {
@@ -36,16 +36,20 @@ char	*expander(t_env *env, char *str)
 	char	*str2;
 	char	*str3;
 	int		i;
+	int		len;
 	
 	env2 = NULL;
 	i = 0;
+	len = 0;
 	str = del_quotes(str, '\"');
 	if (str[0] == 39)
 	{
 		del_quotes(str, '\'');
 		return (str);
 	}
-	str1 = ft_split(str, '$');
+	str1 = ft_split2(str, '$');
+	while(str1[len])
+		len++;
 	str2 = str1[0];
 	while(str1[i] != NULL)
 	{
@@ -59,16 +63,23 @@ char	*expander(t_env *env, char *str)
 				if (i > 0 && str2 != NULL)
 				{
 					str2 = ft_strjoin(str2, str3);
-					str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp));
+					str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp) + 1);
 				}
 				else
-					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp));
+					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp) + 1);
 			}
 			else
 			{
 				if (i == 0)
 					str2 = NULL;
 			}
+		}
+		else 
+		{
+			if (len == 1)
+				str2 = ft_strdup(str2);
+			else if (i > 0 && str2 != NULL)
+				str2 = ft_strjoin(str2, str1[i]);
 		}
 		i++;
 		tmp = NULL;
@@ -97,7 +108,10 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 				printf("expander: %s\n", lexi->str);
 			}
 			else
+			{
 				lexi->str = del_quotes(lexi->str, 34);
+				printf("expander: %s\n", lexi->str);
+			}
 		}
 		lexi = lexi->next;
 	}
