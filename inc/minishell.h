@@ -28,6 +28,7 @@
 
 # include "../libft/inc/libft.h"
 
+# define HD_W "warning: here-document delimited by end-of-file: "
 //lexer
 typedef enum s_token
 {
@@ -68,6 +69,7 @@ typedef struct s_env
 	struct s_env *prev;
 	struct s_env *next;
 } t_env;
+
 //parser
 typedef struct s_tree
 {

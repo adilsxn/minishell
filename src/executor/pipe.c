@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 #include <stdio.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -59,16 +60,18 @@ static pid_t in_proc(t_tree *tree, t_env *env, int fd[2])
 
 void exec_pipe(t_tree *tree, t_env *env)
 {
+    int i;
     int fd[2];
     pid_t child[2];
 
+    i = -1;
     if (pipe(fd) == -1)
         perror("Error: while opening pipes ->");
     child[0] = out_proc(tree->right, env, fd);
-    waitpid(child[0], NULL, 0);
     close(fd[1]);
     child[1] = in_proc(tree->left, env, fd);
-    waitpid(child[1], NULL, 0);
     close(fd[0]);
+    while(++i < 2)
+        waitpid(child[i], NULL, 0);
     /*TODO: Add signal handler for projects*/
 }

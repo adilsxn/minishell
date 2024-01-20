@@ -12,23 +12,25 @@
 
 #include "../../inc/minishell.h"
 
-static void assign_type(t_order type, t_tree *it, bool hdflag)
+static void assign_type(t_token token, t_order type, t_tree *it)
 {
-    extern void exec_rdr(t_tree *tree, t_env* env);
-    extern void exec_pipe(t_tree *tree, t_env* env);    
-    extern void exec_cmd(t_tree *tree, t_env* env);
-
     it->kind = type;
-    if (type == RDR)
-        it->fn = exec_rdr;
+    it->heredoc = false;
+    if (token == LESS)
+        it->fn = rdir_i;
+    else if (token == GREAT)
+        it->fn = rdir_o;
+    else if (token == LESS_LESS)
+    {
+        it->fn = hdoc;
+        it->heredoc = true;
+    }
+    else if (token == GREAT_GREAT)
+        it->fn = appnd;
     else if (type == PPE)
         it->fn = exec_pipe;
     else 
         it->fn = exec_cmd;
-    if (hdflag == true)
-        it->heredoc = true;
-    else
-        it->heredoc = false;
 }
 
 t_tree *make_leaf(t_lexer *lexem)
@@ -38,16 +40,18 @@ t_tree *make_leaf(t_lexer *lexem)
     it = malloc(sizeof(*it));
     if (it == NULL)
         return (NULL);
-    if (lexem->token == LESS 
-         || lexem->token == GREAT 
-         || lexem->token == GREAT_GREAT)
-        assign_type(RDR, it, false);
+    if (lexem->token == LESS)
+        assign_type(LESS, RDR, it);
+    else if (lexem->token == GREAT)
+        assign_type(GREAT, RDR, it); 
+    else if (lexem->token == GREAT_GREAT)
+        assign_type(GREAT_GREAT, RDR, it);
     else if (lexem->token == LESS_LESS)
-        assign_type(RDR, it, true);
+        assign_type(LESS_LESS, RDR, it);
     else if (lexem->token == PIPE)
-        assign_type(PPE, it, false);
+        assign_type(PIPE, PPE, it);
     else
-        assign_type(CMD, it, false);
+        assign_type(TWORD, CMD, it);
     it->root = false;
     if (lexem->str != NULL)
         it->token = ft_strdup(lexem->str);
@@ -78,7 +82,7 @@ t_tree* parser(t_lexer *lexems)
     {
         it = make_leaf(i);
         if (it == NULL)
-            perror("Error: Parsing");
+            perror("Error: Parsing ->");
         tree = tree_insert(tree, it);
         i = i->next;
     }

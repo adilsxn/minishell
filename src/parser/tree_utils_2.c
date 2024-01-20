@@ -84,7 +84,7 @@ void tree_exec(t_tree *tree, t_env *env)
     if (fd[0] == -1 || fd[1] == -1)
         perror("Error: while duping std fd's");
     if (is_complete(tree) == false)
-        perror("Syntax error\n");
+        perror("Syntax error ->");
     else
         tree->fn(tree, env);
     rollback(fd[0], fd[1]);
