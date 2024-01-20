@@ -49,18 +49,20 @@ int	len_word(int i, char *str, t_lexer **lexer)
 		count += len_quote(i + count, str, 39);
 		if (ft_isspace(str[i + count]) == 1)
 			break ;
-		else
+		if (str[i + count] != '\0')
 			count++;
 	}
 	if (check_token(str[i + count], 0) != 0)
 		new_node(NULL, check_token(str[i + count], str[i + count +1]), lexer);
 	else
 		new_node(ft_substr(str, i, count), 0, lexer);
-	if (check_token(str[i + count], str[i + count +1]) == LESS
-		|| check_token(str[i + count], str[i + count +1]) == GREAT \
-		|| check_token(str[i + count], 0) == PIPE)
-		count = 1;
-	else if (check_token(str[i + count], 0) != 0)
-		count = 2;
+	if (check_token(str[i + count], 0) == PIPE)
+		return (1);
+	if ((i + count + 1) < (int)ft_strlen(str))
+		if (check_token(str[i + count], str[i + count +1]) == LESS \
+			|| check_token(str[i + count], str[i + count +1]) == GREAT)
+			return (1);
+	if (check_token(str[i + count], 0) != 0)
+		return (2);
 	return (count);
 }

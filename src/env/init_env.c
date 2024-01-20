@@ -18,6 +18,9 @@ int init_env(char **envp, t_env **env)
     const char *data;
     const char *sign;
 
+    key = NULL;
+    data = NULL;
+    sign = NULL;
     while (*envp != NULL)
     {
         sign = ft_strchr(*envp, '=');

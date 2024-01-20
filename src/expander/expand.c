@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/19 16:59:52 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:18:55 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char *get_key(char *str)
 {
 	int i;
+
 	i = 0;
 	while(str[i] != '\0' && !ft_isspace(str[i]) && str[i] != 47 && str[i] != '"' && str[i] != '\'' && str[i] != '=')
 		i++;
@@ -30,11 +31,11 @@ char *get_key(char *str)
 char	*expander(t_env *env, char *str)
 {
 	char	*tmp;
-	t_env *env2;
-	char **str1;
-	char *str2;
-	char *str3;
-	int i;
+	t_env	*env2;
+	char	**str1;
+	char	*str2;
+	char	*str3;
+	int		i;
 
 	env2 = NULL;
 	i = 0;
@@ -66,6 +67,22 @@ char	*expander(t_env *env, char *str)
 	}
 	return (str2);
 }
+
+// ==425034== 10 bytes in 1 blocks are definitely lost in loss record 9 of 90
+// ==425034==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+// ==425034==    by 0x404BFC: ft_strjoin (in /home/matde-je/minimini/minishell)
+// ==425034==    by 0x40493E: expander (expand.c:60)
+// ==425034==    by 0x403F9A: minishell_loop (main.c:55)
+// ==425034==    by 0x403D79: main (main.c:88)
+// ==425034== 
+// ==425034== 15 bytes in 3 blocks are definitely lost in loss record 17 of 90
+// ==425034==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+// ==425034==    by 0x404A3D: ft_substr (in /home/matde-je/minimini/minishell)
+// ==425034==    by 0x4047FD: get_key (expand.c:22)
+// ==425034==    by 0x404881: expander (expand.c:47)
+// ==425034==    by 0x403F9A: minishell_loop (main.c:55)
+// ==425034==    by 0x403D79: main (main.c:88)
+
 
 // if (tmp2 != NULL)
 // {

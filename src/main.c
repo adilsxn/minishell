@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/19 14:37:18 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:21:42 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,11 @@ static void  minishell_loop(t_tool *shell)
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
-	// t_lexer *k = shell->lexer;
-	// while (k != NULL)
-	// {
-	//     printf("%s\n", k->str);
-	//     k = k->next;
-	// }
 	shell->tree = parser(shell->lexer);
 	free(shell->lexer);
-	printf("\nseg fault here\n");
 	tree_exec(shell->tree, shell->env);
-	printf("seg fault here1\n");
-	//reset_tool();
+	free(shell->tree);
+	//minishell_loop(shell);
 }
 
 int main(int ac, char **av, char **envp)
@@ -90,8 +83,7 @@ int main(int ac, char **av, char **envp)
 		printf("No args accepted\n");
 		exit(0);
 	}
-	//init_tool
-	//setup_sgnl();
+	setup_sgnl();
 	init_env(envp, &shell.env);
 	minishell_loop(&shell);
 	return (0);

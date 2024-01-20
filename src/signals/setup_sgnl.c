@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:25 by matde-je          #+#    #+#             */
-/*   Updated: 2024/01/16 16:39:12 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 12:19:14 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ void	restore_sgnl(void)
     signal(SIGQUIT, SIG_DFL);
 }
 
-void	ignore_sgnl(void)
-{
-    signal(SIGINT, SIG_IGN);
-    signal(SIGQUIT, SIG_IGN);
-}
+// void	ignore_sgnl(void)
+// {
+//     signal(SIGINT, SIG_IGN);
+//     signal(SIGQUIT, SIG_IGN);
+// }
 
 void	quit_sgnl(void)
 {
