@@ -17,8 +17,14 @@ t_env *get_env(t_env *env, const char *key)
     t_env *tmp;
 
     tmp = env;
-    while (tmp != NULL && !ft_strequ(key, env->key))
+    while (tmp != NULL && !ft_strequ(key, tmp->key))
+    {
         tmp = tmp->next;
+    }
     return (tmp);
 }
 
+// if (!ft_strncmp(key, "USER", 6))
+// {
+//     printf("env2: %s\n", tmp->key);
+// }

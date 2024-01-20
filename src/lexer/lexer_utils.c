@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/13 15:48:26 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:40:07 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	len_quote(int i, char *str, char quote)
 	return (count);
 }
 
-t_token	get_tok(int c1, int c2)
+t_token	check_token(int c1, int c2)
 {
 	if (c1 == '<' && c2 == '<')
 		return (LESS_LESS);
@@ -50,4 +50,25 @@ t_token	get_tok(int c1, int c2)
 	else if (c1 == '<')
 		return (LESS);
 	return (0);
+}
+
+char	*del_quotes(char *str, char c)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+		{
+			j = 0;
+			while (str[i + j] == c)
+				j++;
+			ft_strlcpy(&str[i], &str[i + j], strlen(str) - i);
+		}
+		i++;
+	}
+	return (str);
 }

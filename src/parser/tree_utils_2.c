@@ -26,6 +26,7 @@ void tree_print(t_tree *tree)
     printf("%s\n", tree->token);
     tree_print(tree->left);
 }
+
 static bool is_syntax_mixed(t_tree *tree)
 {
     t_tree *left;
