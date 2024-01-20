@@ -59,7 +59,7 @@ static void hdoc(t_tree *tree, t_env *env)
         input = readline("heredoc> ");
         if (!input || !ft_strncmp(input, tree->left->token, FOPEN_MAX))
             break ;
-        //expander(env, input);
+        expander(env, input);
     }
     free(input);
     close(fd_hd);

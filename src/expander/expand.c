@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/20 13:18:55 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:24:20 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,15 @@ char	*expander(t_env *env, char *str)
 	char	*str2;
 	char	*str3;
 	int		i;
-
+	
 	env2 = NULL;
 	i = 0;
 	str = del_quotes(str, '\"');
+	if (str[0] == 39)
+	{
+		del_quotes(str, '\'');
+		return (str);
+	}
 	str1 = ft_split(str, '$');
 	str2 = str1[0];
 	while(str1[i] != NULL)
@@ -51,7 +56,7 @@ char	*expander(t_env *env, char *str)
 			if (env2 != NULL)
 			{
 				str3 = (char *)env2->value;
-				if (i > 0)
+				if (i > 0 && str2 != NULL)
 				{
 					str2 = ft_strjoin(str2, str3);
 					str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp));
@@ -59,15 +64,46 @@ char	*expander(t_env *env, char *str)
 				else
 					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp));
 			}
-		}	
+			else
+			{
+				if (i == 0)
+					str2 = NULL;
+			}
+		}
 		i++;
 		tmp = NULL;
 		env2 = NULL;
 		str3 = NULL;
 	}
-	return (str2);
+	str = str2;
+	i = -1;
+	while(str1[++i])
+		free(str1[i]);
+	return (str);
 }
 
+t_lexer	*expander2(t_env *env, t_lexer *lexi)
+{
+	t_lexer *lex;
+
+	lex = lexi;
+	while (lexi)
+	{
+		if (lexi->str)
+		{
+			if (lexi->i == 0 || (lexi->i != 0 && lexi->prev->token != 5))
+			{
+				lexi->str = expander(env, lexi->str);
+				printf("expander: %s\n", lexi->str);
+			}
+			else
+				lexi->str = del_quotes(lexi->str, 34);
+		}
+		lexi = lexi->next;
+	}
+	lexi = lex;
+	return (lexi);
+}	
 // ==425034== 10 bytes in 1 blocks are definitely lost in loss record 9 of 90
 // ==425034==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
 // ==425034==    by 0x404BFC: ft_strjoin (in /home/matde-je/minimini/minishell)
@@ -82,8 +118,6 @@ char	*expander(t_env *env, char *str)
 // ==425034==    by 0x404881: expander (expand.c:47)
 // ==425034==    by 0x403F9A: minishell_loop (main.c:55)
 // ==425034==    by 0x403D79: main (main.c:88)
-
-
 // if (tmp2 != NULL)
 // {
 // 	tmp3 = get_key(tmp2);

@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/20 13:21:42 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:20:24 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 static void  minishell_loop(t_tool *shell)
 {
-	int i;
 	char *input;
-	t_lexer *lexi = NULL;
 
-	i = -1;
 	input = readline("minishell> ");
 	input = ft_strtrim(input, " ");
 	if (!input || !*input)
@@ -27,45 +24,8 @@ static void  minishell_loop(t_tool *shell)
 		exit (0);
 	}
 	add_history(input);
-	while ((size_t)++i < ft_strlen(input))
-	{
-		i += len_word(i, input, &shell->lexer);
-		if (i == 0)
-		{
-			ft_error(1, shell);
-			return ;
-		}
-	}
-    free(input);
-	lexi = shell->lexer;
-	while (shell->lexer)
-	{
-		printf("lexer: %s\n", shell->lexer->str);
-		shell->lexer = shell->lexer->next;
-	}
-	shell->lexer = lexi;
-	while (shell->lexer)
-	{
-		if (shell->lexer->str)
-		{
-			if (shell->lexer->i == 0 || (shell->lexer->i != 0 && shell->lexer->prev->token != 5))
-			{
-				if (shell->lexer->str[0] != 39 && shell->lexer->str[ft_strlen(shell->lexer->str) - 1] != 39)
-				{
-					shell->lexer->str = expander(shell->env, shell->lexer->str);
-					shell->lexer->str = del_quotes(shell->lexer->str, '\"');
-					printf("expander: %s\n", shell->lexer->str);
-				}
-				else
-				{
-					shell->lexer->str = del_quotes(shell->lexer->str, 39);
-					printf("lexer: %s\n", shell->lexer->str);
-				}
-			}
-		}
-		shell->lexer = shell->lexer->next;
-	}
-	shell->lexer = lexi;
+	shell->lexer = lexer(input, shell->lexer, shell);
+	shell->lexer = expander2(shell->env, shell->lexer);
 	shell->tree = parser(shell->lexer);
 	free(shell->lexer);
 	tree_exec(shell->tree, shell->env);

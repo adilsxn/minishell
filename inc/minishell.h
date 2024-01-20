@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/19 17:33:43 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:20:08 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list);
 char				*del_quotes(char *str, char c);
+t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 
 void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
@@ -143,6 +144,7 @@ int					digit_after_dollar(int j, char *str);
 int					question_mark(char **tmp);
 char				**ft_arrdup(char **arr);
 size_t				equal_sign(char *str);
+t_lexer				*expander2(t_env *env, t_lexer *lexi);
 
 // char				*check_dollar(t_env *env, char *str);
 // int					loop_dollar_sign(t_env *env, char *s, char *tmp, int j);

@@ -43,6 +43,7 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	int	count;
 
 	count = 0;
+
 	while (str[i + count] != '\0' && check_token(str[i + count], 0) == 0)
 	{
 		count += len_quote(i + count, str, 34);
@@ -65,4 +66,30 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	if (check_token(str[i + count], 0) != 0)
 		return (2);
 	return (count);
+}
+
+t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
+{
+	int i;
+	t_lexer *lexi;
+
+	i = -1;
+	while ((size_t)++i < ft_strlen(str))
+	{
+		i += len_word(i, str, &lexer);
+		if (i == 0)
+		{
+			ft_error(1, tool);
+			return NULL;
+		}
+	}
+	lexi = lexer;
+	while (lexer)
+	{
+		printf("lexer: %s\n", lexer->str);
+		lexer = lexer->next;
+	}
+	lexer = lexi;
+	free(str);
+	return (lexer);
 }
