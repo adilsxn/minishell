@@ -37,6 +37,7 @@ typedef enum s_token
 	GREAT_GREAT,
 	LESS,
 	LESS_LESS,
+    TWORD,
 }t_token;
 
 typedef struct s_lexer
@@ -154,11 +155,14 @@ void				free_array(char **array);
 //minishell loop
 char 				**build_av(t_tree *tree);
 char				*cmd_finder(t_tree *tree, t_env *env);
-void 				exec_rdr(t_tree *tree, t_env *env);
+void 				rdir_o(t_tree *tree, t_env *env);
+void 				rdir_i(t_tree *tree, t_env *env);
+void 				appnd(t_tree *tree, t_env *env);
+void 				hdoc(t_tree *tree, t_env *env);
 void 				exec_pipe(t_tree *tree, t_env *env);
 void 				tree_exec(t_tree *tree, t_env *env);
 void 				exec_cmd(t_tree *tree, t_env *env);
 
-void				setup_sgnl(void);
+void sig_handl(void);
 
 #endif

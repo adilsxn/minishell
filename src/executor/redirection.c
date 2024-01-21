@@ -62,12 +62,15 @@ bool handle_hd(char **input, t_env *env, t_tree *tree)
     {
         ft_putendl_fd(HD_W, 2);
         ft_putendl_fd(tree->left->token, 2);
+        return (false);
     }
     if (ft_strequ(tree->left->token, *input))
         return (true);
     if (ft_strchr(*input, '$'))
         expander(env, *input);
+    return (true);
 }
+
 void hdoc(t_tree *tree, t_env *env)
 {
     int fd_hd;
@@ -80,9 +83,8 @@ void hdoc(t_tree *tree, t_env *env)
     while (true)
     {
         input = readline("heredoc> ");
-        if (!input || !ft_strncmp(input, tree->left->token, FOPEN_MAX))
+        if (handle_hd(&input, env, tree))
             break ;
-        //expander(env, input);
         ft_putendl_fd(input, fd_hd);
     }
     free(input);

@@ -10,82 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+# include "../inc/minishell.h"
 
-//extern t_state g_state;
-
-// void	sigint_handler(int sig)
-// {
-//     rl_replace_line("", 0);
-//     rl_redisplay();
-//     rl_done = 1;
-//     return ;
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// 	(void) sig;
-// }
-
-// void	sigquit_handler(int sig)
-// {
-// 	ft_putstr_fd("Quit: ", STDERR_FILENO);
-// 	ft_putnbr_fd(sig, STDERR_FILENO);
-// 	ft_putchar_fd('\n', STDERR_FILENO);
-// }
-
-// void	init_signals(void)
-// {
-// 	rl_event_hook = 0;
-// 	signal(SIGINT, sigint_handler);
-// 	signal(SIGQUIT, SIG_IGN);
-// }
-
-
-void	setup_sgnl(void)
+static void sig_new_prompt(int sig)
 {
-    signal(SIGINT, SIG_IGN);
-    signal(SIGQUIT, SIG_IGN);
+    (void)sig;
+    ft_putchar_fd('\n', 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
 }
 
-void	restore_sgnl(void)
+static void ign_sigquit(void)
 {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
+    struct sigaction event;
+
+    ft_bzero(&event, sizeof(event));
+    event.sa_handler = SIG_IGN;
+    sigaction(SIGQUIT, &event, NULL);
 }
 
-// void	ignore_sgnl(void)
-// {
-//     signal(SIGINT, SIG_IGN);
-//     signal(SIGQUIT, SIG_IGN);
-// }
-
-void	quit_sgnl(void)
+void sig_handl(void)
 {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
+    struct sigaction event;
 
-void	ignore_sgnl_child(void)
-{
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_IGN);
+    ign_sigquit();
+    ft_bzero(&event, sizeof(event));
+    event.sa_handler = &sig_new_prompt;
+    sigaction(SIGINT, &event, NULL);
 }
-
-void	quit_sgnl_child(void)
-{
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
-
-void	ignore_sgnl_parent(void)
-{
-    signal(SIGINT, SIG_IGN);
-    signal(SIGQUIT, SIG_DFL);
-}
-
-void	quit_sgnl_parent(void)
-{
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
-

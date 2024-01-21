@@ -83,7 +83,7 @@ int main(int ac, char **av, char **envp)
 		printf("No args accepted\n");
 		exit(0);
 	}
-	setup_sgnl();
+    sig_handl();
 	init_env(envp, &shell.env);
 	minishell_loop(&shell);
 	return (0);
