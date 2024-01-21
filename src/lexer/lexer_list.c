@@ -16,14 +16,14 @@ int	new_node(char *str, int token, t_lexer **lexer_list)
 {
 	t_lexer		*new_node;
 	t_lexer		*last_node;
-	static int	i = 0;
+	static int	in = 0;
 
 	new_node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new_node)
 		return (-1);
 	new_node->str = str;
 	new_node->token = token;
-	new_node->i = i++;
+	new_node->i = in++;
 	new_node->next = NULL;
 	if (*lexer_list == NULL)
 		*lexer_list = new_node;
@@ -42,36 +42,38 @@ int	len_word(int i, char *str, t_lexer **lexer)
 {
 	int	count;
 
+	if (check_token(str[i], 0) != 0)
+	{
+		new_node(NULL, check_token(str[i - 1], str[i]), lexer);
+		if (check_token(str[i -1], str[i]) == 3 || check_token(str[i -1], str[i]) == 5)
+			return (2);
+		return (1);
+	}
 	count = 0;
-
-	while (str[i + count] != '\0' && check_token(str[i + count], 0) == 0)
+	while (str[i + count] != '\0')
 	{
 		count += len_quote(i + count, str, 34);
 		count += len_quote(i + count, str, 39);
 		if (ft_isspace(str[i + count]) == 1)
-			break ;
+		{
+			new_node(ft_substr(str, i, count), 0, lexer);
+			return (count);
+		}
+		if (check_token(str[i + count], 0) != 0)
+		{
+			new_node(ft_substr(str, i, count), 0, lexer);
+			return (count);
+		}
 		if (str[i + count] != '\0')
 			count++;
 	}
-	if (check_token(str[i + count], 0) != 0)
-		new_node(NULL, check_token(str[i + count], str[i + count +1]), lexer);
-	else
-		new_node(ft_substr(str, i, count), 0, lexer);
-	if (check_token(str[i + count], 0) == PIPE)
-		return (1);
-	if ((i + count + 1) < (int)ft_strlen(str))
-		if (check_token(str[i + count], str[i + count +1]) == LESS \
-			|| check_token(str[i + count], str[i + count +1]) == GREAT)
-			return (1);
-	if (check_token(str[i + count], 0) != 0)
-		return (2);
+	new_node(ft_substr(str, i, count), 0, lexer);
 	return (count);
 }
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
 	int i;
-	t_lexer *lexi;
 
 	i = -1;
 	while ((size_t)++i < ft_strlen(str))
@@ -80,16 +82,9 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		if (i == 0)
 		{
 			ft_error(1, tool);
-			return NULL;
+			return (NULL);
 		}
 	}
-	lexi = lexer;
-	while (lexer)
-	{
-		printf("lexer: %s\n", lexer->str);
-		lexer = lexer->next;
-	}
-	lexer = lexi;
 	free(str);
 	return (lexer);
 }

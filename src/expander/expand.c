@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/20 18:18:17 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/21 17:33:52 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,20 +118,107 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	lexi = lex;
 	return (lexi);
 }	
-// ==425034== 10 bytes in 1 blocks are definitely lost in loss record 9 of 90
-// ==425034==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-// ==425034==    by 0x404BFC: ft_strjoin (in /home/matde-je/minimini/minishell)
-// ==425034==    by 0x40493E: expander (expand.c:60)
-// ==425034==    by 0x403F9A: minishell_loop (main.c:55)
-// ==425034==    by 0x403D79: main (main.c:88)
-// ==425034== 
-// ==425034== 15 bytes in 3 blocks are definitely lost in loss record 17 of 90
-// ==425034==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-// ==425034==    by 0x404A3D: ft_substr (in /home/matde-je/minimini/minishell)
-// ==425034==    by 0x4047FD: get_key (expand.c:22)
-// ==425034==    by 0x404881: expander (expand.c:47)
-// ==425034==    by 0x403F9A: minishell_loop (main.c:55)
-// ==425034==    by 0x403D79: main (main.c:88)
+
+
+
+
+
+// char	*expander2(t_env *env, char *str)
+// {
+// 	int i;
+// 	char	*str1;
+// 	char	*str2;
+// 	char	*str3;
+// 	char	*str4;
+// 	int e;
+// 	int trig;
+// 	int trig1i;
+// 	int token;
+
+// 	i = -1;
+// 	trig = 0;
+// 	trig1i = 0;
+// 	while(str[++i])
+// 	{
+// 		if (check_token(str[i], str[i + 1]) == 5)
+// 		{
+// 			str1 = ft_substr(str, 0, i);
+// 			str1 = expander(env, str1);
+// 			trig = 1;
+// 			token = i;
+// 			i += 2;
+// 			while (str[++i])
+// 			{
+// 				if (str[i] == ' ' || check_token(str[i], str[i + 1]) != 0)
+// 				{
+// 					str2 = ft_substr(str, token, i - token);
+// 					str2 = del_quotes(str2, 34);
+// 					str3 = ft_substr(str, i, ft_strlen(str));
+// 					str4 = ft_strjoin(str1, str2);
+// 					free(str1);
+// 					free(str);
+// 					str = ft_strjoin(str4, str3);
+// 					trig1i = i;
+// 					trig = 0;
+// 					printf("str: %s\n", str);
+// 					free(str2);
+// 					free(str3);
+// 					free(str4);
+// 					printf("str: %s\n", str);
+// 					break ;
+// 				}
+// 			}
+// 		}
+// 		else if (check_token(str[i], str[i + 1]) != 0 && check_token(str[i], str[i + 1]) != 5 && trig == 0)
+// 		{
+// 			e = i;
+// 			while(str[i])
+// 			{
+// 				if (check_token(str[i], str[i + 1]) != 0)
+// 					break ;
+// 				i++;
+// 			}
+// 			str2 = ft_substr(str, e, i);
+// 			i = e;
+// 			str3 = expander(env, str2);
+// 			str = ft_strjoin(str, str);
+// 			trig1i = i;
+// 		}
+// 		if (!str[i + 1] && trig == 0)
+// 		{
+// 			printf("str1: %s\n", str);
+// 			str1 = expander(env, ft_substr(str, trig1i, i));
+// 			str2 = ft_substr(str, 0, trig1i);
+// 			free(str);
+// 			str = ft_strjoin(str2, str1);
+// 			free(str1);
+// 			printf("str1: %s\n", str);
+// 		}
+// 	}
+// 	printf("expander: %s\n", str);
+// 	return (str);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// cat << "$USER" | echo "$USER"
+
+
 // if (tmp2 != NULL)
 // {
 // 	tmp3 = get_key(tmp2);

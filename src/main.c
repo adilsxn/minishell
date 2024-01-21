@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/20 16:20:24 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:54:48 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,28 @@
 static void  minishell_loop(t_tool *shell)
 {
 	char *input;
+	t_lexer	*lex;
 
 	input = readline("minishell> ");
 	input = ft_strtrim(input, " ");
 	if (!input || !*input)
 	{
+		del_env(shell->env);
+		free(input);
 		ft_putendl_fd("exit", 1);
 		exit (0);
 	}
 	add_history(input);
 	shell->lexer = lexer(input, shell->lexer, shell);
+	lex = shell->lexer;
+	while (lex)
+	{
+		if (lex->str)
+			printf("lexer: %s\n", lex->str);
+		if (lex->token)
+			printf("token: %d\n", lex->token);
+		lex = lex->next;
+	}
 	shell->lexer = expander2(shell->env, shell->lexer);
 	shell->tree = parser(shell->lexer);
 	free(shell->lexer);
