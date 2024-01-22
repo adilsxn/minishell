@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 11:13:03 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:08:13 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ char	*expander(t_env *env, char *str)
 					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp) + 1);
 			}
 			else
-			{
 				if (i == 0)
 					str2 = NULL;
-			}
 		}
 		else 
 		{
@@ -102,13 +100,19 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	{
 		if (lexi->str)
 		{
-			if (lexi->i == 0 || (lexi->i != 0 && lexi->prev->token != 5))
+			if (lexi->i == 0 || (lexi->i > 0 && (!lexi->prev->token || lexi->prev->token != 5)))
 			{
+				printf("before %s\n", lexi->str);
+				if (lexi->i > 0)
+					printf("before token and i %i, %i\n", lexi->prev->token, lexi->prev->i);
 				lexi->str = expander(env, lexi->str);
+				printf("after %s\n", lexi->str);
 			}
 			else
 			{
+				printf("before %s\n", lexi->str);
 				lexi->str = del_quotes(lexi->str, 34);
+				printf("before %s\n", lexi->str);
 			}
 		}
 		lexi = lexi->next;
@@ -116,10 +120,6 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	lexi = lex;
 	return (lexi);
 }	
-
-
-
-
 
 // char	*expander2(t_env *env, char *str)
 // {

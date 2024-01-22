@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:32:44 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/22 14:41:49 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,15 @@ void	del_one(t_lexer **lst, int i)
 		node = node->next;
 	}
 	if (node)
+	{
 		prev->next = node->next;
+		prev = prev->next;
+		while (prev)
+		{
+			prev->i--;
+			prev = prev->next;
+		}
+	}
 	else
 		prev->next = NULL;
 	clear_one(&node);
