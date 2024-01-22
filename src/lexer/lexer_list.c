@@ -44,10 +44,10 @@ int	len_word(int i, char *str, t_lexer **lexer)
 
 	if (check_token(str[i], 0) != 0)
 	{
-		new_node(NULL, check_token(str[i - 1], str[i]), lexer);
-		if (check_token(str[i -1], str[i]) == 3 || check_token(str[i -1], str[i]) == 5)
-			return (2);
-		return (1);
+		new_node(NULL, check_token(str[i], str[i + 1]), lexer);
+		if (check_token(str[i], str[i + 1]) == 3 || check_token(str[i], str[i + 1]) == 5)
+			return (1);
+		return (0);
 	}
 	count = 0;
 	while (str[i + count] != '\0')
@@ -62,7 +62,7 @@ int	len_word(int i, char *str, t_lexer **lexer)
 		if (check_token(str[i + count], 0) != 0)
 		{
 			new_node(ft_substr(str, i, count), 0, lexer);
-			return (count);
+			return (count - 1);
 		}
 		if (str[i + count] != '\0')
 			count++;

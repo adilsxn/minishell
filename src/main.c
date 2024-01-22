@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/21 21:54:48 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:07:13 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void  minishell_loop(t_tool *shell)
 	}
 	add_history(input);
 	shell->lexer = lexer(input, shell->lexer, shell);
+	shell->lexer = expander2(shell->env, shell->lexer);
 	lex = shell->lexer;
 	while (lex)
 	{
@@ -37,7 +38,6 @@ static void  minishell_loop(t_tool *shell)
 			printf("token: %d\n", lex->token);
 		lex = lex->next;
 	}
-	shell->lexer = expander2(shell->env, shell->lexer);
 	shell->tree = parser(shell->lexer);
 	free(shell->lexer);
 	tree_exec(shell->tree, shell->env);

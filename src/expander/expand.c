@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/21 17:33:52 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:08:09 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,10 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 			if (lexi->i == 0 || (lexi->i != 0 && lexi->prev->token != 5))
 			{
 				lexi->str = expander(env, lexi->str);
-				printf("expander: %s\n", lexi->str);
 			}
 			else
 			{
 				lexi->str = del_quotes(lexi->str, 34);
-				printf("expander: %s\n", lexi->str);
 			}
 		}
 		lexi = lexi->next;
