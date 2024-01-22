@@ -73,9 +73,12 @@ int msh_exit(t_tree *tree, t_env *env, char **args)
         exit_code = g_last_ret_code;
     else
     {
-        exit_code = get_code(args[1], &error)
+        exit_code = get_code(args[1], &error);
         if (error == true)
-            exit_code = 
+		{
+            exit_code = 2;
+			return(ft_putendl_fd("exit: non numeric arg", 2), exit_code);
+		}
         else if (args[2])
             return (ft_putendl_fd("exit: too many arguments", 2), 1);
     }

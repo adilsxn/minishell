@@ -38,7 +38,7 @@ int msh_unset (t_env *env, char **args)
     {
         if (!valid_key(args[i]) || ft_strchr(args[i], '=') != NULL)
             return (ft_putendl_fd("unset: not a valid identifier", 2), 1);
-        else if (unset_env(env, args[i]));
+        else if (unset_env(env, args[i]))
             return (EXIT_FAILURE);
         i++;
     }

@@ -67,7 +67,7 @@ bool handle_hd(char **input, t_env *env, t_tree *tree)
     if (ft_strequ(tree->left->token, *input))
         return (true);
     if (ft_strchr(*input, '$'))
-        expander(env, *input);
+        *input = expander(env, *input);
     return (true);
 }
 
@@ -86,6 +86,8 @@ void hdoc(t_tree *tree, t_env *env)
         if (handle_hd(&input, env, tree))
             break ;
         ft_putendl_fd(input, fd_hd);
+        if (!input)
+            free(input);
     }
     free(input);
     close(fd_hd);

@@ -30,20 +30,20 @@ void tree_print(t_tree *tree)
 static bool is_syntax_mixed(t_tree *tree)
 {
     t_tree *left;
-    t_tree *right;
+//    t_tree *right;
 
     left = tree->left;
-    right = tree->right;
+  //  (void *)right = tree->right;
     if (!tree->root && tree->kind == PPE)
         if (left != NULL && left->kind == RDR)
             return (true);
-    if (tree->kind == PPE)
+  /*   if (tree->kind == PPE)
     {
-        if (left != NULL && left->heredoc)
+        if (left != NULL)
             return (true);
-        if (right != NULL && right->heredoc)
+        if (right != NULL)
             return (true);
-    }
+    } */
     return (false);
 }
 
