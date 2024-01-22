@@ -74,6 +74,7 @@ int	len_word(int i, char *str, t_lexer **lexer)
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
 	int i;
+	t_lexer *lex;
 
 	i = -1;
 	while ((size_t)++i < ft_strlen(str))
@@ -84,6 +85,20 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 			ft_error(1, tool);
 			return (NULL);
 		}
+	}
+	i = 0;
+	lex = lexer;
+	while (lex)
+	{
+		if (lex->str)
+		{
+			if (lex->str[0] == 0)
+			{
+				del_one(&lexer, lex->i);
+				lex = lexer;
+			}
+		}
+		lex = lex->next;
 	}
 	free(str);
 	return (lexer);

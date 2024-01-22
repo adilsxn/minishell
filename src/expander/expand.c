@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 11:08:09 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:13:03 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,27 +196,6 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 // 	printf("expander: %s\n", str);
 // 	return (str);
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// cat << "$USER" | echo "$USER"
-
-
 // if (tmp2 != NULL)
 // {
 // 	tmp3 = get_key(tmp2);
