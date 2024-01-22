@@ -94,11 +94,19 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		{
 			if (lex->str[0] == 0)
 			{
+				printf("deled %i\n", lex->i);
 				del_one(&lexer, lex->i);
 				lex = lexer;
 			}
 		}
 		lex = lex->next;
+	}
+	lex = lex->prev;
+	while (lex)
+	{
+		if (lex->str != NULL)
+			printf("lexprev %i, %s, %i\n" , lex->i, lex->str, lex->token);
+		lex = lex->prev;
 	}
 	free(str);
 	return (lexer);

@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 15:08:13 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:03:42 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,15 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	{
 		if (lexi->str)
 		{
+			if (lexi->i > 0)
+				printf("token and i %i, %i\n", lexi->prev->token, lexi->prev->i);
 			if (lexi->i == 0 || (lexi->i > 0 && (!lexi->prev->token || lexi->prev->token != 5)))
 			{
-				printf("before %s\n", lexi->str);
-				if (lexi->i > 0)
-					printf("before token and i %i, %i\n", lexi->prev->token, lexi->prev->i);
 				lexi->str = expander(env, lexi->str);
-				printf("after %s\n", lexi->str);
 			}
 			else
 			{
-				printf("before %s\n", lexi->str);
 				lexi->str = del_quotes(lexi->str, 34);
-				printf("before %s\n", lexi->str);
 			}
 		}
 		lexi = lexi->next;

@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 14:49:02 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:44:56 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ static void  minishell_loop(t_tool *shell)
 	lex = shell->lexer;
 	while (lex)
 	{
-		printf("lexeri: %i\n", lex->i);
-		if (lex->str)
-			printf("lexer: %s\n", lex->str);
-		if (lex->token)
-			printf("token: %d\n", lex->token);
+		printf("lexer: %i, %s, %i\n", lex->i, lex->str, lex->token);
 		lex = lex->next;
+		if (lex != NULL)
+			printf("lexer prev: %i, %s, %i\n", lex->prev->i, lex->prev->str, lex->prev->token);
 	}
 	shell->lexer = expander2(shell->env, shell->lexer);
 	lex = shell->lexer;

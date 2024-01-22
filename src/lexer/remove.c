@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 14:41:49 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:21:28 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void	del_first(t_lexer **lst)
 	clear_one(&node);
 	if (*lst)
 		(*lst)->prev = NULL;
+	while (*lst)
+	{
+		(*lst)->i = (*lst)->i -1;
+		(*lst) = (*lst)->next;
+	}
+	(*lst) = (*lst)->prev;
+	while (*lst)
+	{
+		printf("%i", (*lst)->i);
+		(*lst) = (*lst)->prev;
+	}
+	
 }
 
 //update the prev->next pointer to skip the node deleted
@@ -58,7 +70,8 @@ void	del_one(t_lexer **lst, int i)
 		prev = prev->next;
 		while (prev)
 		{
-			prev->i--;
+			prev->i = prev->i -1;
+			printf("%i", prev->i);
 			prev = prev->next;
 		}
 	}
