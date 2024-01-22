@@ -25,17 +25,21 @@
  *  it does the former plus assigns it a new value
  *  -- if no var name is given then it prints the all the global vars*/
 
-static int valid_key(char *key)
+static bool valid_key(char *key)
 {
-    if (!key)
-        return (1);
-    while(*key != '\0')
+    int i;
+
+    i = 0;
+    if(ft_isalpha(key[i]) == 0 && key[i] != '_')
+        return (false);
+    i++;
+    while(key[i] != '\0' && key[i] != '=')
     {
-        if ((ft_isalnum(*key) == 0) && (*key != '_'))
-            return (1);
-        key++;
+        if ((ft_isalnum(key[i]) == 0) && (key[i] != '_'))
+            return (false);
+        i++;
     }
-    return(0);
+    return(true);
 }
 
 static int real_export(char *input, t_env *env)
@@ -43,20 +47,20 @@ static int real_export(char *input, t_env *env)
     const char *sign;
     const char *key;
     const char *data;
-    int valid;
+    bool valid;
 
     sign = ft_strchr(input, '=');
     if (sign == NULL)
         return (1);
     if (sign == input)
     {
-        perror("export: invalid key");
+        ft_putendl_fd("export: invalid key", 2);
         return (1);
     }
     key = ft_substr(input, 0, sign - input);
-    valid =  valid_key((char *)key);
-    if (valid == 1)
-        perror("export: invalid key");
+    valid =  valid_key(key);
+    if (valid == false)
+        ft_putendl_fd("export: invalid key", 2);
     else
     {
         data = ft_strdup(sign + 1);

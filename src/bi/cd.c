@@ -12,9 +12,7 @@
 
 #include "../../inc/minishell.h"
 #include <linux/limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+
 
 static void update_env(t_env *env, bool success)
 {
@@ -32,7 +30,6 @@ static void update_env(t_env *env, bool success)
 static bool ft_chdir(char *path, t_env *env)
 {
     char *ret;
-    char *it;
     char cwd[PATH_MAX];
 
     ret = NULL;
@@ -41,15 +38,15 @@ static bool ft_chdir(char *path, t_env *env)
     ret = getcwd(cwd, PATH_MAX);
     if (ret == NULL)
         perror("cd: error getting current dir");
-    else
-        ret = ft_strdup(cwd);
+    free(ret);
     update_env(env, true);
     return (true);
 }
+
 int msh_cd(char **args, t_env *env)
 {
     char *path;
-    
+
     if (!args || args[1] == NULL || ft_isspace(args[1][0])
         || args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 1)
     {
@@ -69,3 +66,4 @@ int msh_cd(char **args, t_env *env)
     }
     return (!ft_chdir(args[1], env));
 }
+

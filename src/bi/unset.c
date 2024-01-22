@@ -12,11 +12,22 @@
 
 #include "../../inc/minishell.h"
 
-/*TODO: Need to refine the builtins and work on signals and the expander*/
+static bool valid_key(char *key)
+{
+    int i;
 
-/*NOTE: In short the inverse of export
- * if name is a var or function they are unset(meaning what? their
- * value is deleted or in the case of funcs they become unaccessible?)*/
+    i = 0;
+    if(ft_isalpha(key[i]) == 0 && key[i] != '_')
+        return (false);
+    i++;
+    while(key[i] != '\0' && key[i] != '=')
+    {
+        if ((ft_isalnum(key[i]) == 0) && (key[i] != '_'))
+            return (false);
+        i++;
+    }
+    return(true);
+}
 
 int msh_unset (t_env *env, char **args)
 {
@@ -25,7 +36,10 @@ int msh_unset (t_env *env, char **args)
     i = 1;
     while (args[i] != NULL)
     {
-        unset_env(env, args[i]);
+        if (!valid_key(args[i]) || ft_strchr(args[i], '=') != NULL)
+            return (ft_putendl_fd("unset: not a valid identifier", 2), 1);
+        else if (unset_env(env, args[i]));
+            return (EXIT_FAILURE);
         i++;
     }
     return (EXIT_SUCCESS);

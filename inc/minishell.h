@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/19 17:33:43 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 00:15:28 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,6 @@ typedef enum e_order {
     CMD,
 } t_order;
 
-typedef struct e_state
-{
-	char *state;
-	int ret_code;
-}t_state;
-
 typedef struct s_env
 {
 	const char *key;
@@ -93,7 +87,7 @@ typedef struct s_tool
 }t_tool;
 
 
-extern t_state g_state;
+extern int g_last_ret_code;
 
 int					init_env(char **envp, t_env **env);
 t_env				*set_env(t_env **env, const char *key, const char *value);
@@ -105,7 +99,7 @@ int					del_env(t_env *env);
 //bi
 int 				msh_cd(char **args, t_env *env);
 int 				msh_echo(char **args);
-int 				msh_env(t_env *env);
+int 				msh_env(t_env *env, char **args);
 int					msh_exit(t_tree *tree, t_env *env);
 int		 			msh_export(t_env *env, char **args);
 int					msh_pwd(t_env *env);
