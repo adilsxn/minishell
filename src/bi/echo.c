@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 00:06:21 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/22 21:25:18 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ static void printerx(char **args, bool nflag, int i)
     }
 }
 
-int msh_echo(char **args)
+int msh_echo(char **args, t_tool *data)
 {
     bool nflag;
     int i;
 
     i = 1;
     nflag = false;
+    (void)data;
     while (args[i] && is_flag_on(args[i]))
     {
         nflag = true;

@@ -43,27 +43,27 @@ static bool ft_chdir(char *path, t_env *env)
     return (true);
 }
 
-int msh_cd(char **args, t_env *env)
+int msh_cd(char **args, t_tool *data)
 {
     char *path;
 
     if (!args || args[1] == NULL || ft_isspace(args[1][0])
         || args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 1)
     {
-        path = (char *)get_env(env, "HOME")->value;
+        path = (char *)get_env(data->env, "HOME")->value;
         if (!path || *path == '\0' || ft_isspace(*path))
             return (ft_putendl_fd("cd: HOME not set", STDERR_FILENO), 1);
-        return(!ft_chdir(path, env));
+        return(!ft_chdir(path, data->env));
     }
     if (args[2])
         return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO), 1);
     if (ft_strncmp(args[1], "-", 2) == 0)
     {
-        path = (char *)get_env(env, "OLDPWD")->value;
+        path = (char *)get_env(data->env, "OLDPWD")->value;
         if (!path)
             return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
-        return(!ft_chdir(path, env));
+        return(!ft_chdir(path, data->env));
     }
-    return (!ft_chdir(args[1], env));
+    return (!ft_chdir(args[1], data->env));
 }
 

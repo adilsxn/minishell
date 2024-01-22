@@ -63,7 +63,7 @@ static int get_code(char *str, bool *error)
 	return (i % 256);
 }
 
-int msh_exit(t_tree *tree, t_env *env, char **args)
+int msh_exit(char **args, t_tool *data)
 {
     bool error;
     int exit_code;
@@ -82,7 +82,7 @@ int msh_exit(t_tree *tree, t_env *env, char **args)
         else if (args[2])
             return (ft_putendl_fd("exit: too many arguments", 2), 1);
     }
-    tree_delete(tree);
-    del_env(env);
+/*     tree_delete(tree);
+    del_env(env); */
     return (2);
 }

@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec_s_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 13:45:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 21:26:41 by acuva-nu         ###   ########.fr       */
+/*   Created: 2024/01/22 19:16:15 by acuva-nu          #+#    #+#             */
+/*   Updated: 2024/01/22 19:47:52 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-int   msh_pwd(char **args, t_tool *data)
+void	execute_simple_cmd(t_tool *data)
 {
-    char buf[PATH_MAX];
-    char *cwd;
-    if (get_env(data->env, "PWD") != NULL)
-    {
-        ft_putendl_fd((char *)get_env(data->env, "PWD")->value, 1);
-        return (EXIT_SUCCESS);
-    }
-    else
-        cwd = getcwd(buf, PATH_MAX);
-    if (cwd != NULL)
-    {
-        ft_putendl_fd(cwd, STDOUT_FILENO);
-        return (EXIT_SUCCESS);
-    }
-    return (EXIT_FAILURE);
+	t_cmd	*cmd;
+
+	cmd = mk_cmd(data);
+	if (cmd == NULL)
+		return ;
+	if ((is_builtin(cmd->args[0]) != 0))
+		g_last_ret_code = exec_bi(cmd);
+	else
+		exec_bin(cmd);
+	free_cmd(cmd);
 }

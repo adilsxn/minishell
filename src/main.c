@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/20 13:21:42 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:59:25 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void  minishell_loop(t_tool *shell)
 		shell->lexer = shell->lexer->next;
 	}
 	shell->lexer = lexi;
-	shell->tree = parser(shell->lexer);
+	shell-> = parser(shell->lexer);
 	free(shell->lexer);
 	tree_exec(shell->tree, shell->env);
 	free(shell->tree);
