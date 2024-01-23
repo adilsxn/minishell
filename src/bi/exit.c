@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-//missing error;
 static int	ft_atol(char *str, bool *error)
 {
 	int	sinal;
@@ -35,6 +34,8 @@ static int	ft_atol(char *str, bool *error)
 		res = res * 10 + (*str - '0');
 		str++;
 	}
+	if (res > LONG_MAX)
+		*error = true;
 	return ((int)(res * sinal));
 }
 
@@ -77,12 +78,11 @@ int msh_exit(char **args, t_tool *data)
         if (error == true)
 		{
             exit_code = 2;
-			return(ft_putendl_fd("exit: non numeric arg", 2), exit_code);
+			return(ft_err("exit: non numeric arg", args[1]), exit_code);
 		}
         else if (args[2])
-            return (ft_putendl_fd("exit: too many arguments", 2), 1);
+            return (ft_err("exit: too many arguments", args[1]), 1);
     }
-/*     tree_delete(tree);
-    del_env(env); */
-    return (2);
+	clean_data(data);
+    return (exit_code);
 }

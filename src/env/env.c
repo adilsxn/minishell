@@ -17,7 +17,7 @@ int msh_env(char **args, t_tool *data)
     t_env *iter;
 
     if (args && args[1])
-        return (ft_putendl_fd("env: too many arguments", 2), 1);
+        return (ft_err("env: too many arguments", NULL), 1);
     iter = data->env;
     if (iter == NULL)
         return (EXIT_FAILURE);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_sgnl.c                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:25 by matde-je          #+#    #+#             */
-/*   Updated: 2024/01/20 12:19:14 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:54:58 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void ign_sigquit(void)
 {
     struct sigaction event;
 
-    ft_bzero(&event, sizeof(event));
+    ft_bzero(&event, sizeof(struct sigaction));
     event.sa_handler = SIG_IGN;
     sigaction(SIGQUIT, &event, NULL);
 }
@@ -35,7 +35,7 @@ void sig_handl(void)
     struct sigaction event;
 
     ign_sigquit();
-    ft_bzero(&event, sizeof(event));
+    ft_bzero(&event, sizeof(struct sigaction));
     event.sa_handler = &sig_new_prompt;
     sigaction(SIGINT, &event, NULL);
 }

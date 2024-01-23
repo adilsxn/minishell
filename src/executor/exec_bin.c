@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:12:28 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 21:16:20 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:27:20 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 static void	child_process(t_cmd *cmd)
 {
-	setup_signal(sig_child, SIGINT);
-	setup_signal(sig_child, SIGQUIT);
+	sig_handl();
 	if (cmd->rdir != NULL
-		&& (handle_redirects(cmd->rdir) == -1))
+		&& (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
 		exit(1);
 	}
 	if (cmd->path == NULL)
 		exit(0);
-	cleanup_process();
-	execve(cmd->path, cmd->args, cmd->envp);
-	perror("minishell");
+	clean_fds();
+	if (execve(cmd->path, cmd->args, cmd->envp) == ERROR);
+		ft_err("execve failed", strerror(errno));
 	exit(1);
 }
 
@@ -45,24 +44,23 @@ void	exec_bin(t_cmd *cmd)
 
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		error(cmd->args[0], "cmd not found");
+		ft_err(cmd->args[0], "cmd not found");
 		g_last_ret_code = 127;
 		return ;
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell");
+		ft_err( "fork failed", strerror(errno));
 		g_last_ret_code = 1;
 	}
 	else if (pid == 0)
 		child_process(cmd);
 	else
 	{
-		setup_signal(sig_parent, SIGINT);
-		setup_signal(sig_parent, SIGQUIT);
+		sig_handl();
 		if (waitpid(pid, &status, 0) == -1)
-			perror("minishell");
+			ft_err("waitpid failed", strerror(errno));
 		set_ret_code(status);
 	}
 }

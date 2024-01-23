@@ -30,7 +30,7 @@ void	free_pipe(t_ppe *pipe)
 		return ;
 	free_pipe(pipe->next);
 	free_cmd(pipe->cmd);
-	free(pipe);
+	ft_free(pipe);
 }
 
 static t_ppe	*mk_pipe(t_tool *data, t_ppe *prev)

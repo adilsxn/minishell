@@ -37,14 +37,14 @@ void	free_(t_cmd *cmd)
 	if (cmd == NULL)
 		return ;
 	if (cmd->path != NULL)
-		free(cmd->path);
+		ft_free(cmd->path);
 	if (cmd->args != NULL)
-		free(cmd->args);
+		ft_free(cmd->args);
 	if (cmd->envp != NULL)
 		free_arr(cmd->envp);
 	if (cmd->rdir != NULL)
 		free_rdr(cmd->rdir);
-	free(cmd);
+	ft_free(cmd);
 }
 
 t_cmd *mk_cmd(t_tool *data)

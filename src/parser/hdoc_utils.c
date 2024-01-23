@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hdoc.c                                             :+:      :+:    :+:   */
+/*   hdoc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:38:14 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 22:38:22 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:48:05 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_line_and_free(char *line, char *delim)
 	if (line != NULL)
 		free(line);
 	else
-		error("here_doc received end-of-file, wanted", delim);
+		ft_err("here_doc received end-of-file, wanted", delim);
 }
 
 char	*get_delimiter(char *input, size_t *counter, char *quote)

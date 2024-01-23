@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <linux/limits.h>
+
 
 
 static void update_env(t_env *env, bool success)
@@ -24,7 +24,7 @@ static void update_env(t_env *env, bool success)
         set_env(&env, "OLDPWD", get_env(env, "PWD")->value);
         set_env(&env, "PWD", pwd);
     }
-    free((char *)pwd);
+    ft_free((char *)pwd);
 }
 
 static bool ft_chdir(char *path, t_env *env)
@@ -34,11 +34,12 @@ static bool ft_chdir(char *path, t_env *env)
 
     ret = NULL;
     if (chdir(path) != 0)
-        perror("cd: ");
+        ft_err("cd: ", strerror(errno));
     ret = getcwd(cwd, PATH_MAX);
     if (ret == NULL)
-        perror("cd: error getting current dir");
-    free(ret);
+        ft_err("cd: error getting current dir", 
+                strerror(errno));
+    ft_free(ret);
     update_env(env, true);
     return (true);
 }
@@ -52,16 +53,16 @@ int msh_cd(char **args, t_tool *data)
     {
         path = (char *)get_env(data->env, "HOME")->value;
         if (!path || *path == '\0' || ft_isspace(*path))
-            return (ft_putendl_fd("cd: HOME not set", STDERR_FILENO), 1);
+            return (ft_err("cd: HOME not set", NULL), 1);
         return(!ft_chdir(path, data->env));
     }
     if (args[2])
-        return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO), 1);
+        return (ft_err("cd: too many arguments", NULL), 1);
     if (ft_strncmp(args[1], "-", 2) == 0)
     {
         path = (char *)get_env(data->env, "OLDPWD")->value;
         if (!path)
-            return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
+            return (ft_err("cd: OLDPWD not set", NULL), 1);
         return(!ft_chdir(path, data->env));
     }
     return (!ft_chdir(args[1], data->env));

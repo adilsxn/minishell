@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 22:07:43 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:36:01 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/types.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <linux/limits.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <sys/stat.h>
@@ -30,6 +32,7 @@
 
 # define HD_W "warning: here-document delimited by end-of-file: "
 # define HD_FILE "/tmp/heredoc"
+
 # define ERROR -1
 //lexer
 typedef enum s_token
@@ -125,7 +128,7 @@ int					msh_exit(char **args, t_tool *data);
 int		 			msh_export(char **args, t_tool *data);
 int					msh_pwd(char **args, t_tool *data);
 int					msh_unset (char **args, t_tool *data);
-int					exec_bi(t_cmd *cmd);
+
 
 
 //lexer
@@ -146,11 +149,14 @@ int					ft_error(int error, t_tool *tool);
 //parser
 bool	is_builtin(char *str);
 void 	free_arr(char **arr);
+void ft_free(void *ptr);
+void	ft_err(char *message, char *detail);
 void	free_rdr(t_rdr *rdir);	
 t_rdr	*build_rdr(t_lexer *lexi);
 void	free_cmd(t_cmd *cmd);
 t_cmd	*mk_cmd(t_tool *data);
 t_ppe	*parser(t_tool *data);
+void	free_pipe(t_ppe *pipe);
 
 
 //expander
@@ -174,11 +180,15 @@ void				free_array(char **array);
 char				*cmd_finder(t_tool *data, char *cmd);
 void	execute_simple_cmd(t_tool *data);
 t_bi *get_bi(char *cmd);
-int	exec_bi(t_cmd *cmd);
+int	exec_bi(t_cmd *cmd, t_tool *data);
 void	exec_bin(t_cmd *cmd);
 int	exec_rdr(t_rdr *rdr);
-void	exec_pipe(t_ppe *pipeline);
+void	exec_pipe(t_ppe *pipeline, t_tool *data);
 
+//cleanup
+void clean_data(t_tool *data);
+void	clean_fds(void);
+//signal
 void sig_handl(void);
 
 #endif

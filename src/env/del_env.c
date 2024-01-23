@@ -21,9 +21,9 @@ int del_env(t_env *env)
     while(tmp != NULL)
     {
         next = tmp->next;
-        free((void *)tmp->key);
-        free((void *)tmp->value);
-        free(tmp); 
+        ft_free((void *)tmp->key);
+        ft_free((void *)tmp->value);
+        ft_free(tmp); 
         tmp = next;
     }
     return (0);

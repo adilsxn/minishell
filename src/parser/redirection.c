@@ -17,7 +17,7 @@ void	free_rdr(t_rdr *rdir)
 	if (rdir == NULL)
 		return ;
 	free_rdr(rdir->next);
-	free(rdir);
+	ft_free(rdir);
 }
 
 static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
@@ -57,7 +57,7 @@ t_rdr	*build_rdr(t_lexer *lexi)
 			if (rdir == NULL)
 			{
 				free_rdr(start);
-				error("error while parsing the input", NULL);
+				ft_err("error while parsing the input", NULL);
 				return (NULL);
 			}
 			if (start == NULL)

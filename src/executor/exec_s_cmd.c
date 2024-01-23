@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:16:15 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 19:47:52 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:19:15 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	execute_simple_cmd(t_tool *data)
 	if (cmd == NULL)
 		return ;
 	if ((is_builtin(cmd->args[0]) != 0))
-		g_last_ret_code = exec_bi(cmd);
+		g_last_ret_code = exec_bi(cmd, data);
 	else
 		exec_bin(cmd);
 	free_cmd(cmd);

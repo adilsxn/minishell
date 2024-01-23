@@ -6,14 +6,14 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:23:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 21:22:55 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:06:43 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 
-int	exec_bi(t_cmd *cmd)
+int	exec_bi(t_cmd *cmd, t_tool *data)
 {
 	int			fd[2];
 	t_bi	    *builtin;
@@ -28,10 +28,10 @@ int	exec_bi(t_cmd *cmd)
 	builtin = get_bi(cmd->args[0]);
 	if (builtin == NULL)
 	{
-		error(cmd->args[0], "could not execute builtin");
+		ft_err(cmd->args[0], "could not execute builtin");
 		return (2);
 	}
-	return_code = builtin(cmd->argc - 1, cmd->args + 1);
+	return_code = builtin(cmd->args + 1, data);
 	if (cmd->rdir != NULL)
 	{
 		dup2(fd[STDIN_FILENO], STDIN_FILENO);

@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//TODO: implement hash tables/ red black treees 
-//to store the env variables
-/*NOTE: 
- * the export serves mainly three purposes all of the related
- * to the env and its variables
- * 1. Assigning value to an env variables
- * 2. Making the var available to child procs (HOW?)
- * -- this functions either creates new variable 
- * when given a new with a value
- * -- when given a existing var name it just makes it
- *  available to all th children proc, but if given a value
- *  it does the former plus assigns it a new value
- *  -- if no var name is given then it prints the all the global vars*/
 
 static bool valid_key(char *key)
 {
@@ -44,30 +31,30 @@ static bool valid_key(char *key)
 
 static int real_export(char *input, t_env *env)
 {
-    const char *sign;
-    const char *key;
-    const char *data;
+    char *sign;
+    char *key;
+    char *data;
     bool valid;
 
     sign = ft_strchr(input, '=');
     if (sign == NULL)
         return (1);
     if (sign == input)
-    {
-        ft_putendl_fd("export: invalid key", 2);
-        return (1);
-    }
+        return (ft_err("export: invalid key", NULL), 1);
     key = ft_substr(input, 0, sign - input);
     valid =  valid_key(key);
     if (valid == false)
-        ft_putendl_fd("export: invalid key", 2);
+    {
+        ft_free(key);
+        return (ft_err("export: invalid key", NULL), 1);
+    }
     else
     {
         data = ft_strdup(sign + 1);
         set_env(&env, key, data);
-        free((void *) data);
+        ft_free((void *) data);
     }
-    free((void *)key);
+    ft_free((void *)key);
     return (valid == 0);
 }
 

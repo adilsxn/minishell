@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:34:39 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 22:43:28 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:55:32 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*here_doc_content(char *delim, char quote)
 	char	*line;
 
 	content = ft_strdup("");
-	line = readline("here_doc: ");
-	while (line != NULL && (ft_strcmp(line, delim) != 0))
+	line = readline("> ");
+	while (line != NULL && (ft_strequ(line, delim) != 0))
 	{
 		content = join_line(content, line, quote);
 		if (content == NULL)
@@ -35,7 +35,7 @@ static void	heredoc_proc(int pipe_fd[2], char *delim, char quote)
 {
 	char	*content;
 
-	setup_signal(sig_heredoc_child, SIGINT);
+	sig_handl();
 	content = here_doc_content(delim, quote);
 	if (content == NULL)
 		exit(EXIT_FAILURE);
@@ -76,19 +76,19 @@ static char	*handle_child_process_quit(int pid, int pipe_fd[2])
 	int		status;
 	char	*content;
 
-	setup_signal(sig_heredoc_parent, SIGINT);
+	sig_handl();
 	content = NULL;
 	close(pipe_fd[1]);
 	if ((waitpid(pid, &status, 0) == -1))
 		perror("heredoc: ");
 	if (WIFEXITED(status))
 	{
-		g_sh.ret_code = WEXITSTATUS(status);
-		if (g_sh.ret_code == 0)
+		g_last_ret_code = WEXITSTATUS(status);
+		if (g_last_ret_code == 0)
 		{
 			content = get_content_from_pipe(pipe_fd);
 			if (content == NULL)
-				error(NULL, NULL);
+				ft_err(NULL, NULL);
 		}
 		else
 			g_last_ret_code = 130;
@@ -97,7 +97,7 @@ static char	*handle_child_process_quit(int pid, int pipe_fd[2])
 	return (content);
 }
 
-char	*heredoc(char *input, int *counter)
+void	*heredoc(t_lexer *lexi)
 {
 	int		pid;
 	int		fd[2];
@@ -107,21 +107,22 @@ char	*heredoc(char *input, int *counter)
 
 	line = NULL;
 	quote = '"';
-	delim = get_delim(input, counter, &quote);
-	if (delim == NULL)
-		return (NULL);
-	if ((pipe(fd) == -1))
+	while (lexi != NULL)
 	{
-		perror("heredoc: ");
-		return (NULL);
+		if (lexi->token == LESS_LESS)
+		{
+			delim = ft_strdup(lexi->next->str);
+			if ((pipe(fd) == -1))
+				return (ft_err("pipe failed", strerror(errno)), NULL);
+			pid = fork();
+			if (pid == -1)
+				ft_err("fork failed", strerror(errno));
+			else if (pid == 0)
+				heredoc_proc(fd, delim, quote);
+			else
+				line = handle_child_process_quit(pid, fd);
+			lexi->str = line;
+		}
+		lexi = lexi->next;
 	}
-	pid = fork();
-	if (pid == -1)
-		perror("heredoc: ");
-	else if (pid == 0)
-		heredoc_proc(fd, delim, quote);
-	else
-		content = handle_child_process_quit(pid, fd);
-	free(delim);
-	return (line);
 }
