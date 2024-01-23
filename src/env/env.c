@@ -12,11 +12,15 @@
 
 #include "../../inc/minishell.h"
 
-int msh_env(t_env *env)
+int msh_env(char **args, t_tool *data)
 {
     t_env *iter;
-    
-    iter = env;
+
+    if (args && args[1])
+        return (ft_err("env: too many arguments", NULL), 1);
+    iter = data->env;
+    if (iter == NULL)
+        return (EXIT_FAILURE);
     while (iter != NULL)
     {
         printf("%s=%s\n", iter->key, iter->value);

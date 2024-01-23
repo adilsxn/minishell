@@ -13,36 +13,7 @@
 
 #include "../../inc/minishell.h"
 
-static int	exec_bin(char **av, t_tree *tree, t_env *env)
-{
-	pid_t	pid;
-	int		sts;
-	int		ret;
-	char	*cmdpath;
-
-	sts = 0;
-	ret = 0;
-	cmdpath = cmd_finder(tree, env);
-	if (cmdpath == NULL)
-		perror("command not found\n");
-	pid = fork();
-	if (pid == -1)
-		perror("Error: fork failed\n");
-	else if (pid == 0)
-	{
-		if (execve(cmdpath, av, NULL) == -1)
-			perror("Error: execve failed\n");
-		free(cmdpath);
-	}
-	waitpid(pid, &sts, 0);
-	if (WIFEXITED(sts))
-		ret = WEXITSTATUS(sts);
-	else
-		ret = WIFSIGNALED(sts);
-	return (ret);
-}
-
-static bool	is_builtin(char *str)
+bool	is_builtin(char *str)
 {
     if (ft_strequ(str, "echo"))
         return (true);
@@ -61,16 +32,39 @@ static bool	is_builtin(char *str)
     return (false);
 }
 
-void	exec_cmd(t_tree *tree, t_env *env)
+void	free_cmd(t_cmd *cmd)
 {
-	int		status;
-	char	**argv;
+	if (cmd == NULL)
+		return ;
+	if (cmd->path != NULL)
+		ft_free(cmd->path);
+	if (cmd->args != NULL)
+		ft_free(cmd->args);
+	if (cmd->envp != NULL)
+		free_arr(cmd->envp);
+	if (cmd->rdir != NULL)
+		free_rdr(cmd->rdir);
+	ft_free(cmd);
+}
 
-	argv = build_av(tree);
-	status = 0;
-	if (is_builtin(tree->token))
-		status = exec_bi(argv, tree, env);
-	else
-		status = exec_bin(argv, tree, env);
-	set_env(&env, "?", ft_itoa(status));
+t_cmd *mk_cmd(t_tool *data)
+{
+	t_cmd *cmd;
+
+	cmd = ft_calloc(1, sizeof(*cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->envp = ft_arrdup(data->envp);
+	cmd->args = build_av(data->lexer);
+	cmd->rdir = build_rdr(data->lexer);
+	cmd->argc = count_token(data->lexer);
+	if (cmd->args != NULL  && is_builtin(cmd->args[0]) == true)
+	    cmd->path = cmd_finder(data, cmd->args[0]);
+	if (cmd->args == NULL || cmd->envp == NULL ||
+	    cmd->rdir == NULL || cmd->envp == NULL)
+	{
+		free_cmd(cmd);
+		cmd = NULL;
+	}
+	return (cmd);
 }

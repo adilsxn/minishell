@@ -6,31 +6,29 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 21:40:35 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/12/18 22:04:03 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:46:07 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 
-int exec_bi(char **argv, t_tree *tree, t_env *env)
+t_bi *get_bi(char *cmd)
 {
-    int ret;
 
-    ret = 0;
-    if (ft_strequ(*argv, "echo"))
-        ret = msh_echo(argv);
-    else if (ft_strequ(*argv, "pwd"))
-         ret = msh_pwd(env);
-    else if (ft_strequ(*argv, "env"))
-         ret = msh_env(env);
-    else if (ft_strequ(*argv, "export"))
-         ret = msh_export(env, argv);
-    else if (ft_strequ(*argv, "unset"))
-         ret = msh_unset(env, argv);
-    else if (ft_strequ(*argv, "exit"))
-         ret = msh_exit(tree, env);
-    else if (ft_strequ(*argv, "cd"))
-         ret = msh_cd(argv, env);
-    return (ret);
+    if (ft_strequ(cmd, "echo"))
+        return (msh_echo);
+    else if (ft_strequ(cmd, "pwd"))
+         return (msh_pwd);
+    else if (ft_strequ(cmd, "env"))
+         return (msh_env);
+    else if (ft_strequ(cmd, "export"))
+         return (msh_export);
+    else if (ft_strequ(cmd, "unset"))
+         return (msh_unset);
+    else if (ft_strequ(cmd, "exit"))
+         return (msh_exit);
+    else if (ft_strequ(cmd, "cd"))
+         return (msh_cd);
+    return (NULL);
 }

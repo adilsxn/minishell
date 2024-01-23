@@ -15,31 +15,18 @@
 
 /*Code adapted from github.com/adilsxn/pipex*/
 
-static void free_arr(char **arr)
+void free_arr(char **arr)
 {
 	int i;
 
 	i = -1;
 	while (arr[++i])
 	{
-		free(arr[i]);
+		ft_free(arr[i]);
 		arr[i] = NULL;
 	}
-	free(arr);
+	ft_free(arr);
 }
-/*
-static char	*get_path(char **envp)
-{
-	char	*path;
-	int		i;
-
-	i = 0;
-	path = NULL;
-	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
-		i++;
-	path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-	return (path);
-} */
 
 static char	**useful_paths(char *path)
 {
@@ -60,25 +47,28 @@ static char	**useful_paths(char *path)
 	return (paths);
 }
 
-char	*cmd_finder(t_tree *tree, t_env *env)
+char	*cmd_finder(t_tool *data, char *cmd)
 {
 	char	**paths;
 	char	*path;
 	int		i;
 
 	i = -1;
-    if (ft_strchr(tree->token, '/') != NULL)
-        return (tree->token);
-    paths = useful_paths((char *)get_env(env, "PATH")->value);
-	while (paths[++i])
+	if (!cmd)
+		return (NULL);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
+    paths = useful_paths((char *)get_env(data->env, "PATH")->value);
+	while (paths[++i] != NULL)
 	{
-		path = ft_strjoin(paths[i], tree->token);
+		path = ft_strjoin(paths[i], cmd);
 		if (!path)
-			return (NULL);
+			break ;
 		if (access(path, F_OK | X_OK) == 0)
-			return (ft_strdup(path));
+			break;
 		free(path);
+		path = NULL;
 	}
 	free_arr(paths);
-	return (NULL);
+	return (path);
 }

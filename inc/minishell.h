@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
 /*   Updated: 2024/01/23 20:21:06 by matde-je         ###   ########.fr       */
@@ -21,6 +21,8 @@
 # include <sys/types.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <linux/limits.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <sys/stat.h>
@@ -28,6 +30,10 @@
 
 # include "../libft/inc/libft.h"
 
+# define HD_W "warning: here-document delimited by end-of-file"
+# define HD_FILE "/tmp/heredoc"
+
+# define ERROR -1
 //lexer
 typedef enum s_token
 {
@@ -36,6 +42,7 @@ typedef enum s_token
 	GREAT_GREAT,
 	LESS,
 	LESS_LESS,
+    TWORD,
 }t_token;
 
 typedef struct s_lexer
@@ -48,18 +55,6 @@ typedef struct s_lexer
 }t_lexer;
 
 
-typedef enum e_order {
-    MINUS = -1,
-    PPE,
-    RDR,
-    CMD,
-} t_order;
-
-typedef struct e_state
-{
-	char *state;
-	int ret_code;
-}t_state;
 
 typedef struct s_env
 {
@@ -68,29 +63,54 @@ typedef struct s_env
 	struct s_env *prev;
 	struct s_env *next;
 } t_env;
-//parser
-typedef struct s_tree
-{
-    bool   root;
-    bool   heredoc;
-    char  *token;
-    t_order kind;
-    void (*fn)(struct s_tree *tree, t_env *env);
-    struct s_tree *left;
-    struct s_tree *right;
-} t_tree;
 
+//parser
+typedef enum e_rdirkind
+{
+	RDR_OUT,
+	RDR_IN,
+	RDR_APP,
+	RDR_HD,
+	RDR_CNT,
+}t_rdirkind;
+
+typedef struct s_rdr
+{
+	t_rdirkind				kind;
+	char					*value;
+	struct s_rdr	*next;
+}	t_rdr;
+
+
+typedef struct s_cmd
+{
+	char				*path;
+	int					argc;
+	char				**args;
+	char				**envp;
+	t_rdr		*rdir;
+}	t_cmd;
+
+typedef struct s_ppe
+{
+	int					pid;
+	int					exit_code;
+	t_cmd			*cmd;
+	struct s_ppe	*prev;
+	struct s_ppe	*next;
+}	t_ppe;
 
 typedef struct s_tool
 {
 	char					*arg;
 	t_lexer					*lexer;
-	t_tree					*tree;
+	t_ppe					*pipes;
 	t_env					*env;
+	char 					**envp;
 }t_tool;
 
 
-extern t_state g_state;
+extern int g_last_ret_code;
 
 int					init_env(char **envp, t_env **env);
 t_env				*set_env(t_env **env, const char *key, const char *value);
@@ -100,14 +120,15 @@ t_env				*get_env(t_env *env, const char *key);
 int					del_env(t_env *env);
 
 //bi
-int 				msh_cd(char **args, t_env *env);
-int 				msh_echo(char **args);
-int 				msh_env(t_env *env);
-int					msh_exit(t_tree *tree, t_env *env);
-int		 			msh_export(t_env *env, char **args);
-int					msh_pwd(t_env *env);
-int					msh_unset (t_env *env, char **args);
-int					exec_bi(char **argv, t_tree *tree, t_env *env);
+typedef int	t_bi (char **args, t_tool *data);
+int 				msh_cd(char **args, t_tool *data);
+int 				msh_echo(char **args, t_tool *data);
+int 				msh_env(char **args, t_tool *data);
+int					msh_exit(char **args, t_tool *data);
+int		 			msh_export(char **args, t_tool *data);
+int					msh_pwd(char **args, t_tool *data);
+int					msh_unset (char **args, t_tool *data);
+
 
 
 //lexer
@@ -127,12 +148,16 @@ void				lst_clear(t_lexer **lst);
 int					ft_error(int error, t_tool *tool);
 
 //parser
-t_tree 				*make_leaf(t_lexer *lexem);
-void 				tree_delete(t_tree *tree);
-void 				tree_print(t_tree *tree);
-t_tree 				*tree_insert(t_tree *tree, t_tree *it);
-bool 				is_complete(t_tree *tree);
-t_tree* 			parser(t_lexer *lexems);
+bool	is_builtin(char *str);
+void 	free_arr(char **arr);
+void ft_free(void *ptr);
+void	ft_err(char *message, char *detail);
+void	free_rdr(t_rdr *rdir);	
+t_rdr	*build_rdr(t_lexer *lexi);
+void	free_cmd(t_cmd *cmd);
+t_cmd	*mk_cmd(t_tool *data);
+t_ppe	*parser(t_tool *data);
+void	free_pipe(t_ppe *pipe);
 
 
 //expander
@@ -153,13 +178,20 @@ char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
 
 //minishell loop
-char 				**build_av(t_tree *tree);
-char				*cmd_finder(t_tree *tree, t_env *env);
-void 				exec_rdr(t_tree *tree, t_env *env);
-void 				exec_pipe(t_tree *tree, t_env *env);
-void 				tree_exec(t_tree *tree, t_env *env);
-void 				exec_cmd(t_tree *tree, t_env *env);
+ int count_token(t_lexer *lexi);
+ char **build_av(t_lexer *lexi);
+char				*cmd_finder(t_tool *data, char *cmd);
+void	execute_simple_cmd(t_tool *data);
+t_bi *get_bi(char *cmd);
+int	exec_bi(t_cmd *cmd, t_tool *data);
+void	exec_bin(t_cmd *cmd);
+int	exec_rdr(t_rdr *rdr);
+void	exec_pipe(t_ppe *pipeline, t_tool *data);
 
-void				setup_sgnl(void);
+//cleanup
+void clean_data(t_tool *data);
+void	clean_fds(void);
+//signal
+void sig_handl(void);
 
 #endif

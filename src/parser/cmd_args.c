@@ -12,41 +12,43 @@
 
 # include "../../inc/minishell.h"
 
-static int count_token(t_tree *tree)
+ int count_token(t_lexer *lexi)
 {
     int i;
-    t_tree *it;
 
     i = 0;
-    it = tree;
-    if (!it)
+    if (!lexi)
         return (0);
-    while (it != NULL)
+    while (lexi != NULL)
     {
-        i++;
-        it = it->right;
+        if (lexi->token == PIPE)
+             break;
+        if (lexi->str != NULL)
+            i++;
+        lexi = lexi->next;
     }
     return (i);
 }
 
-char **build_av(t_tree *tree)
+char **build_av(t_lexer *lexi)
 {
     char **av;
     int len;
     int i;
-    t_tree *curr;
 
-    len = count_token(tree);
+    len = count_token(lexi);
     av = ft_calloc(len + 1, sizeof(*av));
     if (av == NULL)
         return (NULL);
-    curr = tree;
+ 
     i = 0;
     while (i < len)
     {
-        av[i] = ft_strdup(curr->token);
-        curr = curr->right;
-        i++;
+        if (lexi->token == PIPE)
+            break;
+        if (lexi->str != NULL)
+            av[i++] = lexi->str;
+        lexi = lexi->next;
     }
     av[len + 1] = "\0";
     return (av);

@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_env.c                                          :+:      :+:    :+:   */
+/*   exec_s_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 16:11:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/11/27 16:11:54 by acuva-nu         ###   ########.fr       */
+/*   Created: 2024/01/22 19:16:15 by acuva-nu          #+#    #+#             */
+/*   Updated: 2024/01/23 12:19:15 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int del_env(t_env *env)
+void	execute_simple_cmd(t_tool *data)
 {
-    t_env *tmp;
-    t_env *next;
+	t_cmd	*cmd;
 
-    tmp = env;
-    while(tmp != NULL)
-    {
-        next = tmp->next;
-        ft_free((void *)tmp->key);
-        ft_free((void *)tmp->value);
-        ft_free(tmp); 
-        tmp = next;
-    }
-    return (0);
+	cmd = mk_cmd(data);
+	if (cmd == NULL)
+		return ;
+	if ((is_builtin(cmd->args[0]) != 0))
+		g_last_ret_code = exec_bi(cmd, data);
+	else
+		exec_bin(cmd);
+	free_cmd(cmd);
 }
