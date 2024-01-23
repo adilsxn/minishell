@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/21 17:29:55 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 20:21:06 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char				**ft_split2(char const *s, char c);
 
 // char				*check_dollar(t_env *env, char *str);
 // int					loop_dollar_sign(t_env *env, char *s, char *tmp, int j);
-char				*expander(t_env *env, char *str);
+char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
 
 //minishell loop

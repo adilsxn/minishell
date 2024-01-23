@@ -6,115 +6,206 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 18:03:42 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 22:17:47 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *get_key(char *str)
+char	*get_key(char *str)
 {
-	int i;
-	char *str1;
-	
+	int		i;
+	char	*str1;
+
 	str1 = ft_strchr(str, '$');
 	if (str1 == NULL)
 		return (NULL);
 	if (str1 != NULL && *str1 == '$')
 		str1++;
 	i = 0;
-	while(str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47 && str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
+	while(str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47 \
+	&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
 		i++;
 	return (ft_substr(str1, 0, i));
 }
 
+// char	*expander_aux(t_env *env, char *str2, char **str1, int i)
+// {
+// 	char *tmp;
+// 	t_env *env2;
+// 	char *str3;
+	
+// 	tmp = get_key(str1[i]);
+// 	if (tmp != NULL)
+// 	{
+// 		env2 = get_env(env, tmp);
+// 		if (env2 != NULL)
+// 		{
+// 			str3 = (char *)env2->value;
+// 			if (i > 0 && str2 != NULL)
+// 				str2 = double_strj(str2, str3, str1[i] + ft_strlen(tmp) + 1);
+// 			else
+// 				str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp) + 1);
+// 		}
+// 		else
+// 			if (i == 0)
+// 				str2 = NULL;
+// 	}
+// 	else
+// 		str2 = expander_help1(str2, str1, i);
+// 	i = loopin(&env2, &str3, tmp, i);
+// 	return (str2);
+// }
+
+// char	*expander(t_env *env, char *str2, char **str1)
+// {
+// 	t_env	*env2;
+// 	int		i;
+	
+// 	env2 = NULL;
+// 	i = 0;
+// 	while(str1[i] != NULL)
+// 	{
+// 		str2 = expander_aux(env, str2, str1, i);
+// 	}
+// 	free_array(str1);
+// 	return (str2);
+// }
+
+// char	*expander21(t_env *env, t_lexer *lexi, t_lexer *lex)
+// {
+// 	char	**str1;
+// 	char	*str2;
+
+// 	lexi->str = del_quotes(lexi->str, '\"');
+// 	if (lexi->str[0] == 39)
+// 	{
+// 		lexi->str = del_quotes(lexi->str, '\'');
+// 		return (lex->str);
+// 	}
+// 	str1 = ft_split2(lexi->str, '$');
+// 	str2 = str1[0];
+// 	lexi->str = expander(env, str2, str1);
+// 	return (lexi->str);
+// }
+
+char	*expander_help1(int len, char *str2, char **str1, int i)
+{
+	if (len == 1)
+		str2 = ft_strdup(str2);
+	else if (i > 0 && str2 != NULL)
+		str2 = ft_strjoin(str2, str1[i]);
+	return (str2);
+}
+
+int	loopin(t_env **env2, char **str3, char *tmp, int i)
+{
+	i++;
+	free(tmp);
+	*env2 = NULL;
+	*str3 = NULL;
+	return (i);
+}
+
+char	*double_strj(char *str2, char *str3, char *str1)
+{
+	str2 = ft_strjoin(str2, str3);
+	if (str2)
+		str2 = ft_strjoin(str2, str1);
+	return (str2);
+}
+
+void loop_help1(t_env *env2, char **str3)
+{
+	if (env2 != NULL)
+		*str3 = (char *)env2->value;
+}
+
+void loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
+{
+	if (*i > 0 && *str2 != NULL)
+	{
+		*str2 = ft_strjoin(*str2, str3);
+		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(get_key(str1[*i])) + 1);
+	}
+	else
+		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(get_key(str1[*i])) + 1);
+	
+}
+
+int initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
+{
+	int len;
+
+	len = 0;
+	*env2 = NULL;
+	*i = 0;
+	while(str1[len])
+		len++;
+	*str2 = str1[0];
+	return (len);
+}
+char	*init_expand(char **str, char	***str1)
+{
+	*str = del_quotes(*str, '\"');
+	if (*str[0] == 39)
+	{
+		del_quotes(*str, '\'');
+		return (*str);
+	}
+	*str1 = ft_split2(*str, '$');
+	return (NULL);
+}
+
 char	*expander(t_env *env, char *str)
 {
-	char	*tmp;
 	t_env	*env2;
-	char	**str1;
 	char	*str2;
 	char	*str3;
 	int		i;
+	char	**str1;
 	int		len;
-	
-	env2 = NULL;
-	i = 0;
-	len = 0;
-	str = del_quotes(str, '\"');
-	if (str[0] == 39)
-	{
-		del_quotes(str, '\'');
+
+	if (init_expand(&str, &str1) != NULL)
 		return (str);
-	}
-	str1 = ft_split2(str, '$');
-	while(str1[len])
-		len++;
-	str2 = str1[0];
+	len = initialize_expander(&env2, &i, &str2, str1);
 	while(str1[i] != NULL)
 	{
-		tmp = get_key(str1[i]);
-		if (tmp != NULL)
+		if (get_key(str1[i]) != NULL)
 		{
-			env2 = get_env(env, tmp);
+			env2 = get_env(env, get_key(str1[i]));
+			loop_help1(env2, &str3);
 			if (env2 != NULL)
-			{
-				str3 = (char *)env2->value;
-				if (i > 0 && str2 != NULL)
-				{
-					str2 = ft_strjoin(str2, str3);
-					str2 = ft_strjoin(str2, str1[i] + ft_strlen(tmp) + 1);
-				}
-				else
-					str2 = ft_strjoin(str3, str1[i] + ft_strlen(tmp) + 1);
-			}
-			else
-				if (i == 0)
-					str2 = NULL;
+				loop_help2(&i, &str2, str3, str1);
+			if (get_key(str1[i]) != NULL && (i == 0) && env2 == NULL)
+				str2 = NULL;
 		}
-		else 
-		{
-			if (len == 1)
-				str2 = ft_strdup(str2);
-			else if (i > 0 && str2 != NULL)
-				str2 = ft_strjoin(str2, str1[i]);
-		}
-		i++;
-		tmp = NULL;
-		env2 = NULL;
-		str3 = NULL;
+		else
+			str2 = expander_help1(len, str2, str1, i);
+		i = loopin(&env2, &str3, get_key(str1[i]), i);
 	}
-	str = str2;
-	i = -1;
-	while(str1[++i])
-		free(str1[i]);
-	return (str);
+	free_array(str1);
+	return (str2);
 }
 
 t_lexer	*expander2(t_env *env, t_lexer *lexi)
 {
-	t_lexer *lex;
+	t_lexer	*lex;
 
 	lex = lexi;
 	while (lexi)
 	{
 		if (lexi->str)
 		{
-			if (lexi->i > 0)
-				printf("token and i %i, %i\n", lexi->prev->token, lexi->prev->i);
-			if (lexi->i == 0 || (lexi->i > 0 && (!lexi->prev->token || lexi->prev->token != 5)))
-			{
+			if (lexi->i == 0 || (lexi->i > 0 \
+			&& (!lexi->prev->token || lexi->prev->token != 5)))
 				lexi->str = expander(env, lexi->str);
-			}
 			else
-			{
 				lexi->str = del_quotes(lexi->str, 34);
-			}
 		}
 		lexi = lexi->next;
 	}
-	lexi = lex;
-	return (lexi);
+	return (lex);
 }	
 
 // char	*expander2(t_env *env, char *str)

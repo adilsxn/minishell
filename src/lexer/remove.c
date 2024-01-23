@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/22 19:21:28 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:03:56 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,22 @@ void	*clear_one(t_lexer **lst)
 void	del_first(t_lexer **lst)
 {
 	t_lexer	*node;
+	t_lexer	*node1;
 
+	printf("lst i: %i\n", (*lst)->i);
 	node = *lst;
 	*lst = node->next;
 	clear_one(&node);
 	if (*lst)
 		(*lst)->prev = NULL;
+	node1 = *lst;
 	while (*lst)
 	{
 		(*lst)->i = (*lst)->i -1;
+		printf("lst i: %i\n", (*lst)->i);
 		(*lst) = (*lst)->next;
 	}
-	(*lst) = (*lst)->prev;
-	while (*lst)
-	{
-		printf("%i", (*lst)->i);
-		(*lst) = (*lst)->prev;
-	}
-	
+	*lst = node1;
 }
 
 //update the prev->next pointer to skip the node deleted
@@ -51,6 +49,7 @@ void	del_one(t_lexer **lst, int i)
 	t_lexer	*node;
 	t_lexer	*prev;
 	t_lexer	*start;
+	t_lexer *current;
 
 	start = *lst;
 	node = start;
@@ -64,15 +63,16 @@ void	del_one(t_lexer **lst, int i)
 		prev = node;
 		node = node->next;
 	}
-	if (node)
+	if (node->next)
 	{
 		prev->next = node->next;
-		prev = prev->next;
-		while (prev)
+		current = prev->next;
+		while (current)
 		{
-			prev->i = prev->i -1;
-			printf("%i", prev->i);
-			prev = prev->next;
+			current->i = current->i -1;
+			current->prev = prev;
+        	prev = current;
+			current = current->next;
 		}
 	}
 	else

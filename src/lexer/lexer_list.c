@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/04 20:29:20 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:57:20 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	if (check_token(str[i], 0) != 0)
 	{
 		new_node(NULL, check_token(str[i], str[i + 1]), lexer);
-		if (check_token(str[i], str[i + 1]) == 3 || check_token(str[i], str[i + 1]) == 5)
+		if (check_token(str[i], str[i + 1]) == 3 \
+		|| check_token(str[i], str[i + 1]) == 5)
 			return (1);
 		return (0);
 	}
@@ -86,7 +87,6 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 			return (NULL);
 		}
 	}
-	i = 0;
 	lex = lexer;
 	while (lex)
 	{
@@ -94,19 +94,11 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		{
 			if (lex->str[0] == 0)
 			{
-				printf("deled %i\n", lex->i);
 				del_one(&lexer, lex->i);
 				lex = lexer;
 			}
 		}
 		lex = lex->next;
-	}
-	lex = lex->prev;
-	while (lex)
-	{
-		if (lex->str != NULL)
-			printf("lexprev %i, %s, %i\n" , lex->i, lex->str, lex->token);
-		lex = lex->prev;
 	}
 	free(str);
 	return (lexer);

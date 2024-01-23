@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 15:22:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/20 18:17:12 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:51:02 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	stralloc2(char const *s, char c, char **arr, int i)
 		char_count++;
 		s++;
 	}
-	arr[i] = (char *)malloc(sizeof(char) * (char_count + 1));
+	arr[i] = (char *)malloc(sizeof(char) * (char_count + 2));
 	if (!arr[i])
 	{
 		while (i--)

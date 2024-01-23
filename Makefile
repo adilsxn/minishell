@@ -6,7 +6,7 @@
 #    By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/01/22 14:20:57 by matde-je         ###   ########.fr        #
+#    Updated: 2024/01/23 15:05:47 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,8 @@ fclean: clean
 
 re: fclean all
 
-norm:
-	norminette -R CheckForbiddenSourceHeader ${SRCS}
-	norminette -R CheckDefine ${INCS}
+# norm:
+# 	norminette -R CheckForbiddenSourceHeader ${SRCS}
+# 	norminette -R CheckDefine ${INCS}
 
 .PHONY: all re clean fclean 
