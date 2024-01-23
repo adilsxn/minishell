@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+         #
+#    By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
 #    Updated: 2024/01/23 22:22:54 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c tree_utils.c   \
-			 tree_utils_2.c parser.c error.c remove.c lexer_utils.c lexer_list.c       \
-			 cmd_finder.c cmd_args.c command.c pipe.c redirection.c  \
-			 pwd.c echo.c unset.c exit.c export.c cd.c builtins.c main.c  \
-			 setup_sgnl.c  expand_utilspt2.c expand_utils.c expand.c main.c
+SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c cmd_finder.c         \
+			 cmd_args.c command.c pipe.c hdoc.c redirection.c signals.c                      \
+			 remove.c lexer_utils.c lexer_list.c exec_rdr.c exec_s_cmd.c exec_pipe.c         \
+			 exec_bin.c exec_bi.c pwd.c echo.c unset.c exit.c export.c cd.c builtins.c       \
+			 error.c cleanup.c main.c expand_utilspt2.c expand_utils.c expand.c 
 
 #Add any missing folder containing a .c to the vpath
-vpath %.c src/ src/signals src/executor src/expander src/bi src/lexer src/parser  src/env
+vpath %.c src/ src/signals src/executor src/executor src/expander src/bi src/lexer src/parser  src/env
 OBJ_DIR = ./obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
@@ -34,8 +34,7 @@ all: ${NAME}
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p ${OBJ_DIR}
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS)
-
+	@$(CC) $(CFLAGS) -c $< -o $@
 ${NAME}: ${OBJS} 
 	@echo "Compiling minishell"
 	@make -s -C libft

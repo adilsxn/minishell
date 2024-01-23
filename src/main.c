@@ -6,11 +6,13 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 21:44:07 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 23:39:05 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int g_last_ret_code = 0;
 
 static void  minishell_loop(t_tool *shell)
 {
@@ -27,6 +29,8 @@ static void  minishell_loop(t_tool *shell)
 		exit (0);
 	}
 	add_history(input);
+    free(input);
+	shell->lexer = lex;
 	shell->lexer = lexer(input, shell->lexer, shell);
 	lex = shell->lexer;
 	while (lex)
@@ -53,13 +57,13 @@ int main(int ac, char **av, char **envp)
 {
 	t_tool shell;
 
-	shell = (t_tool){NULL, NULL, NULL, NULL};
+    ft_bzero(&shell, sizeof(t_tool));
 	if (ac != 1 || av[1])
 	{
-		printf("No args accepted\n");
-		exit(0);
+		ft_err("no args accepted", NULL);
+		exit(EXIT_FAILURE);
 	}
-//	setup_sgnl();
+    sig_handl();
 	init_env(envp, &shell.env);
 	minishell_loop(&shell);
 	return (0);
