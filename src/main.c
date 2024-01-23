@@ -17,18 +17,39 @@ int g_last_ret_code = 0;
 static void  minishell_loop(t_tool *shell)
 {
 	char *input;
-	t_lexer *lexi = NULL;
+	t_lexer	*lex;
 
-	input = readline("msh$ ");
+	input = readline("minishell> ");
 	input = ft_strtrim(input, " ");
 	if (!input || !*input)
 	{
+		del_env(shell->env);
+		free(input);
 		ft_putendl_fd("exit", 1);
 		exit (0);
 	}
 	add_history(input);
     free(input);
 	shell->lexer = lexi;
+	shell->lexer = lexer(input, shell->lexer, shell);
+	lex = shell->lexer;
+	while (lex)
+	{
+		printf("lexer: %i, %s, %i\n", lex->i, lex->str, lex->token);
+		lex = lex->next;
+	}
+	shell->lexer = expander2(shell->env, shell->lexer);
+	lex = shell->lexer;
+	while (lex)
+	{
+		printf("lexer expander: %i, %s, %i\n", lex->i, lex->str, lex->token);
+		lex = lex->next;
+	}
+	//shell->tree = parser(shell->lexer);
+	lst_clear(&shell->lexer);
+	//free(shell->lexer);
+	// tree_exec(shell->tree, shell->env);
+	// free(shell->tree);
 	//minishell_loop(shell);
 }
 

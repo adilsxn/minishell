@@ -6,7 +6,7 @@
 #    By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/01/23 13:41:32 by acuva-nu         ###   ########.fr        #
+#    Updated: 2024/01/23 15:05:47 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,6 @@ ${NAME}: ${OBJS}
 	@echo "Compiling minishell"
 	@make -s -C libft
 	@${CC} ${CFLAGS}  $^ -o $@  -I ${INCS} ${LDFLAGS}
-	${RM} ${OBJ_DIR}
-	make clean -s -C libft
 	@echo "minishell created"
 
 clean:
@@ -54,8 +52,8 @@ fclean: clean
 
 re: fclean all
 
-norm:
-	norminette -R CheckForbiddenSourceHeader ${SRCS}
-	norminette -R CheckDefine ${INCS}
+# norm:
+# 	norminette -R CheckForbiddenSourceHeader ${SRCS}
+# 	norminette -R CheckDefine ${INCS}
 
 .PHONY: all re clean fclean 

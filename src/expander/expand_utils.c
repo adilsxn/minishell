@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/08 13:41:08 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/23 15:15:16 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	after_dollar_len(char *str, int j)
 
 	i = j + 1;
 	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-'
-		&& str[i] != ':')
+		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' \
+		&& str[i] != '-' && str[i] != ':')
 		i++;
 	return (i);
 }

@@ -24,12 +24,22 @@ void	*clear_one(t_lexer **lst)
 void	del_first(t_lexer **lst)
 {
 	t_lexer	*node;
+	t_lexer	*node1;
 
+	printf("lst i: %i\n", (*lst)->i);
 	node = *lst;
 	*lst = node->next;
 	clear_one(&node);
 	if (*lst)
 		(*lst)->prev = NULL;
+	node1 = *lst;
+	while (*lst)
+	{
+		(*lst)->i = (*lst)->i -1;
+		printf("lst i: %i\n", (*lst)->i);
+		(*lst) = (*lst)->next;
+	}
+	*lst = node1;
 }
 
 //update the prev->next pointer to skip the node deleted
@@ -39,6 +49,7 @@ void	del_one(t_lexer **lst, int i)
 	t_lexer	*node;
 	t_lexer	*prev;
 	t_lexer	*start;
+	t_lexer *current;
 
 	start = *lst;
 	node = start;
@@ -52,8 +63,18 @@ void	del_one(t_lexer **lst, int i)
 		prev = node;
 		node = node->next;
 	}
-	if (node)
+	if (node->next)
+	{
 		prev->next = node->next;
+		current = prev->next;
+		while (current)
+		{
+			current->i = current->i -1;
+			current->prev = prev;
+        	prev = current;
+			current = current->next;
+		}
+	}
 	else
 		prev->next = NULL;
 	clear_one(&node);
