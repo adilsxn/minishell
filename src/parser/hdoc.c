@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <string.h>
 
 
-static char	*here_doc_content(char *delim, char quote)
+static char	*get_line_hdoc(char *delim)
 {
 	char	*content;
 	char	*line;
@@ -22,56 +23,52 @@ static char	*here_doc_content(char *delim, char quote)
 	line = readline("> ");
 	while (line != NULL && (ft_strequ(line, delim) != 0))
 	{
-		content = join_line(content, line, quote);
+		content = ft_strjoin(content, line);
 		if (content == NULL)
 			break ;
-		line = readline("here_doc: ");
+		line = readline("> ");
 	}
-	check_line_and_free(line, delim);
+    if (!line)
+        ft_free(line);
+	else
+		ft_err(HD_W, delim);
 	return (content);
 }
 
-static void	heredoc_proc(int pipe_fd[2], char *delim, char quote)
+static void	heredoc_proc(int pipe_fd[2], char *delim)
 {
-	char	*content;
+	char	*line;
 
 	sig_handl();
-	content = here_doc_content(delim, quote);
-	if (content == NULL)
+	line = get_line_hdoc(delim);
+	if (line == NULL)
 		exit(EXIT_FAILURE);
-	ft_putstr_fd(content, pipe_fd[1]);
+	ft_putstr_fd(line, pipe_fd[1]);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	free(content);
+	ft_free(line);
 	exit(EXIT_SUCCESS);
 }
 
-static char	*get_content_from_pipe(int pipe_fd[2])
+static char	*get_line_pipe(int pipe_fd[2])
 {
-	int		res;
 	char	*line;
 	char	*content;
 
 	content = ft_strdup("");
-	res = get_next_line(pipe_fd[0], &line);
-	while (res != END_OF_FILE)
+	line = get_next_line(pipe_fd[0]);
+	while (line != NULL)
 	{
-		if (res == GNL_ERROR)
-		{
-			free(content);
-			return (NULL);
-		}
-		content = join_line(content, line, SINGLE_QUOTE);
-		res = get_next_line(pipe_fd[0], &line);
+		content = ft_strjoin(content, line);
+		line = get_next_line(pipe_fd[0]);
 		if (content == NULL)
 			return (NULL);
 	}
-	if (line != NULL)
-		free(line);
+    ft_free(line);
 	return (content);
 }
 
-static char	*handle_child_process_quit(int pid, int pipe_fd[2])
+static char	*handle_child_exit(int pid, int pipe_fd[2])
 {
 	int		status;
 	char	*content;
@@ -80,13 +77,13 @@ static char	*handle_child_process_quit(int pid, int pipe_fd[2])
 	content = NULL;
 	close(pipe_fd[1]);
 	if ((waitpid(pid, &status, 0) == -1))
-		perror("heredoc: ");
+        ft_err("heredoc", strerror(errno));
 	if (WIFEXITED(status))
 	{
 		g_last_ret_code = WEXITSTATUS(status);
 		if (g_last_ret_code == 0)
 		{
-			content = get_content_from_pipe(pipe_fd);
+			content = get_line_pipe(pipe_fd);
 			if (content == NULL)
 				ft_err(NULL, NULL);
 		}
@@ -97,32 +94,31 @@ static char	*handle_child_process_quit(int pid, int pipe_fd[2])
 	return (content);
 }
 
-void	*heredoc(t_lexer *lexi)
+int heredoc(t_lexer *lexi)
 {
 	int		pid;
 	int		fd[2];
 	char	*delim;
-	char	quote;
 	char	*line;
 
 	line = NULL;
-	quote = '"';
 	while (lexi != NULL)
 	{
 		if (lexi->token == LESS_LESS)
 		{
-			delim = ft_strdup(lexi->next->str);
+			delim = lexi->next->str;
 			if ((pipe(fd) == -1))
-				return (ft_err("pipe failed", strerror(errno)), NULL);
+				return (ft_err("pipe failed", strerror(errno)),1);
 			pid = fork();
 			if (pid == -1)
-				ft_err("fork failed", strerror(errno));
+				return(ft_err("fork failed", strerror(errno)), 1);
 			else if (pid == 0)
-				heredoc_proc(fd, delim, quote);
+				heredoc_proc(fd, delim);
 			else
-				line = handle_child_process_quit(pid, fd);
+				line = handle_child_exit(pid, fd);
 			lexi->str = line;
 		}
 		lexi = lexi->next;
 	}
+    return (0);
 }

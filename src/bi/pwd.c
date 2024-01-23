@@ -17,6 +17,9 @@ int   msh_pwd(char **args, t_tool *data)
 {
     char buf[PATH_MAX];
     char *cwd;
+
+    (void)args;
+    cwd = NULL;
     if (get_env(data->env, "PWD") != NULL)
     {
         ft_putendl_fd((char *)get_env(data->env, "PWD")->value, 1);

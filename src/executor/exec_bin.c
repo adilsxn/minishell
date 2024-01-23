@@ -24,7 +24,7 @@ static void	child_process(t_cmd *cmd)
 	if (cmd->path == NULL)
 		exit(0);
 	clean_fds();
-	if (execve(cmd->path, cmd->args, cmd->envp) == ERROR);
+	if (execve(cmd->path, cmd->args, cmd->envp) == ERROR)
 		ft_err("execve failed", strerror(errno));
 	exit(1);
 }

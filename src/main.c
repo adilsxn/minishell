@@ -12,13 +12,13 @@
 
 #include "../inc/minishell.h"
 
+int g_last_ret_code = 0;
+
 static void  minishell_loop(t_tool *shell)
 {
-	int i;
 	char *input;
 	t_lexer *lexi = NULL;
 
-	i = -1;
 	input = readline("msh$ ");
 	input = ft_strtrim(input, " ");
 	if (!input || !*input)
@@ -36,11 +36,11 @@ int main(int ac, char **av, char **envp)
 {
 	t_tool shell;
 
-	shell = (t_tool){NULL, NULL, NULL, NULL};
+    ft_bzero(&shell, sizeof(t_tool));
 	if (ac != 1 || av[1])
 	{
-		printf("No args accepted\n");
-		exit(0);
+		ft_err("no args accepted", NULL);
+		exit(EXIT_FAILURE);
 	}
     sig_handl();
 	init_env(envp, &shell.env);

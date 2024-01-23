@@ -32,7 +32,7 @@ bool	is_builtin(char *str)
     return (false);
 }
 
-void	free_(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return ;

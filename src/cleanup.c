@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "../inc/minishell.h"
 
 void clean_data(t_tool *data)
 {

@@ -30,7 +30,7 @@
 
 # include "../libft/inc/libft.h"
 
-# define HD_W "warning: here-document delimited by end-of-file: "
+# define HD_W "warning: here-document delimited by end-of-file"
 # define HD_FILE "/tmp/heredoc"
 
 # define ERROR -1
