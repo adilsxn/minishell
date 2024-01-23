@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/23 22:17:47 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/23 23:31:48 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,17 @@ void loop_help1(t_env *env2, char **str3)
 
 void loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
 {
+	char *tmp;
+	
+	tmp = get_key(str1[*i]);
 	if (*i > 0 && *str2 != NULL)
 	{
 		*str2 = ft_strjoin(*str2, str3);
-		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(get_key(str1[*i])) + 1);
+		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(tmp) + 1);
 	}
 	else
-		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(get_key(str1[*i])) + 1);
-	
+		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(tmp) + 1);
+	free(tmp);
 }
 
 int initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
@@ -162,6 +165,7 @@ char	*expander(t_env *env, char *str)
 	t_env	*env2;
 	char	*str2;
 	char	*str3;
+	char	*tmp;
 	int		i;
 	char	**str1;
 	int		len;
@@ -171,18 +175,19 @@ char	*expander(t_env *env, char *str)
 	len = initialize_expander(&env2, &i, &str2, str1);
 	while(str1[i] != NULL)
 	{
-		if (get_key(str1[i]) != NULL)
+		tmp = get_key(str1[i]);
+		if (tmp!= NULL)
 		{
-			env2 = get_env(env, get_key(str1[i]));
+			env2 = get_env(env, tmp);
 			loop_help1(env2, &str3);
 			if (env2 != NULL)
 				loop_help2(&i, &str2, str3, str1);
-			if (get_key(str1[i]) != NULL && (i == 0) && env2 == NULL)
+			if (tmp != NULL && (i == 0) && env2 == NULL)
 				str2 = NULL;
 		}
 		else
 			str2 = expander_help1(len, str2, str1, i);
-		i = loopin(&env2, &str3, get_key(str1[i]), i);
+		i = loopin(&env2, &str3, tmp, i);
 	}
 	free_array(str1);
 	return (str2);
