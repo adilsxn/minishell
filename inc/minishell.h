@@ -85,7 +85,8 @@ typedef struct s_rdr
 {
 	t_rdirkind		kind;
 	char			*value;
-	struct s_rdr	*next;
+	struct s_rdr	*next;	t_lexer	*lex;
+
 }					t_rdr;
 
 typedef struct s_cmd
@@ -118,6 +119,7 @@ typedef struct s_tool
 extern int			g_last_ret_code;
 
 int					init_env(char **envp, t_env **env);
+t_env	*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env *env, const char *key);
 t_env				*get_env(t_env *env, const char *key);
@@ -161,6 +163,7 @@ void				free_cmd(t_cmd *cmd);
 t_cmd				*mk_cmd(t_tool *data);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe *pipe);
+int					heredoc(t_lexer *lexi);
 
 // expander
 
@@ -184,15 +187,15 @@ void				freer(t_envy *ex, char *str);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi);
 char				*cmd_finder(t_tool *data, char *cmd);
-void				execute_simple_cmd(t_tool *data);
+void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
-void				exec_pipe(t_ppe *pipeline, t_tool *data);
+void				exec_pipe(t_tool *data);
 
 // cleanup
-void				clean_data(t_tool *data);
+void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
 int					sub(char *str, int i, int count, t_lexer **lexer);
 // signal

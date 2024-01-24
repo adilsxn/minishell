@@ -12,18 +12,20 @@
 
 #include "../inc/minishell.h"
 
-void	clean_data(t_tool *data)
+void	clean_data(t_tool *data, bool has_history)
 {
-	if (data->arg)
+	if (data && data->arg)
 		ft_free(data->arg);
-	if (data->lexer)
+	if (data && data->lexer)
 		lst_clear(&data->lexer);
-	if (data->env)
+	if (data && data->env)
 		del_env(data->env);
-	if (data->pipes)
+	if (data && data->pipes)
 		free_pipe(data->pipes);
-	if (data->envp)
+	if (data && data->envp)
 		free_arr(data->envp);
+	if (has_history == true)
+		rl_clear_history();
 }
 
 void	clean_fds(void)

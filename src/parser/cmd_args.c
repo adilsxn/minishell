@@ -24,6 +24,8 @@ int	count_token(t_lexer *lexi)
 	{
 		if (lexi->token == PIPE)
 			break ;
+		if (lexi->token == LESS_LESS && !(lexi->next->str))
+			break ;
 		if (lexi->str != NULL)
 			i++;
 		lexi = lexi->next;
@@ -45,6 +47,8 @@ char	**build_av(t_lexer *lexi)
 	while (i < len)
 	{
 		if (lexi->token == PIPE)
+			break ;
+		if (lexi->token == LESS_LESS && !(lexi->next->str))
 			break ;
 		if (lexi->str != NULL)
 			av[i++] = lexi->str;

@@ -17,6 +17,8 @@ t_env	*get_env(t_env *env, const char *key)
 {
 	t_env	*tmp;
 
+	if (ft_strequ(key, "?"))
+		set_env(&env, "?", ft_itoa(g_last_ret_code));
 	tmp = env;
 	while (tmp != NULL && !ft_strequ(key, tmp->key))
 	{

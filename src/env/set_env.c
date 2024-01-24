@@ -13,7 +13,7 @@
 
 #include "../../inc/minishell.h"
 
-static t_env	*mk_env(const char *key, const char *value, t_env *prev)
+t_env	*mk_env(const char *key, const char *value, t_env *prev)
 {
 	t_env	*env;
 

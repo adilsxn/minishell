@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <string.h>
 
 static char	*get_line_hdoc(char *delim)
 {
@@ -19,13 +18,13 @@ static char	*get_line_hdoc(char *delim)
 	char	*line;
 
 	content = ft_strdup("");
-	line = readline("> ");
+	line = readline("heredoc> ");
 	while (line != NULL && (ft_strequ(line, delim) != 0))
 	{
 		content = ft_strjoin(content, line);
 		if (content == NULL)
 			break ;
-		line = readline("> ");
+		line = readline("heredoc> ");
 	}
 	if (!line)
 		ft_free(line);
@@ -106,6 +105,7 @@ int	heredoc(t_lexer *lexi)
 		if (lexi->token == LESS_LESS)
 		{
 			delim = lexi->next->str;
+
 			if ((pipe(fd) == -1))
 				return (ft_err("pipe failed", strerror(errno)), 1);
 			pid = fork();

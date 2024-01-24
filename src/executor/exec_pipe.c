@@ -84,7 +84,7 @@ static void	wait_procs(t_ppe *procs)
 	}
 }
 
-void	exec_pipe(t_ppe *pipeline, t_tool *data)
+void	exec_pipe(t_tool *data)
 {
 	int		std_fd[2];
 	int		proc_fd[2];
@@ -95,7 +95,7 @@ void	exec_pipe(t_ppe *pipeline, t_tool *data)
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	proc_fd[STDOUT_FILENO] = -1;
-	proc = pipeline;
+	proc = data->pipes;
 	while (proc != NULL)
 	{
 		create_proc(proc, proc_fd, std_fd, data);
@@ -105,5 +105,5 @@ void	exec_pipe(t_ppe *pipeline, t_tool *data)
 	dup2(std_fd[STDOUT_FILENO], STDOUT_FILENO);
 	close(std_fd[STDIN_FILENO]);
 	close(std_fd[STDOUT_FILENO]);
-	wait_procs(pipeline);
+	wait_procs(data->pipes);
 }

@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	execute_simple_cmd(t_tool *data)
+void	exec_cmd(t_tool *data)
 {
 	t_cmd	*cmd;
 

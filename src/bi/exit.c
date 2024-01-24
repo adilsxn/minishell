@@ -83,6 +83,8 @@ int	msh_exit(char **args, t_tool *data)
 		else if (args[2])
 			return (ft_err("exit: too many arguments", args[1]), 1);
 	}
-	clean_data(data);
-	return (exit_code);
+	ft_putendl_fd("exit", 2);
+	clean_fds();
+	clean_data(data, false);
+	exit(exit_code);
 }
