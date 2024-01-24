@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 18:37:15 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:16:33 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ typedef struct s_rdr
 {
 	t_rdirkind		kind;
 	char			*value;
-	struct s_rdr	*next;	t_lexer	*lex;
+	struct s_rdr	*next;
+	t_lexer			*lex;
 
 }					t_rdr;
 
@@ -119,7 +120,7 @@ typedef struct s_tool
 extern int			g_last_ret_code;
 
 int					init_env(char **envp, t_env **env);
-t_env	*mk_env(const char *key, const char *value, t_env *prev);
+t_env				*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env *env, const char *key);
 t_env				*get_env(t_env *env, const char *key);

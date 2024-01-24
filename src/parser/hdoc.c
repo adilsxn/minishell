@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:34:39 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 13:55:32 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:14:57 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	heredoc(t_lexer *lexi)
 		if (lexi->token == LESS_LESS)
 		{
 			delim = lexi->next->str;
-
 			if ((pipe(fd) == -1))
 				return (ft_err("pipe failed", strerror(errno)), 1);
 			pid = fork();

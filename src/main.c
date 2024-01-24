@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 18:14:16 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:28:51 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	minishell_loop(t_tool *shell)
 	heredoc(shell->lexer);
 	shell->lexer = expander2(shell->env, shell->lexer);
 	shell->pipes = parser(shell);
-		if (shell->pipes != NULL)
-			exec_pipe(shell);
+	if (shell->pipes != NULL)
+		exec_pipe(shell);
 	else
 		exec_cmd(shell);
 	clean_data(shell, false);
@@ -39,6 +39,7 @@ int	main(int ac, char **av, char **envp)
 
 	ft_bzero(&shell, sizeof(t_tool));
 	shell = (t_tool){NULL, NULL, NULL, NULL, NULL};
+	shell.envp = ft_arrdup(envp);
 	if (ac != 1 || av[1])
 	{
 		ft_err("no args accepted", NULL);
