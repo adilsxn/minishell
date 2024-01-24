@@ -22,11 +22,8 @@ void	free_arr(char **arr)
 
 	i = -1;
 	while (arr[++i])
-	{
-		ft_free(arr[i]);
-		arr[i] = NULL;
-	}
-	ft_free(arr);
+		free(arr[i]);
+	free(arr);
 }
 
 static char	**useful_paths(char *path)

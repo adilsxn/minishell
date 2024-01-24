@@ -20,7 +20,7 @@ t_env	*mk_env(const char *key, const char *value, t_env *prev)
 	env = NULL;
 	if (!key || !value)
 		return (NULL);
-	env = malloc(sizeof(*env));
+	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->key = ft_strdup(key);

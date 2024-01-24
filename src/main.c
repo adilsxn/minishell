@@ -23,7 +23,8 @@ static void	minishell_loop(t_tool *shell)
 	add_history(shell->arg);
 	shell->lexer = lexer(shell->arg, shell->lexer);
 	shell->lexer = expander2(shell->env, shell->lexer);
-	heredoc(shell->lexer);
+	if (has_heredoc(shell->lexer) == true)
+		heredoc(shell->lexer);
 	shell->lexer = expander2(shell->env, shell->lexer);
 	shell->pipes = parser(shell);
 	if (shell->pipes != NULL)

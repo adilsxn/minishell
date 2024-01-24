@@ -25,7 +25,7 @@ INCS 	   = inc/
 NAME       = minishell
 
 CC         = cc
-CFLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address,undefined
 
 LDFLAGS	   = -L./libft -lft -lreadline
 RM         = rm -rf

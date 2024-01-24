@@ -164,6 +164,7 @@ void				free_cmd(t_cmd *cmd);
 t_cmd				*mk_cmd(t_tool *data);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe *pipe);
+bool has_heredoc(t_lexer *lexer);
 int					heredoc(t_lexer *lexi);
 
 // expander

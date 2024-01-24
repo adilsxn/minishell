@@ -53,11 +53,14 @@ static t_ppe	*mk_pipe(t_tool *data, t_ppe *prev)
 
 static t_lexer	*peek_pipe(t_lexer *lexer)
 {
-	while (lexer != NULL)
+	t_lexer *it;
+
+	it = lexer;
+	while (it != NULL)
 	{
-		if (lexer->token == PIPE)
-			return (lexer->next);
-		lexer = lexer->next;
+		if (it->token == PIPE)
+			return (it->next);
+		it = it->next;
 	}
 	return (NULL);
 }

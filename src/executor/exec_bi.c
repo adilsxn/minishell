@@ -30,7 +30,7 @@ int	exec_bi(t_cmd *cmd, t_tool *data)
 		ft_err(cmd->args[0], "could not execute builtin");
 		return (2);
 	}
-	return_code = builtin(cmd->args + 1, data);
+	return_code = builtin(cmd->args, data);
 	if (cmd->rdir != NULL)
 	{
 		dup2(fd[STDIN_FILENO], STDIN_FILENO);

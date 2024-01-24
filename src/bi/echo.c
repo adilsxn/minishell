@@ -31,7 +31,7 @@ static bool	is_flag_on(char *str)
 
 static void	printerx(char **args, bool nflag, int i)
 {
-	if (!args[i])
+	if (args[i] == NULL)
 	{
 		if (nflag == false)
 			ft_putchar_fd('\n', STDOUT_FILENO);

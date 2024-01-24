@@ -39,7 +39,7 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->path != NULL)
 		ft_free(cmd->path);
 	if (cmd->args != NULL)
-		ft_free(cmd->args);
+		free_arr(cmd->args);
 	if (cmd->envp != NULL)
 		free_arr(cmd->envp);
 	if (cmd->rdir != NULL)
@@ -51,7 +51,7 @@ t_cmd	*mk_cmd(t_tool *data)
 {
 	t_cmd	*cmd;
 
-	cmd = ft_calloc(1, sizeof(*cmd));
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	cmd->envp = ft_arrdup(data->envp);
@@ -60,11 +60,8 @@ t_cmd	*mk_cmd(t_tool *data)
 	cmd->argc = count_token(data->lexer);
 	if (cmd->args != NULL && is_builtin(cmd->args[0]) == true)
 		cmd->path = cmd_finder(data, cmd->args[0]);
-	if (cmd->args == NULL || cmd->envp == NULL || cmd->rdir == NULL
-		|| cmd->envp == NULL)
-	{
+	if (cmd->args == NULL || cmd->envp == NULL 
+	|| (cmd->rdir == NULL && cmd->argc == 0))
 		free_cmd(cmd);
-		cmd = NULL;
-	}
 	return (cmd);
 }

@@ -14,16 +14,19 @@
 
 void	clean_data(t_tool *data, bool has_history)
 {
-	if (data && data->arg)
-		ft_free(data->arg);
-	if (data && data->lexer)
-		lst_clear(&data->lexer);
-	if (data && data->env)
-		del_env(data->env);
-	if (data && data->pipes)
-		free_pipe(data->pipes);
-	if (data && data->envp)
-		free_arr(data->envp);
+	if (data != NULL)
+	{
+		// if (data->arg != NULL)
+		// 	ft_free(data->arg);
+		if ( data->lexer)
+			lst_clear(&data->lexer);
+		if (data->env)
+			del_env(data->env);
+		if (data->pipes)
+			free_pipe(data->pipes);
+		if (data->envp)
+			free_arr(data->envp);
+	}
 	if (has_history == true)
 		rl_clear_history();
 }
@@ -54,4 +57,18 @@ int	sub(char *str, int i, int count, t_lexer **lexer)
 	new_node(tmp, 0, lexer);
 	ft_free(tmp);
 	return (count);
+}
+
+bool has_heredoc(t_lexer *lexer)
+{
+	t_lexer *it;
+	it = lexer;
+
+	while (it != NULL)
+	{
+		if (it->token == LESS_LESS)
+			return (true);
+		it = it->next;
+	}
+	return (false);
 }

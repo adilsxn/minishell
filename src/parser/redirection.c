@@ -45,26 +45,27 @@ t_rdr	*build_rdr(t_lexer *lexi)
 {
 	t_rdr	*start;
 	t_rdr	*rdir;
+	t_lexer *it;
 
 	start = NULL;
 	rdir = NULL;
-	while (lexi != NULL && lexi->token != PIPE)
+	it = lexi;
+	while (it != NULL && it->token != PIPE)
 	{
-		if (lexi->token == GREAT || lexi->token == LESS
-			|| lexi->token == GREAT_GREAT || lexi->token == LESS_LESS)
+		if (it->token == GREAT || it->token == LESS
+			|| it->token == GREAT_GREAT || it->token == LESS_LESS)
 		{
-			rdir = mk_rdr(lexi->token, rdir);
+			rdir = mk_rdr(it->token, rdir);
 			if (rdir == NULL)
 			{
 				free_rdr(start);
-				ft_err("error while parsing the input", NULL);
-				return (NULL);
+				return (ft_err("redirection", NULL), NULL);
 			}
 			if (start == NULL)
 				start = rdir;
-			rdir->value = lexi->str;
+			rdir->value = it->str;
 		}
-		lexi = lexi->next;
+		it = it->next;
 	}
 	return (start);
 }
