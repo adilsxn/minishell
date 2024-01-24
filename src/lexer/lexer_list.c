@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/23 16:57:20 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:31:35 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,26 @@ int	new_node(char *str, int token, t_lexer **lexer_list)
 	return (0);
 }
 
-int	len_word(int i, char *str, t_lexer **lexer)
+int token_checker(int i, char *str, t_lexer **lexer)
 {
-	int	count;
-
 	if (check_token(str[i], 0) != 0)
 	{
 		new_node(NULL, check_token(str[i], str[i + 1]), lexer);
 		if (check_token(str[i], str[i + 1]) == 3 \
 		|| check_token(str[i], str[i + 1]) == 5)
-			return (1);
-		return (0);
+			return (2);
+		return (1);
 	}
-	count = 0;
+	return (0);
+}
+
+int	len_word(int i, char *str, t_lexer **lexer)
+{
+	int	count;
+
+	count = token_checker(i, str, lexer);
+	if (count > 0)
+		return (count - 1);
 	while (str[i + count] != '\0')
 	{
 		count += len_quote(i + count, str, 34);
@@ -72,10 +79,28 @@ int	len_word(int i, char *str, t_lexer **lexer)
 	return (count);
 }
 
-t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
+void	lex_del(t_lexer **lexer)
+{
+	t_lexer *lex;
+	
+	lex = *lexer;
+	while (lex)
+	{
+		if (lex->str)
+		{
+			if (lex->str[0] == 0)
+			{
+				del_one(lexer, lex->i);
+				lex = *lexer;
+			}
+		}
+		lex = lex->next;
+	}
+}
+
+t_lexer	*lexer(char *str, t_lexer *lexer)
 {
 	int i;
-	t_lexer *lex;
 
 	i = -1;
 	while ((size_t)++i < ft_strlen(str))
@@ -83,23 +108,11 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		i += len_word(i, str, &lexer);
 		if (i == 0)
 		{
-			ft_error(1, tool);
+			ft_err("Invalid Commands", "in lexer");
 			return (NULL);
 		}
 	}
-	lex = lexer;
-	while (lex)
-	{
-		if (lex->str)
-		{
-			if (lex->str[0] == 0)
-			{
-				del_one(&lexer, lex->i);
-				lex = lexer;
-			}
-		}
-		lex = lex->next;
-	}
+	lex_del(&lexer);
 	free(str);
 	return (lexer);
 }

@@ -6,28 +6,86 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/23 23:31:48 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:51:48 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*get_key(char *str)
+int	loopin(t_env **env2, char **str3, char *tmp, int i)
 {
-	int		i;
-	char	*str1;
-
-	str1 = ft_strchr(str, '$');
-	if (str1 == NULL)
-		return (NULL);
-	if (str1 != NULL && *str1 == '$')
-		str1++;
-	i = 0;
-	while(str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47 \
-	&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
-		i++;
-	return (ft_substr(str1, 0, i));
+	i++;
+	free(tmp);
+	*env2 = NULL;
+	*str3 = NULL;
+	return (i);
 }
+
+void	loop_help1(t_env *env2, char **str3)
+{
+	if (env2 != NULL)
+		*str3 = (char *)env2->value;
+}
+
+int	initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
+{
+	int	len;
+
+	len = 0;
+	*env2 = NULL;
+	*i = 0;
+	while (str1[len])
+		len++;
+	*str2 = str1[0];
+	return (len);
+}
+
+char	*expander(t_env *env, char *str)
+{
+	t_env	*env2;
+	t_envy	*ex;
+	char	*ret;
+
+	ex = NULL;
+	if (init_expand(&str, &ex->str1) != NULL)
+		return (str);
+	ex->len = initialize_expander(&env2, &ex->i, &ex->str2, ex->str1);
+	while (ex->str1[ex->i] != NULL)
+	{
+		if (tmpcheck(&ex->tmp, ex->str1, ex->i) != NULL)
+		{
+			if (envy(&env2, env, &ex->str3, ex->tmp) == 1)
+				loop_help2(&ex->i, &ex->str2, ex->str3, ex->str1);
+			checker(env2, &ex->str2, ex->i);
+		}
+		else
+			ex->str2 = expander_help1(ex->len, ex->str2, ex->str1, ex->i);
+		ex->i = loopin(&env2, &ex->str3, ex->tmp, ex->i);
+	}
+	free_array(ex->str1);
+	ret = ft_strdup(ex->str2);
+	return (ret);
+}
+
+t_lexer	*expander2(t_env *env, t_lexer *lexi)
+{
+	t_lexer	*lex;
+
+	lex = lexi;
+	while (lexi)
+	{
+		if (lexi->str)
+		{
+			if (lexi->i == 0 || (lexi->i > 0 \
+			&& (!lexi->prev->token || lexi->prev->token != 5)))
+				lexi->str = expander(env, lexi->str);
+			else
+				lexi->str = del_quotes(lexi->str, 34);
+		}
+		lexi = lexi->next;
+	}
+	return (lex);
+}	
 
 // char	*expander_aux(t_env *env, char *str2, char **str1, int i)
 // {
@@ -56,12 +114,10 @@ char	*get_key(char *str)
 // 	i = loopin(&env2, &str3, tmp, i);
 // 	return (str2);
 // }
-
 // char	*expander(t_env *env, char *str2, char **str1)
 // {
 // 	t_env	*env2;
 // 	int		i;
-	
 // 	env2 = NULL;
 // 	i = 0;
 // 	while(str1[i] != NULL)
@@ -71,12 +127,10 @@ char	*get_key(char *str)
 // 	free_array(str1);
 // 	return (str2);
 // }
-
 // char	*expander21(t_env *env, t_lexer *lexi, t_lexer *lex)
 // {
 // 	char	**str1;
 // 	char	*str2;
-
 // 	lexi->str = del_quotes(lexi->str, '\"');
 // 	if (lexi->str[0] == 39)
 // 	{
@@ -88,131 +142,6 @@ char	*get_key(char *str)
 // 	lexi->str = expander(env, str2, str1);
 // 	return (lexi->str);
 // }
-
-char	*expander_help1(int len, char *str2, char **str1, int i)
-{
-	if (len == 1)
-		str2 = ft_strdup(str2);
-	else if (i > 0 && str2 != NULL)
-		str2 = ft_strjoin(str2, str1[i]);
-	return (str2);
-}
-
-int	loopin(t_env **env2, char **str3, char *tmp, int i)
-{
-	i++;
-	free(tmp);
-	*env2 = NULL;
-	*str3 = NULL;
-	return (i);
-}
-
-char	*double_strj(char *str2, char *str3, char *str1)
-{
-	str2 = ft_strjoin(str2, str3);
-	if (str2)
-		str2 = ft_strjoin(str2, str1);
-	return (str2);
-}
-
-void loop_help1(t_env *env2, char **str3)
-{
-	if (env2 != NULL)
-		*str3 = (char *)env2->value;
-}
-
-void loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
-{
-	char *tmp;
-	
-	tmp = get_key(str1[*i]);
-	if (*i > 0 && *str2 != NULL)
-	{
-		*str2 = ft_strjoin(*str2, str3);
-		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(tmp) + 1);
-	}
-	else
-		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(tmp) + 1);
-	free(tmp);
-}
-
-int initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
-{
-	int len;
-
-	len = 0;
-	*env2 = NULL;
-	*i = 0;
-	while(str1[len])
-		len++;
-	*str2 = str1[0];
-	return (len);
-}
-char	*init_expand(char **str, char	***str1)
-{
-	*str = del_quotes(*str, '\"');
-	if (*str[0] == 39)
-	{
-		del_quotes(*str, '\'');
-		return (*str);
-	}
-	*str1 = ft_split2(*str, '$');
-	return (NULL);
-}
-
-char	*expander(t_env *env, char *str)
-{
-	t_env	*env2;
-	char	*str2;
-	char	*str3;
-	char	*tmp;
-	int		i;
-	char	**str1;
-	int		len;
-
-	if (init_expand(&str, &str1) != NULL)
-		return (str);
-	len = initialize_expander(&env2, &i, &str2, str1);
-	while(str1[i] != NULL)
-	{
-		tmp = get_key(str1[i]);
-		if (tmp!= NULL)
-		{
-			env2 = get_env(env, tmp);
-			loop_help1(env2, &str3);
-			if (env2 != NULL)
-				loop_help2(&i, &str2, str3, str1);
-			if (tmp != NULL && (i == 0) && env2 == NULL)
-				str2 = NULL;
-		}
-		else
-			str2 = expander_help1(len, str2, str1, i);
-		i = loopin(&env2, &str3, tmp, i);
-	}
-	free_array(str1);
-	return (str2);
-}
-
-t_lexer	*expander2(t_env *env, t_lexer *lexi)
-{
-	t_lexer	*lex;
-
-	lex = lexi;
-	while (lexi)
-	{
-		if (lexi->str)
-		{
-			if (lexi->i == 0 || (lexi->i > 0 \
-			&& (!lexi->prev->token || lexi->prev->token != 5)))
-				lexi->str = expander(env, lexi->str);
-			else
-				lexi->str = del_quotes(lexi->str, 34);
-		}
-		lexi = lexi->next;
-	}
-	return (lex);
-}	
-
 // char	*expander2(t_env *env, char *str)
 // {
 // 	int i;
@@ -224,7 +153,6 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 // 	int trig;
 // 	int trig1i;
 // 	int token;
-
 // 	i = -1;
 // 	trig = 0;
 // 	trig1i = 0;
@@ -259,7 +187,8 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 // 				}
 // 			}
 // 		}
-// 		else if (check_token(str[i], str[i + 1]) != 0 && check_token(str[i], str[i + 1]) != 5 && trig == 0)
+// 		else if (check_token(str[i], str[i + 1]) != 0 
+//		&& check_token(str[i], str[i + 1]) != 5 && trig == 0)
 // 		{
 // 			e = i;
 // 			while(str[i])
@@ -302,73 +231,4 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 // 	else
 // 		tmp4 = ft_strjoin(env2->value, tmp2);
 // str = tmp4;
-// return (str);
-//question mark function and loop_if_dollar change the tmp
-//i increments after these functions or not if the functions return 0
-//i increments after assigning str[i] to tmp2 and then update tmp
-// char	*check_dollar(t_env *env, char *str)
-// {
-// 	int		i;
-// 	char	*tmp;
-// 	char	*tmp2;
-// 	char	*tmp3;
-// 	i = 0;
-// 	tmp = ft_calloc(1, 1);
-// 	while (str[i])
-// 	{
-// 		i += digit_after_dollar(i, str);
-// 		if (str[i] == '$' && str[i + 1] == '?')
-// 			i += question_mark(&tmp);
-// 		else if (str[i] == '$' && (str[i + 1] != ' ' && (str[i + 1] != '"' 
-// 					|| str[i + 2] != '\0')) && str[i + 1] != '\0')
-// 			i += loop_dollar_sign(env, str, tmp, i);
-// 		else
-// 		{
-// 			tmp2 = char_to_str(str[i++]);
-// 			tmp3 = ft_strjoin(tmp, tmp2);
-// 			free(tmp);
-// 			tmp = tmp3;
-// 			free(tmp2);
-// 		}
-// 	}
-// 	return (tmp);
-// }
-//after the dollar sign
-//env=value
-//comparing env with str, str[i] + 1 so its not $
-//and -1 so its not the = 
-//minus j to be the len after the dollar and before the equal sign
-//atribute the value of the env(key) to tmp transforming it to its correspondent
-//return an int to increment the i in the original function
-// char *	loop_dollar_sign(t_env *env, char *str, char *tmp, int j)
-// {
-// 	int		final;
-// 	(void)	j;
-// 	final = 0;
-// 	env = get_env(env, get_key(str));
-// 	return (env->value);
-// 	if (env->key)
-// 		final = ft_strlen(env->key) + 1;
-// 	if (final == 0)
-// 		final = ft_strlen(env->value);
-// 	free(tmp);
-// 	tmp = (char *)env->value;
-// 	return (final);
-// }
-//export makes a variable available to other processes
-//started from the current shell session
-//str is already broken into diffent cmd
-//quotes are not removed for export command
-//char	*tmp;
-// if (str[dollar_sign(str) - 2] == '\'' && dollar_sign(str) == 0
-// 	&& str[dollar_sign(str)] == '\0')
-// 	return (NULL);
-// tmp = NULL;
-// {
-// 	tmp = check_dollar(env, str);
-// 	free(str);
-// 	str = tmp;
-// }
-// str = del_quote(str, '\"');
-// str = del_quote(str, '\'');
 // return (str);

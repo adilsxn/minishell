@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/19 11:40:07 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:40:25 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,14 @@ char	*del_quotes(char *str, char c)
 		i++;
 	}
 	return (str);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
 }

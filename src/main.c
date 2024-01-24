@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 23:39:05 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:14:44 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static void  minishell_loop(t_tool *shell)
 		exit (0);
 	}
 	add_history(input);
-    free(input);
-	shell->lexer = lex;
-	shell->lexer = lexer(input, shell->lexer, shell);
+	shell->lexer = lexer(input, shell->lexer);
 	lex = shell->lexer;
 	while (lex)
 	{

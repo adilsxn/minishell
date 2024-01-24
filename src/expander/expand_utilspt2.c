@@ -6,32 +6,52 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/23 15:15:50 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:26:37 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//incrementing the i, to skip over it
-size_t	equal_sign(char *str)
+char	*expander_help1(int len, char *str2, char **str1, int i)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i + 1);
-		i++;
-	}
-	return (0);
+	if (len == 1)
+		str2 = ft_strdup(str2);
+	else if (i > 0 && str2 != NULL)
+		str2 = ft_strjoin(str2, str1[i]);
+	return (str2);
 }
 
-int	question_mark(char **tmp)
+void	loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
 {
-	free(*tmp);
-	*tmp = ft_itoa(1);
-	return (ft_strlen(*tmp) + 1);
+	char	*tmp;
+
+	tmp = get_key(str1[*i]);
+	if (*i > 0 && *str2 != NULL)
+	{
+		*str2 = ft_strjoin(*str2, str3);
+		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(tmp) + 1);
+	}
+	else
+		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(tmp) + 1);
+	free(tmp);
+}
+
+char	*init_expand(char **str, char	***str1)
+{
+	*str = del_quotes(*str, '\"');
+	if ((*str)[0] == 39)
+	{
+		del_quotes(*str, '\'');
+		return (*str);
+	}
+	*str1 = ft_split2(*str, '$');
+	return (NULL);
+}
+
+void	checker(t_env *env2, char **str2, int i)
+{
+	if (i == 0 && env2 == NULL)
+		*str2 = NULL;
 }
 
 char	**ft_arrdup(char **arr)
@@ -57,14 +77,4 @@ char	**ft_arrdup(char **arr)
 		i++;
 	}
 	return (array2);
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
 }

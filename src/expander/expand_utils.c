@@ -6,37 +6,51 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/23 15:15:16 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:43:47 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//returns the number of the char that is a $
-size_t	dollar_sign(char *str)
+char	*get_key(char *str)
 {
-	size_t	i;
+	int		i;
+	char	*str1;
 
+	str1 = ft_strchr(str, '$');
+	if (str1 == NULL)
+		return (NULL);
+	if (str1 != NULL && *str1 == '$')
+		str1++;
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (i + 1);
+	while (str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47 \
+	&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
 		i++;
-	}
+	return (ft_substr(str1, 0, i));
+}
+
+char	*double_strj(char *str2, char *str3, char *str1)
+{
+	str2 = ft_strjoin(str2, str3);
+	if (str2)
+		str2 = ft_strjoin(str2, str1);
+	return (str2);
+}
+
+int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
+{
+	*env2 = get_env(env, tmp);
+	if (env2 != NULL)
+		*str3 = (char *)(*env2)->value;
+	if (env2 != NULL)
+		return (1);
 	return (0);
 }
 
-int	after_dollar_len(char *str, int j)
+char	*tmpcheck(char **tmp, char **str1, int i)
 {
-	int	i;
-
-	i = j + 1;
-	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' \
-		&& str[i] != '-' && str[i] != ':')
-		i++;
-	return (i);
+	*tmp = get_key(str1[i]);
+	return (*tmp);
 }
 
 char	*del_quote(char *str, char c)
@@ -58,26 +72,4 @@ char	*del_quote(char *str, char c)
 		i++;
 	}
 	return (str);
-}
-
-char	*char_to_str(char c)
-{
-	char	*str;
-
-	str = ft_calloc(sizeof(char), 2);
-	str[0] = c;
-	return (str);
-}
-
-int	digit_after_dollar(int j, char *str)
-{
-	int	i;
-
-	i = j;
-	if (str[j] == '$')
-	{
-		if ((str[j + 1] > 47 && str[j + 1] < 58))
-			j += 2;
-	}
-	return (j - i);
 }
