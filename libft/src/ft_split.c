@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 15:22:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 11:51:02 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:36:42 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,20 @@ char	**ft_split(char const *s, char c)
 	return (arr);
 }
 
-static void	stralloc2(char const *s, char c, char **arr, int i)
+static void	stralloc2(char const *s, int trig, char **arr, int i)
 {
 	int	char_count;
 
 	char_count = 0;
-	while (*s != c && *s)
+	while (*s != '$' && *s)
 	{
 		char_count++;
 		s++;
 	}
-	arr[i] = (char *)malloc(sizeof(char) * (char_count + 2));
+	if (i != 0 || (i == 0 && trig == 1))
+		arr[i] = (char *)malloc(sizeof(char) * (char_count + 2));
+	else
+		arr[i] = (char *)malloc(sizeof(char) * (char_count + 1));
 	if (!arr[i])
 	{
 		while (i--)
@@ -79,29 +82,21 @@ static void	stralloc2(char const *s, char c, char **arr, int i)
 	}
 }
 
-char	**ft_split2(char const *s, char c)
+char	**ft_split3(char const *s, char c, int trig, int str_count)
 {
-	char	**arr;
-	int		str_count;
 	int		i;
 	int		j;
-	int		trig;
+	char	**arr;
 
-	if (!s)
-		return (NULL);
-	trig = 0;
-	if (s[0] == c)
-		trig = 1;
-	str_count = ft_wordcount(s, c);
+	i = 0;
 	arr = (char **)malloc(sizeof(char *) * (str_count + 1));
 	if (!arr)
 		return (NULL);
-	i = 0;
 	while (i != str_count)
 	{
 		while (*s == c && *s)
 			s++;
-		stralloc2(s, c, arr, i);
+		stralloc2(s, trig, arr, i);
 		j = 0;
 		if (i != 0 || (i == 0 && trig == 1))
 			arr[i][j++] = c;
@@ -111,5 +106,21 @@ char	**ft_split2(char const *s, char c)
 		i++;
 	}
 	arr[i] = NULL;
+	return (arr);
+}
+
+char	**ft_split2(char const *s, char c)
+{
+	char	**arr;
+	int		str_count;
+	int		trig;
+
+	if (!s)
+		return (NULL);
+	trig = 0;
+	if (s[0] == c)
+		trig = 1;
+	str_count = ft_wordcount(s, c);
+	arr = ft_split3(s, c, trig, str_count);
 	return (arr);
 }

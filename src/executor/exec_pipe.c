@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:30:06 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 13:32:37 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:22:53 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	exec_bin_pipe(t_cmd *cmd)
 {
@@ -19,10 +19,9 @@ static int	exec_bin_pipe(t_cmd *cmd)
 		ft_err(cmd->args[0], "cmd not found");
 		return (127);
 	}
-	if (cmd->rdir != NULL
-		&& (exec_rdr(cmd->rdir) == -1))
+	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
-		ft_err( "redirection failed", NULL);
+		ft_err("redirection failed", NULL);
 		return (1);
 	}
 	if (cmd->path == NULL)
@@ -44,7 +43,8 @@ static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 	exit(proc->exit_code);
 }
 
-static void	create_proc(t_ppe *proc, int proc_fd[2], int std_fd[2], t_tool *data)
+static void	create_proc(t_ppe *proc, int proc_fd[2], int std_fd[2],
+		t_tool *data)
 {
 	int	pipe_fd[2];
 
@@ -86,8 +86,8 @@ static void	wait_procs(t_ppe *procs)
 
 void	exec_pipe(t_ppe *pipeline, t_tool *data)
 {
-	int			std_fd[2];
-	int			proc_fd[2];
+	int		std_fd[2];
+	int		proc_fd[2];
 	t_ppe	*proc;
 
 	sig_handl();

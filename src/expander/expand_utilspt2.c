@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/24 13:26:37 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:54:33 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expander_help1(int len, char *str2, char **str1, int i)
 	return (str2);
 }
 
-void	loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
+void	loop_help2(int *i, char **str2, char *str3, char **str1)
 {
 	char	*tmp;
 
@@ -36,7 +36,7 @@ void	loop_help2(int	*i, char	**str2, char	*str3, char	**str1)
 	free(tmp);
 }
 
-char	*init_expand(char **str, char	***str1)
+char	*init_expand(char **str, char ***str1)
 {
 	*str = del_quotes(*str, '\"');
 	if ((*str)[0] == 39)

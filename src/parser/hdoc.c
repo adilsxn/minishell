@@ -13,7 +13,6 @@
 #include "../../inc/minishell.h"
 #include <string.h>
 
-
 static char	*get_line_hdoc(char *delim)
 {
 	char	*content;
@@ -28,8 +27,8 @@ static char	*get_line_hdoc(char *delim)
 			break ;
 		line = readline("> ");
 	}
-    if (!line)
-        ft_free(line);
+	if (!line)
+		ft_free(line);
 	else
 		ft_err(HD_W, delim);
 	return (content);
@@ -64,7 +63,7 @@ static char	*get_line_pipe(int pipe_fd[2])
 		if (content == NULL)
 			return (NULL);
 	}
-    ft_free(line);
+	ft_free(line);
 	return (content);
 }
 
@@ -77,7 +76,7 @@ static char	*handle_child_exit(int pid, int pipe_fd[2])
 	content = NULL;
 	close(pipe_fd[1]);
 	if ((waitpid(pid, &status, 0) == -1))
-        ft_err("heredoc", strerror(errno));
+		ft_err("heredoc", strerror(errno));
 	if (WIFEXITED(status))
 	{
 		g_last_ret_code = WEXITSTATUS(status);
@@ -94,7 +93,7 @@ static char	*handle_child_exit(int pid, int pipe_fd[2])
 	return (content);
 }
 
-int heredoc(t_lexer *lexi)
+int	heredoc(t_lexer *lexi)
 {
 	int		pid;
 	int		fd[2];
@@ -108,10 +107,10 @@ int heredoc(t_lexer *lexi)
 		{
 			delim = lexi->next->str;
 			if ((pipe(fd) == -1))
-				return (ft_err("pipe failed", strerror(errno)),1);
+				return (ft_err("pipe failed", strerror(errno)), 1);
 			pid = fork();
 			if (pid == -1)
-				return(ft_err("fork failed", strerror(errno)), 1);
+				return (ft_err("fork failed", strerror(errno)), 1);
 			else if (pid == 0)
 				heredoc_proc(fd, delim);
 			else
@@ -120,5 +119,5 @@ int heredoc(t_lexer *lexi)
 		}
 		lexi = lexi->next;
 	}
-    return (0);
+	return (0);
 }

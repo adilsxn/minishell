@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static void	child_process(t_cmd *cmd)
 {
 	sig_handl();
-	if (cmd->rdir != NULL
-		&& (exec_rdr(cmd->rdir) == -1))
+	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
 		exit(1);
@@ -34,13 +33,13 @@ static void	set_ret_code(int wstatus)
 	if (WIFEXITED(wstatus))
 		g_last_ret_code = WEXITSTATUS(wstatus);
 	else if (WIFSIGNALED(wstatus))
-		g_last_ret_code  = WTERMSIG(wstatus) + 128;
+		g_last_ret_code = WTERMSIG(wstatus) + 128;
 }
 
 void	exec_bin(t_cmd *cmd)
 {
-	int		pid;
-	int		status;
+	int	pid;
+	int	status;
 
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
@@ -51,7 +50,7 @@ void	exec_bin(t_cmd *cmd)
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_err( "fork failed", strerror(errno));
+		ft_err("fork failed", strerror(errno));
 		g_last_ret_code = 1;
 	}
 	else if (pid == 0)

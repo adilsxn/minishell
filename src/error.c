@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/minishell.h"
+#include "../inc/minishell.h"
 
-void ft_free(void *ptr)
+void	ft_free(void *ptr)
 {
-    if (ptr != NULL)
-    {
-        free(ptr);
-        ptr = NULL;
-    }
+	if (ptr != NULL)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }
 
 static char	*join_str(char *str1, char *str2)
@@ -37,13 +37,12 @@ static char	*join_str(char *str1, char *str2)
 
 void	ft_err(char *message, char *detail)
 {
-    char *str;
+	char	*str;
 
-    str = ft_strdup("minishell: ");
-    str = join_str(str, message);
-    str = join_str(str, ": ");
-    str = join_str(str, detail);
-    
-    ft_putendl_fd(str, STDERR_FILENO);
-    ft_free(str);
+	str = ft_strdup("minishell: ");
+	str = join_str(str, message);
+	str = join_str(str, ": ");
+	str = join_str(str, detail);
+	ft_putendl_fd(str, STDERR_FILENO);
+	ft_free(str);
 }

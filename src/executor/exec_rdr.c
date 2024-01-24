@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	handle_red_stdout(int fd, t_rdr *rdr)
 {
@@ -79,8 +79,8 @@ static int	handle_red_stdin(int fd, t_rdr *rdr)
 
 static int	set_stdin_fd(t_rdr *rdr)
 {
-	int				fd;
-	int				dup_fd;
+	int	fd;
+	int	dup_fd;
 
 	fd = -1;
 	while (rdr != NULL)

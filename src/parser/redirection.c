@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rdir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 23:03:18 by acuva-nu          #+#    #+#             */
 /*   Updated: 2024/01/05 23:03:18 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	free_rdr(t_rdr *rdir)
 {
@@ -31,7 +32,7 @@ static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
 		rdir->kind = RDR_OUT;
 	else if (type == LESS)
 		rdir->kind = RDR_IN;
-	else if ( type == GREAT_GREAT)
+	else if (type == GREAT_GREAT)
 		rdir->kind = RDR_APP;
 	else
 		rdir->kind = RDR_HD;
@@ -49,9 +50,8 @@ t_rdr	*build_rdr(t_lexer *lexi)
 	rdir = NULL;
 	while (lexi != NULL && lexi->token != PIPE)
 	{
-		if (lexi->token == GREAT
-			|| lexi->token == LESS || lexi->token == GREAT_GREAT
-			|| lexi->token == LESS_LESS)
+		if (lexi->token == GREAT || lexi->token == LESS
+			|| lexi->token == GREAT_GREAT || lexi->token == LESS_LESS)
 		{
 			rdir = mk_rdr(lexi->token, rdir);
 			if (rdir == NULL)

@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:12:32 by matilde           #+#    #+#             */
 /*   Updated: 2024/01/08 19:10:15 by acuva-nu         ###   ########.fr       */
@@ -11,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 static int	has_pipe(t_lexer *lexer)
 {
@@ -69,8 +69,8 @@ t_ppe	*parser(t_tool *data)
 
 	start = NULL;
 	pipeline = NULL;
-    if (has_pipe(data->lexer) == 0)
-         return(NULL);
+	if (has_pipe(data->lexer) == 0)
+		return (NULL);
 	while (pipeline != NULL)
 	{
 		pipeline = mk_pipe(data, pipeline);

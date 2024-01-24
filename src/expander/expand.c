@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/24 14:51:48 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:11:49 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	loop_help1(t_env *env2, char **str3)
 		*str3 = (char *)env2->value;
 }
 
-int	initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
+int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
 {
 	int	len;
 
@@ -42,28 +42,30 @@ int	initialize_expander(t_env	**env2, int	*i, char	**str2, char	**str1)
 
 char	*expander(t_env *env, char *str)
 {
-	t_env	*env2;
 	t_envy	*ex;
+	char	**str1;
 	char	*ret;
 
-	ex = NULL;
-	if (init_expand(&str, &ex->str1) != NULL)
+	ex = malloc(sizeof(t_envy));
+	if (init_expand(&str, &str1) != NULL)
 		return (str);
-	ex->len = initialize_expander(&env2, &ex->i, &ex->str2, ex->str1);
-	while (ex->str1[ex->i] != NULL)
+	ex->len = initialize_expander(&ex->env2, &ex->i, &ex->str2, str1);
+	while (str1[ex->i] != NULL)
 	{
-		if (tmpcheck(&ex->tmp, ex->str1, ex->i) != NULL)
+		if (tmpcheck(&ex->tmp, str1, ex->i) != NULL)
 		{
-			if (envy(&env2, env, &ex->str3, ex->tmp) == 1)
-				loop_help2(&ex->i, &ex->str2, ex->str3, ex->str1);
-			checker(env2, &ex->str2, ex->i);
+			if (envy(&ex->env2, env, &ex->str3, ex->tmp) == 1)
+				loop_help2(&ex->i, &ex->str2, ex->str3, str1);
+			checker(ex->env2, &ex->str2, ex->i);
 		}
 		else
-			ex->str2 = expander_help1(ex->len, ex->str2, ex->str1, ex->i);
-		ex->i = loopin(&env2, &ex->str3, ex->tmp, ex->i);
+			ex->str2 = expander_help1(ex->len, ex->str2, str1, ex->i);
+		ex->i = loopin(&ex->env2, &ex->str3, ex->tmp, ex->i);
 	}
-	free_array(ex->str1);
+	free_array(str1);
 	ret = ft_strdup(ex->str2);
+	free(ex->str2);
+	freer(ex, str);
 	return (ret);
 }
 
@@ -76,8 +78,8 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	{
 		if (lexi->str)
 		{
-			if (lexi->i == 0 || (lexi->i > 0 \
-			&& (!lexi->prev->token || lexi->prev->token != 5)))
+			if (lexi->i == 0 || (lexi->i > 0 && (!lexi->prev->token
+						|| lexi->prev->token != 5)))
 				lexi->str = expander(env, lexi->str);
 			else
 				lexi->str = del_quotes(lexi->str, 34);
@@ -85,14 +87,14 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 		lexi = lexi->next;
 	}
 	return (lex);
-}	
+}
 
 // char	*expander_aux(t_env *env, char *str2, char **str1, int i)
 // {
 // 	char *tmp;
 // 	t_env *env2;
 // 	char *str3;
-	
+
 // 	tmp = get_key(str1[i]);
 // 	if (tmp != NULL)
 // 	{
@@ -187,7 +189,7 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 // 				}
 // 			}
 // 		}
-// 		else if (check_token(str[i], str[i + 1]) != 0 
+// 		else if (check_token(str[i], str[i + 1]) != 0
 //		&& check_token(str[i], str[i + 1]) != 5 && trig == 0)
 // 		{
 // 			e = i;

@@ -10,32 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/minishell.h"
+#include "../inc/minishell.h"
 
-static void sig_new_prompt(int sig)
+static void	sig_new_prompt(int sig)
 {
-    (void)sig;
-    ft_putchar_fd('\n', 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+	(void)sig;
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-static void ign_sigquit(void)
+static void	ign_sigquit(void)
 {
-    struct sigaction event;
+	struct sigaction	event;
 
-    ft_bzero(&event, sizeof(struct sigaction));
-    event.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &event, NULL);
+	ft_bzero(&event, sizeof(struct sigaction));
+	event.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &event, NULL);
 }
 
-void sig_handl(void)
+void	sig_handl(void)
 {
-    struct sigaction event;
+	struct sigaction	event;
 
-    ign_sigquit();
-    ft_bzero(&event, sizeof(struct sigaction));
-    event.sa_handler = &sig_new_prompt;
-    sigaction(SIGINT, &event, NULL);
+	ign_sigquit();
+	ft_bzero(&event, sizeof(struct sigaction));
+	event.sa_handler = &sig_new_prompt;
+	sigaction(SIGINT, &event, NULL);
 }

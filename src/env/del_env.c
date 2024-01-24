@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   del_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:11:54 by acuva-nu          #+#    #+#             */
 /*   Updated: 2023/11/27 16:11:54 by acuva-nu         ###   ########.fr       */
@@ -12,19 +13,19 @@
 
 #include "../../inc/minishell.h"
 
-int del_env(t_env *env)
+int	del_env(t_env *env)
 {
-    t_env *tmp;
-    t_env *next;
+	t_env	*tmp;
+	t_env	*next;
 
-    tmp = env;
-    while(tmp != NULL)
-    {
-        next = tmp->next;
-        ft_free((void *)tmp->key);
-        ft_free((void *)tmp->value);
-        ft_free(tmp); 
-        tmp = next;
-    }
-    return (0);
+	tmp = env;
+	while (tmp != NULL)
+	{
+		next = tmp->next;
+		ft_free((void *)tmp->key);
+		ft_free((void *)tmp->value);
+		ft_free(tmp);
+		tmp = next;
+	}
+	return (0);
 }

@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_finder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 23:23:33 by acuva-nu          #+#    #+#             */
 /*   Updated: 2024/01/11 23:23:33 by acuva-nu         ###   ########.fr       */
@@ -15,9 +16,9 @@
 
 /*Code adapted from github.com/adilsxn/pipex*/
 
-void free_arr(char **arr)
+void	free_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (arr[++i])
@@ -58,14 +59,14 @@ char	*cmd_finder(t_tool *data, char *cmd)
 		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
-    paths = useful_paths((char *)get_env(data->env, "PATH")->value);
+	paths = useful_paths((char *)get_env(data->env, "PATH")->value);
 	while (paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], cmd);
 		if (!path)
 			break ;
 		if (access(path, F_OK | X_OK) == 0)
-			break;
+			break ;
 		free(path);
 		path = NULL;
 	}

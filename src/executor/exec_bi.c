@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 19:23:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 12:06:43 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:23:13 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
 int	exec_bi(t_cmd *cmd, t_tool *data)
 {
-	int			fd[2];
-	t_bi	    *builtin;
-	int			return_code;
+	int		fd[2];
+	t_bi	*builtin;
+	int		return_code;
 
 	if (cmd->rdir != NULL)
 	{

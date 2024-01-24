@@ -12,23 +12,21 @@
 
 #include "../../inc/minishell.h"
 
-
-t_bi *get_bi(char *cmd)
+t_bi	*get_bi(char *cmd)
 {
-
-    if (ft_strequ(cmd, "echo"))
-        return (msh_echo);
-    else if (ft_strequ(cmd, "pwd"))
-         return (msh_pwd);
-    else if (ft_strequ(cmd, "env"))
-         return (msh_env);
-    else if (ft_strequ(cmd, "export"))
-         return (msh_export);
-    else if (ft_strequ(cmd, "unset"))
-         return (msh_unset);
-    else if (ft_strequ(cmd, "exit"))
-         return (msh_exit);
-    else if (ft_strequ(cmd, "cd"))
-         return (msh_cd);
-    return (NULL);
+	if (ft_strequ(cmd, "echo"))
+		return (msh_echo);
+	else if (ft_strequ(cmd, "pwd"))
+		return (msh_pwd);
+	else if (ft_strequ(cmd, "env"))
+		return (msh_env);
+	else if (ft_strequ(cmd, "export"))
+		return (msh_export);
+	else if (ft_strequ(cmd, "unset"))
+		return (msh_unset);
+	else if (ft_strequ(cmd, "exit"))
+		return (msh_exit);
+	else if (ft_strequ(cmd, "cd"))
+		return (msh_cd);
+	return (NULL);
 }

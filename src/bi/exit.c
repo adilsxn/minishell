@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:37:34 by acuva-nu          #+#    #+#             */
 /*   Updated: 2023/09/14 22:37:34 by acuva-nu         ###   ########.fr       */
@@ -14,7 +15,7 @@
 
 static int	ft_atol(char *str, bool *error)
 {
-	int	sinal;
+	int					sinal;
 	unsigned long long	res;
 
 	res = 0;
@@ -39,18 +40,18 @@ static int	ft_atol(char *str, bool *error)
 	return ((int)(res * sinal));
 }
 
-static int get_code(char *str, bool *error)
+static int	get_code(char *str, bool *error)
 {
-    unsigned long long i;
+	unsigned long long	i;
 
-    if (str == NULL)
-        return (g_last_ret_code);
-    i = 0;
-    while (ft_isspace(str[i]))
-        i++;
-    if (str[i] == '\0')
-        *error = true;
-    if (str[i] == '-' || str[i] == '+')
+	if (str == NULL)
+		return (g_last_ret_code);
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '\0')
+		*error = true;
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (!ft_isdigit(str[i]))
 		*error = true;
@@ -64,25 +65,24 @@ static int get_code(char *str, bool *error)
 	return (i % 256);
 }
 
-int msh_exit(char **args, t_tool *data)
+int	msh_exit(char **args, t_tool *data)
 {
-    bool error;
-    int exit_code;
+	bool	error;
+	int		exit_code;
 
-
-    if (!args || !args[1])
-        exit_code = g_last_ret_code;
-    else
-    {
-        exit_code = get_code(args[1], &error);
-        if (error == true)
+	if (!args || !args[1])
+		exit_code = g_last_ret_code;
+	else
+	{
+		exit_code = get_code(args[1], &error);
+		if (error == true)
 		{
-            exit_code = 2;
-			return(ft_err("exit: non numeric arg", args[1]), exit_code);
+			exit_code = 2;
+			return (ft_err("exit: non numeric arg", args[1]), exit_code);
 		}
-        else if (args[2])
-            return (ft_err("exit: too many arguments", args[1]), 1);
-    }
+		else if (args[2])
+			return (ft_err("exit: too many arguments", args[1]), 1);
+	}
 	clean_data(data);
-    return (exit_code);
+	return (exit_code);
 }
