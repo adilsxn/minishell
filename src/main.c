@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 12:31:59 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:34:23 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void printin(t_lexer *lex)
 
 int			g_last_ret_code = 0;
 
-static void	minishell_loop(t_tool *shell)
+static void	minishell_loop(t_tool *shell, char **envp)
 {
 	while (1)
 	{
+		shell->envp = ft_arrdup(envp);
+		init_env(shell->envp, &shell->env);
 		sig_handl();
 		shell->arg = readline("minishell> ");
 		if (shell->arg == NULL)
@@ -39,15 +41,19 @@ static void	minishell_loop(t_tool *shell)
 		shell->arg = ft_strtrim(shell->arg, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
-		shell->lexer = expander2(shell->env, shell->lexer);
-		if (has_heredoc(shell->lexer) == true)
-			heredoc(shell->lexer);
-		shell->lexer = expander2(shell->env, shell->lexer);
-		shell->pipes = parser(shell);
-		if (shell->pipes != NULL)
-			exec_pipe(shell);
-		else
-			exec_cmd(shell);
+		printin(shell->lexer);
+		if (shell->lexer)
+		{
+			shell->lexer = expander2(shell->env, shell->lexer);
+			if (has_heredoc(shell->lexer) == true)
+				heredoc(shell->lexer);
+			shell->lexer = expander2(shell->env, shell->lexer);
+			shell->pipes = parser(shell);
+			if (shell->pipes != NULL)
+				exec_pipe(shell);
+			else
+				exec_cmd(shell);
+		}
 		clean_data(shell, false);
 		shell->reset = 1;
 	}
@@ -59,15 +65,13 @@ int	main(int ac, char **av, char **envp)
 
 	ft_bzero(&shell, sizeof(t_tool));
 	shell = (t_tool){NULL, NULL, NULL, NULL, 0, NULL};
-	shell.envp = ft_arrdup(envp);
 	if (ac != 1 || av[1])
 	{
 		ft_err("no args accepted", NULL);
 		exit(EXIT_FAILURE);
 	}
 	shell.reset = 0;
-	init_env(envp, &shell.env);
-	minishell_loop(&shell);
+	minishell_loop(&shell, envp);
 	return (0);
 }
 

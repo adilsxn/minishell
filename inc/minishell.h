@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 12:17:35 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:14:43 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_lexer
 	char			*str;
 	t_token			token;
 	int				i;
-	//int				reset;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }					t_lexer;

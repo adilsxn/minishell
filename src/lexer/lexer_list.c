@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/25 12:18:21 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:38:06 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,31 @@ int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 
 int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 {
+	int	trig;
+
+	trig = 0;
 	if (check_token(str[i], 0) != 0)
 	{
-		new_node(NULL, check_token(str[i], str[i + 1]), lexer, tool);
 		if (check_token(str[i], str[i + 1]) == 3 \
 			|| check_token(str[i], str[i + 1]) == 5)
+		{
+			trig = 1;
+			if (check_token(str[i + 2], str[i + 3] != 0))
+			{
+				ft_err("Double token", "Syntax error");
+				return (-1);
+			}
+		}
+		else
+		{
+			if (check_token(str[i + 1], 0) != 0)
+			{
+				ft_err("Double token", "Syntax error");
+				return (-1);
+			}
+		}
+		new_node(NULL, check_token(str[i], str[i + 1]), lexer, tool);
+		if (trig == 1)
 			return (2);
 		return (1);
 	}
@@ -64,6 +84,8 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 	tmp = NULL;
 	if (count > 0)
 		return (count - 1);
+	if (count == -1)
+		return (count);
 	while (str[i + count] != '\0')
 	{
 		count += len_quote(i + count, str, 34);
@@ -100,6 +122,21 @@ void	lex_del(t_lexer **lexer)
 	}
 }
 
+t_lexer	*lex_check(t_lexer *lexer)
+{
+	t_lexer	*lex;
+
+	lex = lexer;
+	while (lex->next)
+		lex = lex->next;
+	if (lex->token != 0 && lex->token != 1)
+	{
+		ft_err("Syntax error", "token at end of commands");
+		return (NULL);
+	}
+	return (lexer);
+}
+
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
 	int	i;
@@ -107,14 +144,25 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 	i = -1;
 	while ((size_t)++i < ft_strlen(str))
 	{
-		i += len_word(i, str, &lexer, tool);
+		if (len_word(i, str, &lexer, tool) != -1)
+			i += len_word(i, str, &lexer, tool);
+		else
+		{
+			if (str)
+				free(str);
+			return (NULL);
+		}
 		if (i == 0)
 		{
+			if (str)
+				free(str);
 			ft_err("Invalid Commands", "in lexer");
 			return (NULL);
 		}
 	}
-	lex_del(&lexer);
 	free(str);
+	if (lex_check(lexer) == NULL)
+		return (NULL);
+	lex_del(&lexer);
 	return (lexer);
 }

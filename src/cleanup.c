@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 12:17:25 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:03:17 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	clean_data(t_tool *data, bool has_history)
 	{
 		// if (data->arg != NULL)
 		// 	ft_free(data->arg);
-		if ( data->lexer)
+		if (data->lexer)
 			lst_clear(&data->lexer);
 		if (data->env)
 			del_env(data->env);
