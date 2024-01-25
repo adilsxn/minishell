@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/24 20:15:45 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:48:52 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	t_lexer	*lex;
 
 	lex = lexi;
-	while (lexi)
+	while (lex)
 	{
-		if (lexi->str)
+		if (lex->str)
 		{
-			if (lexi->i == 0 || (lexi->i > 0 && (!lexi->prev->token
-						|| lexi->prev->token != 5)))
-				lexi->str = expander(env, lexi->str);
+			if (lex->i == 0 || (lex->i > 0 && (!lex->prev->token \
+						|| lex->prev->token != 5)))
+				lex->str = expander(env, lex->str);
 			else
-				lexi->str = del_quotes(lexi->str, 34);
+				lex->str = del_quotes(lex->str, 34);
 		}
-		lexi = lexi->next;
+		lex = lex->next;
 	}
-	return (lex);
+	return (lexi);
 }
 
 // char	*expander_aux(t_env *env, char *str2, char **str1, int i)

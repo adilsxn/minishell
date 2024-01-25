@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 18:36:21 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:17:25 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	freer(t_envy *ex, char *str)
 	free(str);
 }
 
-int	sub(char *str, int i, int count, t_lexer **lexer)
+int	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)
 {
 	char	*tmp;
 
 	tmp = ft_substr(str, i, count);
-	new_node(tmp, 0, lexer);
+	new_node(tmp, 0, lexer, tool);
 	ft_free(tmp);
 	return (count);
 }

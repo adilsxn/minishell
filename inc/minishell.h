@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 20:16:33 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:17:35 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_lexer
 	char			*str;
 	t_token			token;
 	int				i;
+	//int				reset;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }					t_lexer;
@@ -114,6 +115,7 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
+	int				reset;
 	char			**envp;
 }					t_tool;
 
@@ -140,12 +142,12 @@ int					msh_unset(char **args, t_tool *data);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
-int					new_node(char *str, int token, t_lexer **lexer_list);
+int					new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
-int					len_word(int i, char *str, t_lexer **lexer_list);
+int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
 char				*del_quotes(char *str, char c);
-t_lexer				*lexer(char *str, t_lexer *lexer);
+t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
 
 void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
@@ -199,7 +201,7 @@ void				exec_pipe(t_tool *data);
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
-int					sub(char *str, int i, int count, t_lexer **lexer);
+int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 // signal
 void				sig_handl(void);
 
