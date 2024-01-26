@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 14:14:43 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:06:36 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_cmd
 	char			*path;
 	int				argc;
 	char			**args;
-	char			**envp;
 	t_rdr			*rdir;
 }					t_cmd;
 
@@ -115,15 +114,14 @@ typedef struct s_tool
 	t_ppe			*pipes;
 	t_env			*env;
 	int				reset;
-	char			**envp;
 }					t_tool;
 
 extern int			g_last_ret_code;
 
-int					init_env(char **envp, t_env **env);
+t_env *init_env(char **envp);
 t_env				*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
-int					unset_env(t_env *env, const char *key);
+int					unset_env(t_env **env, const char *key);
 t_env				*get_env(t_env *env, const char *key);
 // int traverse_msh_env(t_msh_envlist *list);
 int					del_env(t_env *env);

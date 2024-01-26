@@ -27,5 +27,6 @@ int	del_env(t_env *env)
 		ft_free(tmp);
 		tmp = next;
 	}
+	env = NULL;
 	return (0);
 }

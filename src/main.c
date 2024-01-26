@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 15:34:23 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:27:28 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void printin(t_lexer *lex)
 	t_lexer *lexi;
 
 	lexi = lex;
+	printf("------printin---------\n");
 	while (lexi)
 	{
 		printf("str: %s\n", lexi->str);
@@ -24,19 +25,18 @@ void printin(t_lexer *lex)
 		printf("i: %d\n", lexi->i);
 		lexi = lexi->next;
 	}
+	printf("------printin---------\n");
 }
 
 int			g_last_ret_code = 0;
 
-static void	minishell_loop(t_tool *shell, char **envp)
+static void	minishell_loop(t_tool *shell)
 {
 	while (1)
 	{
-		shell->envp = ft_arrdup(envp);
-		init_env(shell->envp, &shell->env);
 		sig_handl();
 		shell->arg = readline("minishell> ");
-		if (shell->arg == NULL)
+		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
 		shell->arg = ft_strtrim(shell->arg, " ");
 		add_history(shell->arg);
@@ -64,14 +64,15 @@ int	main(int ac, char **av, char **envp)
 	t_tool	shell;
 
 	ft_bzero(&shell, sizeof(t_tool));
-	shell = (t_tool){NULL, NULL, NULL, NULL, 0, NULL};
+	shell = (t_tool){NULL, NULL, NULL, NULL, 0};
 	if (ac != 1 || av[1])
 	{
 		ft_err("no args accepted", NULL);
 		exit(EXIT_FAILURE);
 	}
 	shell.reset = 0;
-	minishell_loop(&shell, envp);
+	shell.env = init_env(envp);
+	minishell_loop(&shell);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:30:06 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 18:22:53 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:07:45 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 	}
 	if (cmd->path == NULL)
 		return (0);
-	if (execve(cmd->path, cmd->args, cmd->envp) == ERROR)
+	if (execve(cmd->path, cmd->args, NULL) == ERROR)
 		ft_err("execve failed", strerror(errno));
 	return (errno);
 }

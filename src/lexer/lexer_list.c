@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/25 15:38:06 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:44:42 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,10 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 		{
 			trig = 1;
 			if (check_token(str[i + 2], str[i + 3] != 0))
-			{
-				ft_err("Double token", "Syntax error");
-				return (-1);
-			}
+				return (ft_err("Double token", "Syntax error"), -1);
 		}
-		else
-		{
-			if (check_token(str[i + 1], 0) != 0)
-			{
-				ft_err("Double token", "Syntax error");
-				return (-1);
-			}
-		}
+		else if (check_token(str[i + 1], 0) != 0)
+				return (ft_err("Double token", "Syntax error"), -1);
 		new_node(NULL, check_token(str[i], str[i + 1]), lexer, tool);
 		if (trig == 1)
 			return (2);
@@ -154,13 +145,12 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		}
 		if (i == 0)
 		{
-			if (str)
-				free(str);
+			ft_free(str);
 			ft_err("Invalid Commands", "in lexer");
 			return (NULL);
 		}
 	}
-	free(str);
+	//free(str);
 	if (lex_check(lexer) == NULL)
 		return (NULL);
 	lex_del(&lexer);

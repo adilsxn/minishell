@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/25 15:03:17 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:48:19 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ void	clean_data(t_tool *data, bool has_history)
 {
 	if (data != NULL)
 	{
-		// if (data->arg != NULL)
-		// 	ft_free(data->arg);
+		if (data->arg != NULL)
+		 	ft_free(data->arg);
 		if (data->lexer)
 			lst_clear(&data->lexer);
-		if (data->env)
-			del_env(data->env);
 		if (data->pipes)
 			free_pipe(data->pipes);
-		if (data->envp)
-			free_arr(data->envp);
+	
+		if (has_history == true)
+		{
+			rl_clear_history();
+			if (data != NULL && data->env)
+				del_env(data->env);
+		}
 	}
-	if (has_history == true)
-		rl_clear_history();
 }
 
 void	clean_fds(void)

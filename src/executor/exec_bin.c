@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:12:28 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 13:27:20 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:01:46 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	child_process(t_cmd *cmd)
 	if (cmd->path == NULL)
 		exit(0);
 	clean_fds();
-	if (execve(cmd->path, cmd->args, cmd->envp) == ERROR)
+	if (execve(cmd->path, cmd->args, NULL) == ERROR)
 		ft_err("execve failed", strerror(errno));
 	exit(1);
 }
@@ -43,7 +43,7 @@ void	exec_bin(t_cmd *cmd)
 
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "cmd not found");
+		ft_err(cmd->args[0], "command not found");
 		g_last_ret_code = 127;
 		return ;
 	}

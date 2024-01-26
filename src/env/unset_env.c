@@ -13,17 +13,19 @@
 
 #include "../../inc/minishell.h"
 
-int	unset_env(t_env *env, const char *key)
+int	unset_env(t_env **env, const char *key)
 {
 	t_env	*tmp;
 
-	tmp = get_env(env, key);
+	if (!env || !key)
+		return (1);
+	tmp = get_env(*env, key);
 	if (tmp == NULL)
 		return (1);
 	if (tmp->prev != NULL)
 		tmp->prev->next = tmp->next;
 	else
-		env = tmp->next;
+		*env = tmp->next;
 	if (tmp->next != NULL)
 		tmp->next->prev = tmp->prev;
 	tmp->prev = NULL;

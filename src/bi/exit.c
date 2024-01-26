@@ -85,6 +85,6 @@ int	msh_exit(char **args, t_tool *data)
 	}
 	ft_putendl_fd("exit", 2);
 	clean_fds();
-	clean_data(data, false);
+	clean_data(data, true);
 	exit(exit_code);
 }
