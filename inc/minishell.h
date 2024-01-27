@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/26 12:06:36 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:25:25 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void				exec_pipe(t_tool *data);
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
-int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
+void				sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 // signal
 void				sig_handl(void);
 

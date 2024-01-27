@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/26 12:48:19 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:11:46 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	clean_data(t_tool *data, bool has_history)
 			lst_clear(&data->lexer);
 		if (data->pipes)
 			free_pipe(data->pipes);
-	
 		if (has_history == true)
 		{
 			rl_clear_history();
@@ -50,14 +49,13 @@ void	freer(t_envy *ex, char *str)
 	free(str);
 }
 
-int	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)
+void	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)
 {
 	char	*tmp;
 
 	tmp = ft_substr(str, i, count);
 	new_node(tmp, 0, lexer, tool);
 	ft_free(tmp);
-	return (count);
 }
 
 bool has_heredoc(t_lexer *lexer)
