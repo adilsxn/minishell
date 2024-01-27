@@ -145,14 +145,13 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		}
 		if (i == 0)
 		{
-			ft_free(str);
+			// ft_free(str);
 			ft_err("Invalid Commands", "in lexer");
 			return (NULL);
 		}
 	}
 	//free(str);
 	if (lex_check(lexer) == NULL)
-		return (NULL);
-	lex_del(&lexer);
+       return(lex_del(&lexer), NULL);
 	return (lexer);
 }
