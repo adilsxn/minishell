@@ -44,10 +44,10 @@ static void	minishell_loop(t_tool *shell)
 		printin(shell->lexer);
 		if (shell->lexer)
 		{
-			shell->lexer = expander2(shell->env, shell->lexer);
+			// shell->lexer = expander2(shell->env, shell->lexer);
 			if (has_heredoc(shell->lexer) == true)
 				heredoc(shell->lexer);
-			shell->lexer = expander2(shell->env, shell->lexer);
+			// shell->lexer = expander2(shell->env, shell->lexer);
 			shell->pipes = parser(shell);
 			if (shell->pipes != NULL)
 				exec_pipe(shell);

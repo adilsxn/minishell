@@ -13,6 +13,7 @@
 
 #include "../../inc/minishell.h"
 
+//TODO: Fix error appearing when exit 0
 static int	ft_atol(char *str, bool *error)
 {
 	int					sinal;
