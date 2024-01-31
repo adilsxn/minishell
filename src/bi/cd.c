@@ -37,7 +37,6 @@ static bool	ft_chdir(char *path, t_env *env)
 	ret = getcwd(cwd, PATH_MAX);
 	if (ret == NULL)
 		ft_err("cd: error getting current dir", strerror(errno));
-	ft_free(ret);
 	update_env(env, true);
 	return (true);
 }
