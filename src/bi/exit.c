@@ -86,5 +86,7 @@ int	msh_exit(char **args, t_tool *data)
 	ft_putendl_fd("exit", 2);
 	clean_fds();
 	clean_data(data, true);
+	printf("hi\n");
 	exit(exit_code);
+	printf("hi1\n");
 }

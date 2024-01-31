@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/27 18:11:46 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/27 19:22:48 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	clean_data(t_tool *data, bool has_history)
 	{
 		if (data->arg != NULL)
 		 	ft_free(data->arg);
-		if (data->lexer)
-			lst_clear(&data->lexer);
+		lst_clear(&data->lexer);
 		if (data->pipes)
 			free_pipe(data->pipes);
 		if (has_history == true)
