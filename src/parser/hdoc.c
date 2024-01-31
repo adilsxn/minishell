@@ -22,6 +22,7 @@ static char	*get_line_hdoc(char *delim)
 	while (line != NULL && (ft_strequ(line, delim) != 0))
 	{
 		content = ft_strjoin(content, line);
+        ft_free(line);
 		if (content == NULL)
 			break ;
 		line = readline("heredoc> ");

@@ -63,7 +63,7 @@ t_rdr	*build_rdr(t_lexer *lexi)
 			}
 			if (start == NULL)
 				start = rdir;
-			rdir->value = it->str;
+			rdir->value = it->next->str;
 		}
 		it = it->next;
 	}
