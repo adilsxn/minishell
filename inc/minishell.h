@@ -32,7 +32,7 @@
 # define HD_W "warning: here-document delimited by end-of-file"
 # define HD_FILE "/tmp/heredoc"
 
-# define ERROR -1
+# define ERROR -3
 // lexer
 typedef enum s_token
 {

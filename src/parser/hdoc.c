@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+//TODO: make it conform to multiples hdoc, by them having unique names
 static char	*get_line_hdoc(char *delim)
 {
 	char	*content;
@@ -19,7 +20,7 @@ static char	*get_line_hdoc(char *delim)
 
 	content = ft_strdup("");
 	line = readline("heredoc> ");
-	while (line != NULL && (ft_strequ(line, delim) != 0))
+	while (line != NULL && (ft_strequ(line, delim) == 0))
 	{
 		content = ft_strjoin(content, line);
         ft_free(line);

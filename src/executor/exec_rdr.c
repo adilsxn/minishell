@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	handle_red_stdout(int fd, t_rdr *rdr)
+//TODO: make get_in get the unique name for the hd_file
+static int	get_out(int fd, t_rdr *rdr)
 {
 	int	fmode;
 	int	fperm;
@@ -41,7 +41,7 @@ static int	set_fd_out(t_rdr *rdr)
 	{
 		if (rdr->kind == RDR_OUT || rdr->kind == RDR_APP)
 		{
-			fd = handle_red_stdout(fd, rdr);
+			fd = get_out(fd, rdr);
 			dup_fd = dup2(fd, STDOUT_FILENO);
 			close(fd);
 			if (dup_fd == -1)
@@ -53,7 +53,7 @@ static int	set_fd_out(t_rdr *rdr)
 	return (fd);
 }
 
-static int	handle_red_stdin(int fd, t_rdr *rdr)
+static int	get_in(int fd, t_rdr *rdr)
 {
 	int	heredoc_perm;
 
@@ -83,11 +83,11 @@ static int	set_fd_in(t_rdr *rdr)
 	int	dup_fd;
 
 	fd = -1;
-	while (rdr != NULL)
+	while (rdr != NULL )
 	{
 		if (rdr->kind == RDR_IN || rdr->kind == RDR_HD)
 		{
-			fd = handle_red_stdin(fd, rdr);
+			fd = get_in(fd, rdr);
 			if (fd == ERROR)
 				return (ERROR);
 			dup_fd = dup2(fd, STDIN_FILENO);
@@ -108,10 +108,8 @@ int	exec_rdr(t_rdr *rdr)
 	int	fd_in;
 
 	fd_out = set_fd_out(rdr);
-	if (fd_out == ERROR)
-		return (-1);
-	fd_in = set_fd_in(rdr);
-	if (fd_in == ERROR)
+    fd_in = set_fd_in(rdr);
+	if (fd_out == ERROR || fd_in == ERROR)
 		return (-1);
 	return (0);
 }

@@ -12,7 +12,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+//TODO: Make it congruent with the way hdoc will work frm now on
 void	free_rdr(t_rdr *rdir)
 {
 	if (rdir == NULL)
@@ -64,6 +64,8 @@ t_rdr	*build_rdr(t_lexer *lexi)
 			if (start == NULL)
 				start = rdir;
 			rdir->value = it->next->str;
+            if (it->token == LESS_LESS)
+                rdir->value = it->str;
 		}
 		it = it->next;
 	}
