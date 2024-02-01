@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_wordcount.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 14:53:22 by acuva-nu          #+#    #+#             */
-/*   Updated: 2023/04/08 15:01:19 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:48:54 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,30 @@ int	ft_wordcount(char const *s, char c)
 		while (*s != c && *s)
 			s++;
 		count++;
+	}
+	return (count);
+}
+
+int	ft_wordcount1(char const *s, char c)
+{
+	int	count;
+
+	count = 0;
+	while (*s)
+	{
+		while (*s == c)
+			s++;
+		if (*s == '\0')
+			break ;
+		while (*s != c && *s)
+			s++;
+		count++;
+	}
+	if (count == 0)
+	{
+		--s;
+		if (s[0] == c)
+			return (1);
 	}
 	return (count);
 }

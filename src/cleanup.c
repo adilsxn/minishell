@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/27 19:22:48 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/01 15:53:39 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,19 @@ void	clean_fds(void)
 	unlink(HD_FILE);
 }
 
-void	freer(t_envy *ex, char *str)
+char	*freer(t_envy *ex, char *str, char **str1)
 {
+	char	*ret;
+
+	free_array(str1);
+	if (ex->str2 != NULL)
+		ret = ft_strdup(ex->str2);
+	else
+		ret = NULL;
+	ft_free(ex->str2);
 	free(ex);
 	free(str);
+	return (ret);
 }
 
 void	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/25 11:48:52 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:27:23 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*expander(t_env *env, char *str)
 {
 	t_envy	*ex;
 	char	**str1;
-	char	*ret;
 
 	ex = malloc(sizeof(t_envy));
 	if (init_expand(&str, &str1) != NULL)
@@ -62,11 +61,7 @@ char	*expander(t_env *env, char *str)
 			ex->str2 = expander_help1(ex->len, ex->str2, str1, ex->i);
 		ex->i = loopin(&ex->env2, &ex->str3, ex->tmp, ex->i);
 	}
-	free_array(str1);
-	ret = ft_strdup(ex->str2);
-	free(ex->str2);
-	freer(ex, str);
-	return (ret);
+	return (freer(ex, str, str1));
 }
 
 t_lexer	*expander2(t_env *env, t_lexer *lexi)

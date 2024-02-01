@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/27 17:25:25 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/01 18:01:51 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
 char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
-void				freer(t_envy *ex, char *str);
+char				*freer(t_envy *ex, char *str, char **str1);
 
 // minishell loop
 int					count_token(t_lexer *lexi);
@@ -201,5 +201,6 @@ void				clean_fds(void);
 void				sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 // signal
 void				sig_handl(void);
+char	*ft_strtrim1(char const *s1, char const *set);
 
 #endif

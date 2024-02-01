@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/24 12:43:47 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:30:20 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ char	*double_strj(char *str2, char *str3, char *str1)
 int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
 {
 	*env2 = get_env(env, tmp);
-	if (env2 != NULL)
-		*str3 = (char *)(*env2)->value;
+	if (*env2 != NULL)
+	{
+		if ((char *)(*env2)->value != NULL)
+			*str3 = (char *)(*env2)->value;
+	}
+	else
+		*str3 = NULL;
 	if (env2 != NULL)
 		return (1);
 	return (0);
@@ -50,6 +55,8 @@ int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
 char	*tmpcheck(char **tmp, char **str1, int i)
 {
 	*tmp = get_key(str1[i]);
+	if ((*tmp)[0] == '\0')
+		return (NULL);
 	return (*tmp);
 }
 

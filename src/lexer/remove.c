@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/28 20:17:13 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:04:22 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	lst_clear(t_lexer **lst)
 	{
 		tmp = (*lst)->next;
 		free((*lst)->str);
-		printf("i: %i\n", (*lst)->i);
 		free(*lst);
 		*lst = tmp;
 	}
