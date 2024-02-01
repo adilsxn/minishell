@@ -31,7 +31,7 @@ static int	handle_red_stdout(int fd, t_rdr *rdr)
 	return (fd);
 }
 
-static int	set_stdout_fd(t_rdr *rdr)
+static int	set_fd_out(t_rdr *rdr)
 {
 	int	fd;
 	int	dup_fd;
@@ -77,7 +77,7 @@ static int	handle_red_stdin(int fd, t_rdr *rdr)
 	return (fd);
 }
 
-static int	set_stdin_fd(t_rdr *rdr)
+static int	set_fd_in(t_rdr *rdr)
 {
 	int	fd;
 	int	dup_fd;
@@ -104,14 +104,14 @@ static int	set_stdin_fd(t_rdr *rdr)
 
 int	exec_rdr(t_rdr *rdr)
 {
-	int	stdout_fd;
-	int	stdin_fd;
+	int	fd_out;
+	int	fd_in;
 
-	stdout_fd = set_stdout_fd(rdr);
-	if (stdout_fd == ERROR)
+	fd_out = set_fd_out(rdr);
+	if (fd_out == ERROR)
 		return (-1);
-	stdin_fd = set_stdin_fd(rdr);
-	if (stdin_fd == ERROR)
+	fd_in = set_fd_in(rdr);
+	if (fd_in == ERROR)
 		return (-1);
 	return (0);
 }

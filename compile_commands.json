@@ -7,8 +7,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/set_env.o",
       "src/env/set_env.c"
@@ -25,8 +23,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/get_env.o",
       "src/env/get_env.c"
@@ -43,8 +39,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/unset_env.o",
       "src/env/unset_env.c"
@@ -61,8 +55,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/env.o",
       "src/env/env.c"
@@ -79,8 +71,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/del_env.o",
       "src/env/del_env.c"
@@ -97,8 +87,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/init_env.o",
       "src/env/init_env.c"
@@ -115,15 +103,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/tree_utils.o",
-      "src/parser/tree_utils.c"
+      "obj/cmd_finder.o",
+      "src/parser/cmd_finder.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/parser/tree_utils.c",
-    "output": "/home/homeaway/minishell/obj/tree_utils.o"
+    "file": "/home/homeaway/minishell/src/parser/cmd_finder.c",
+    "output": "/home/homeaway/minishell/obj/cmd_finder.o"
   },
   {
     "arguments": [
@@ -133,15 +119,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/tree_utils_2.o",
-      "src/parser/tree_utils_2.c"
+      "obj/cmd_args.o",
+      "src/parser/cmd_args.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/parser/tree_utils_2.c",
-    "output": "/home/homeaway/minishell/obj/tree_utils_2.o"
+    "file": "/home/homeaway/minishell/src/parser/cmd_args.c",
+    "output": "/home/homeaway/minishell/obj/cmd_args.o"
   },
   {
     "arguments": [
@@ -151,15 +135,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/parser.o",
-      "src/parser/parser.c"
+      "obj/command.o",
+      "src/parser/command.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/parser/parser.c",
-    "output": "/home/homeaway/minishell/obj/parser.o"
+    "file": "/home/homeaway/minishell/src/parser/command.c",
+    "output": "/home/homeaway/minishell/obj/command.o"
   },
   {
     "arguments": [
@@ -169,15 +151,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/error.o",
-      "src/parser/error.c"
+      "obj/pipe.o",
+      "src/parser/pipe.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/parser/error.c",
-    "output": "/home/homeaway/minishell/obj/error.o"
+    "file": "/home/homeaway/minishell/src/parser/pipe.c",
+    "output": "/home/homeaway/minishell/obj/pipe.o"
   },
   {
     "arguments": [
@@ -187,8 +167,54 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
+      "-o",
+      "obj/hdoc.o",
+      "src/parser/hdoc.c"
+    ],
+    "directory": "/home/homeaway/minishell",
+    "file": "/home/homeaway/minishell/src/parser/hdoc.c",
+    "output": "/home/homeaway/minishell/obj/hdoc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "obj/redirection.o",
+      "src/parser/redirection.c"
+    ],
+    "directory": "/home/homeaway/minishell",
+    "file": "/home/homeaway/minishell/src/parser/redirection.c",
+    "output": "/home/homeaway/minishell/obj/redirection.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "obj/signals.o",
+      "src/signals.c"
+    ],
+    "directory": "/home/homeaway/minishell",
+    "file": "/home/homeaway/minishell/src/signals.c",
+    "output": "/home/homeaway/minishell/obj/signals.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
       "-o",
       "obj/remove.o",
       "src/lexer/remove.c"
@@ -205,8 +231,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/lexer_utils.o",
       "src/lexer/lexer_utils.c"
@@ -223,8 +247,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/lexer_list.o",
       "src/lexer/lexer_list.c"
@@ -241,15 +263,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/cmd_finder.o",
-      "src/executor/cmd_finder.c"
+      "obj/exec_rdr.o",
+      "src/executor/exec_rdr.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/executor/cmd_finder.c",
-    "output": "/home/homeaway/minishell/obj/cmd_finder.o"
+    "file": "/home/homeaway/minishell/src/executor/exec_rdr.c",
+    "output": "/home/homeaway/minishell/obj/exec_rdr.o"
   },
   {
     "arguments": [
@@ -259,15 +279,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/cmd_args.o",
-      "src/executor/cmd_args.c"
+      "obj/exec_cmd.o",
+      "src/executor/exec_cmd.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/executor/cmd_args.c",
-    "output": "/home/homeaway/minishell/obj/cmd_args.o"
+    "file": "/home/homeaway/minishell/src/executor/exec_cmd.c",
+    "output": "/home/homeaway/minishell/obj/exec_cmd.o"
   },
   {
     "arguments": [
@@ -277,15 +295,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/command.o",
-      "src/executor/command.c"
+      "obj/exec_pipe.o",
+      "src/executor/exec_pipe.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/executor/command.c",
-    "output": "/home/homeaway/minishell/obj/command.o"
+    "file": "/home/homeaway/minishell/src/executor/exec_pipe.c",
+    "output": "/home/homeaway/minishell/obj/exec_pipe.o"
   },
   {
     "arguments": [
@@ -295,15 +311,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/pipe.o",
-      "src/executor/pipe.c"
+      "obj/exec_bin.o",
+      "src/executor/exec_bin.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/executor/pipe.c",
-    "output": "/home/homeaway/minishell/obj/pipe.o"
+    "file": "/home/homeaway/minishell/src/executor/exec_bin.c",
+    "output": "/home/homeaway/minishell/obj/exec_bin.o"
   },
   {
     "arguments": [
@@ -313,15 +327,13 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
-      "obj/redirection.o",
-      "src/executor/redirection.c"
+      "obj/exec_bi.o",
+      "src/executor/exec_bi.c"
     ],
     "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/executor/redirection.c",
-    "output": "/home/homeaway/minishell/obj/redirection.o"
+    "file": "/home/homeaway/minishell/src/executor/exec_bi.c",
+    "output": "/home/homeaway/minishell/obj/exec_bi.o"
   },
   {
     "arguments": [
@@ -331,8 +343,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/pwd.o",
       "src/bi/pwd.c"
@@ -349,8 +359,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/echo.o",
       "src/bi/echo.c"
@@ -367,8 +375,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/unset.o",
       "src/bi/unset.c"
@@ -385,8 +391,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/exit.o",
       "src/bi/exit.c"
@@ -403,8 +407,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/export.o",
       "src/bi/export.c"
@@ -421,8 +423,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/cd.o",
       "src/bi/cd.c"
@@ -439,8 +439,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/builtins.o",
       "src/bi/builtins.c"
@@ -457,8 +455,38 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
+      "-o",
+      "obj/error.o",
+      "src/error.c"
+    ],
+    "directory": "/home/homeaway/minishell",
+    "file": "/home/homeaway/minishell/src/error.c",
+    "output": "/home/homeaway/minishell/obj/error.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
+      "-o",
+      "obj/cleanup.o",
+      "src/cleanup.c"
+    ],
+    "directory": "/home/homeaway/minishell",
+    "file": "/home/homeaway/minishell/src/cleanup.c",
+    "output": "/home/homeaway/minishell/obj/cleanup.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-c",
       "-o",
       "obj/main.o",
       "src/main.c"
@@ -475,26 +503,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
-      "-o",
-      "obj/setup_sgnl.o",
-      "src/signals/setup_sgnl.c"
-    ],
-    "directory": "/home/homeaway/minishell",
-    "file": "/home/homeaway/minishell/src/signals/setup_sgnl.c",
-    "output": "/home/homeaway/minishell/obj/setup_sgnl.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/expand_utilspt2.o",
       "src/expander/expand_utilspt2.c"
@@ -511,8 +519,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/expand_utils.o",
       "src/expander/expand_utils.c"
@@ -529,8 +535,6 @@
       "-Wextra",
       "-Werror",
       "-c",
-      "-I",
-      "inc/",
       "-o",
       "obj/expand.o",
       "src/expander/expand.c"
