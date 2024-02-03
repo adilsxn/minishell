@@ -12,7 +12,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//TODO: Make it congruent with the way hdoc will work frm now on
+
 void	free_rdr(t_rdr *rdir)
 {
 	if (rdir == NULL)

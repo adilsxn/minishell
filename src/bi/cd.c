@@ -20,7 +20,7 @@ static void	update_env(t_env *env, bool success)
 	pwd = getcwd(NULL, 0);
 	if (success)
 	{
-		set_env(&env, "OLDPWD", get_env(env, "PWD")->value);
+		set_env(&env, "OLDPWD", get_env(env, "PWD"));
 		set_env(&env, "PWD", pwd);
 	}
 	ft_free((char *)pwd);
@@ -48,7 +48,7 @@ int	msh_cd(char **args, t_tool *data)
 	if (!args || args[1] == NULL || ft_isspace(args[1][0]) || args[1][0] == '\0'
 		|| ft_strncmp(args[1], "--", 3) == 1)
 	{
-		path = (char *)get_env(data->env, "HOME")->value;
+		path = get_env(data->env, "HOME");
 		if (!path || *path == '\0' || ft_isspace(*path))
 			return (ft_err("cd: HOME not set", NULL), 1);
 		return (!ft_chdir(path, data->env));
@@ -57,7 +57,7 @@ int	msh_cd(char **args, t_tool *data)
 		return (ft_err("cd: too many arguments", NULL), 1);
 	if (ft_strncmp(args[1], "-", 2) == 0)
 	{
-		path = (char *)get_env(data->env, "OLDPWD")->value;
+		path = get_env(data->env, "OLDPWD");
 		if (!path)
 			return (ft_err("cd: OLDPWD not set", NULL), 1);
 		return (!ft_chdir(path, data->env));

@@ -11,19 +11,17 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//TODO: make get_in get the unique name for the hd_file
+
 static int	get_out(int fd, t_rdr *rdr)
 {
 	int	fmode;
-	int	fperm;
 
 	if (fd >= 0)
 		close(fd);
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	if (rdr->kind == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
-	fperm = S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH;
-	fd = open(rdr->value, fmode, fperm);
+	fd = open(rdr->value, fmode, 0644);
 	if (fd == -1)
 		return (ERROR);
 	if (rdr->kind == RDR_OUT)
@@ -55,25 +53,12 @@ static int	set_fd_out(t_rdr *rdr)
 
 static int	get_in(int fd, t_rdr *rdr)
 {
-	int	heredoc_perm;
-
 	if (fd >= 0)
 		close(fd);
-	heredoc_perm = S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH;
-	if (rdr->kind == RDR_HD)
-		fd = open(HD_FILE, O_RDWR | O_CREAT | O_TRUNC, heredoc_perm);
-	else
-		fd = open(rdr->value, O_RDONLY, 0);
+	if (rdr->kind == RDR_HD || rdr->kind == RDR_IN)
+        fd = open(rdr->value, O_RDONLY);
 	if (fd == -1)
 		return (ERROR);
-	if (rdr->kind == RDR_HD)
-	{
-		ft_putstr_fd(rdr->value, fd);
-		close(fd);
-		fd = open(HD_FILE, O_RDONLY, 0);
-		if (fd == -1)
-			return (ERROR);
-	}
 	return (fd);
 }
 
@@ -98,7 +83,7 @@ static int	set_fd_in(t_rdr *rdr)
 		rdr = rdr->next;
 	}
 	close(fd);
-	unlink(HD_FILE);
+	// unlink(HD_FILE);
 	return (fd);
 }
 
