@@ -11,6 +11,11 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+static void new_line_prompt(int signal)
+{
+    (void)signal;
+    rl_on_new_line();
+}
 
 static void	sig_new_prompt(int sig)
 {
@@ -21,21 +26,30 @@ static void	sig_new_prompt(int sig)
 	rl_redisplay();
 }
 
-static void	ign_sigquit(void)
+static void	ignore_the_sigquit(void)
 {
 	struct sigaction	event;
 
-	ft_bzero(&event, sizeof(struct sigaction));
+	ft_bzero(&event, sizeof(event));
 	event.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &event, NULL);
 }
 
-void	sig_handl(void)
+void signal_handler_idle(void) 
+{
+    struct sigaction event;
+
+    ft_bzero(&event, sizeof(event));
+    event.sa_handler = &new_line_prompt;
+    sigaction(SIGQUIT, &event, NULL);
+    sigaction(SIGINT, &event, NULL);
+}
+void	signal_handler(void)
 {
 	struct sigaction	event;
 
-	ign_sigquit();
-	ft_bzero(&event, sizeof(struct sigaction));
+	ignore_the_sigquit();
+	ft_bzero(&event, sizeof(event));
 	event.sa_handler = &sig_new_prompt;
 	sigaction(SIGINT, &event, NULL);
 }

@@ -201,6 +201,8 @@ void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
 void				sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 // signal
-void				sig_handl(void);
+
+void signal_handler(void);
+void signal_handler_idle(void);
 
 #endif

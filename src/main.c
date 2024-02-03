@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/27 19:44:14 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ static void	minishell_loop(t_tool *shell)
 {
 	while (1)
 	{
-		sig_handl();
+        signal_handler();
 		shell->arg = readline("minishell> ");
+        signal_handler_idle();
 		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
 		shell->arg = ft_strtrim(shell->arg, " ");
@@ -44,10 +45,9 @@ static void	minishell_loop(t_tool *shell)
 		printin(shell->lexer);
 		if (shell->lexer)
 		{
-			// shell->lexer = expander2(shell->env, shell->lexer);
-			if (has_heredoc(shell->lexer) == true)
-				heredoc(shell);
-			// shell->lexer = expander2(shell->env, shell->lexer);
+            if (has_heredoc(shell->lexer) == true)
+                heredoc(shell);
+			shell->lexer = expander2(shell->env, shell->lexer);
             shell->pipes = parser(shell);
 			if (shell->pipes != NULL)
 				exec_pipe(shell);

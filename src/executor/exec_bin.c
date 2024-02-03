@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:12:28 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/26 13:01:46 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	child_proc(t_cmd *cmd)
 {
-	sig_handl();
+	signal_handler();
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -57,7 +57,7 @@ void	exec_bin(t_cmd *cmd)
 		child_proc(cmd);
 	else
 	{
-		sig_handl();
+		signal_handler();
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno));
 		get_exit_code(status);

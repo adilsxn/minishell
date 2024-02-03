@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:30:06 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/26 12:07:45 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 
 static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 {
-	sig_handl();
+    signal_handler();
 	close(proc_fd[STDIN_FILENO]);
 	clean_fds();
 	if ((is_builtin(proc->cmd->args[0]) != 0))
@@ -90,7 +90,7 @@ void	exec_pipe(t_tool *data)
 	int		proc_fd[2];
 	t_ppe	*proc;
 
-	sig_handl();
+	signal_handler();
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);

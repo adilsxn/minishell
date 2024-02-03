@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:34:39 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 20:14:57 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static bool	get_line_hdoc(char *delim, t_tool *data, int fd)
 
 	while (true)
 	{
+        signal_handler();
         input = readline("heredoc> ");
+        signal_handler_idle();
         if (handle_heredoc(data, fd, input, delim))
             break ;
 	}
@@ -80,7 +82,8 @@ int	heredoc(t_tool *data)
             if (fd == -1)
                 return (ft_err("heredoc failed", NULL), 1);
             get_line_hdoc(delim, data, fd);
-            close(fd);
+            if (fd != -1)
+                close(fd);
 		}
 		it = it->next;
 	}

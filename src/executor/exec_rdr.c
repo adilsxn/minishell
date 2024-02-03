@@ -47,7 +47,8 @@ static int	set_fd_out(t_rdr *rdr)
 		}
 		rdr = rdr->next;
 	}
-	close(fd);
+	if (fd != -1)
+		close(fd);
 	return (fd);
 }
 
@@ -56,7 +57,7 @@ static int	get_in(int fd, t_rdr *rdr)
 	if (fd >= 0)
 		close(fd);
 	if (rdr->kind == RDR_HD || rdr->kind == RDR_IN)
-        fd = open(rdr->value, O_RDONLY);
+		fd = open(rdr->value, O_RDONLY);
 	if (fd == -1)
 		return (ERROR);
 	return (fd);
@@ -68,7 +69,7 @@ static int	set_fd_in(t_rdr *rdr)
 	int	dup_fd;
 
 	fd = -1;
-	while (rdr != NULL )
+	while (rdr != NULL)
 	{
 		if (rdr->kind == RDR_IN || rdr->kind == RDR_HD)
 		{
@@ -82,7 +83,8 @@ static int	set_fd_in(t_rdr *rdr)
 		}
 		rdr = rdr->next;
 	}
-	close(fd);
+	if (fd != -1)
+		close(fd);
 	// unlink(HD_FILE);
 	return (fd);
 }
@@ -93,7 +95,7 @@ int	exec_rdr(t_rdr *rdr)
 	int	fd_in;
 
 	fd_out = set_fd_out(rdr);
-    fd_in = set_fd_in(rdr);
+	fd_in = set_fd_in(rdr);
 	if (fd_out == ERROR || fd_in == ERROR)
 		return (-1);
 	return (0);
