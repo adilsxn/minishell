@@ -45,7 +45,7 @@ static char	**useful_paths(char *path)
 	return (paths);
 }
 
-char	*cmd_finder(t_tool *data, char *cmd)
+char	*cmd_finder(t_env *env, char *cmd)
 {
 	char	**paths;
 	char	*path;
@@ -56,7 +56,7 @@ char	*cmd_finder(t_tool *data, char *cmd)
 		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
-	paths = useful_paths(get_env(data->env, "PATH"));
+	paths = useful_paths(get_env(env, "PATH"));
 	while (paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], cmd);

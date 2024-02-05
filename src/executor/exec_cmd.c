@@ -16,7 +16,7 @@ void	exec_cmd(t_tool *data)
 {
 	t_cmd	*cmd;
 
-	cmd = mk_cmd(data);
+	cmd = mk_cmd(data->lexer, data->env);
 	if (cmd == NULL)
 		return ;
 	if ((is_builtin(cmd->args[0]) != 0))

@@ -166,7 +166,7 @@ void				ft_err(char *message, char *detail);
 void				free_rdr(t_rdr *rdir);
 t_rdr				*build_rdr(t_lexer *lexi);
 void				free_cmd(t_cmd *cmd);
-t_cmd				*mk_cmd(t_tool *data);
+t_cmd				*mk_cmd(t_lexer *lexer, t_env *env);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe *pipe);
 bool has_heredoc(t_lexer *lexer);
@@ -194,7 +194,7 @@ char				*freer(t_envy **ex, char *str, char **str1);
 // minishell loop
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi);
-char				*cmd_finder(t_tool *data, char *cmd);
+char				*cmd_finder(t_env *env, char *cmd);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
