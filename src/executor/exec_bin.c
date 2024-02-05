@@ -6,15 +6,15 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:12:28 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/26 13:01:46 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	child_process(t_cmd *cmd)
+static void	child_proc(t_cmd *cmd)
 {
-	sig_handl();
+	signal_handler();
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -28,7 +28,7 @@ static void	child_process(t_cmd *cmd)
 	exit(1);
 }
 
-static void	set_ret_code(int wstatus)
+static void	get_exit_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
 		g_last_ret_code = WEXITSTATUS(wstatus);
@@ -54,12 +54,12 @@ void	exec_bin(t_cmd *cmd)
 		g_last_ret_code = 1;
 	}
 	else if (pid == 0)
-		child_process(cmd);
+		child_proc(cmd);
 	else
 	{
-		sig_handl();
+		signal_handler();
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno));
-		set_ret_code(status);
+		get_exit_code(status);
 	}
 }

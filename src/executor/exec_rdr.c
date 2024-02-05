@@ -12,18 +12,16 @@
 
 #include "../../inc/minishell.h"
 
-static int	handle_red_stdout(int fd, t_rdr *rdr)
+static int	get_out(int fd, t_rdr *rdr)
 {
 	int	fmode;
-	int	fperm;
 
 	if (fd >= 0)
 		close(fd);
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	if (rdr->kind == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
-	fperm = S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH;
-	fd = open(rdr->value, fmode, fperm);
+	fd = open(rdr->value, fmode, 0644);
 	if (fd == -1)
 		return (ERROR);
 	if (rdr->kind == RDR_OUT)
@@ -31,7 +29,7 @@ static int	handle_red_stdout(int fd, t_rdr *rdr)
 	return (fd);
 }
 
-static int	set_stdout_fd(t_rdr *rdr)
+static int	set_fd_out(t_rdr *rdr)
 {
 	int	fd;
 	int	dup_fd;
@@ -41,7 +39,7 @@ static int	set_stdout_fd(t_rdr *rdr)
 	{
 		if (rdr->kind == RDR_OUT || rdr->kind == RDR_APP)
 		{
-			fd = handle_red_stdout(fd, rdr);
+			fd = get_out(fd, rdr);
 			dup_fd = dup2(fd, STDOUT_FILENO);
 			close(fd);
 			if (dup_fd == -1)
@@ -49,35 +47,23 @@ static int	set_stdout_fd(t_rdr *rdr)
 		}
 		rdr = rdr->next;
 	}
-	close(fd);
+	if (fd != -1)
+		close(fd);
 	return (fd);
 }
 
-static int	handle_red_stdin(int fd, t_rdr *rdr)
+static int	get_in(int fd, t_rdr *rdr)
 {
-	int	heredoc_perm;
-
 	if (fd >= 0)
 		close(fd);
-	heredoc_perm = S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH;
-	if (rdr->kind == RDR_HD)
-		fd = open(HD_FILE, O_RDWR | O_CREAT | O_TRUNC, heredoc_perm);
-	else
-		fd = open(rdr->value, O_RDONLY, 0);
+	if (rdr->kind == RDR_HD || rdr->kind == RDR_IN)
+		fd = open(rdr->value, O_RDONLY);
 	if (fd == -1)
 		return (ERROR);
-	if (rdr->kind == RDR_HD)
-	{
-		ft_putstr_fd(rdr->value, fd);
-		close(fd);
-		fd = open(HD_FILE, O_RDONLY, 0);
-		if (fd == -1)
-			return (ERROR);
-	}
 	return (fd);
 }
 
-static int	set_stdin_fd(t_rdr *rdr)
+static int	set_fd_in(t_rdr *rdr)
 {
 	int	fd;
 	int	dup_fd;
@@ -87,7 +73,7 @@ static int	set_stdin_fd(t_rdr *rdr)
 	{
 		if (rdr->kind == RDR_IN || rdr->kind == RDR_HD)
 		{
-			fd = handle_red_stdin(fd, rdr);
+			fd = get_in(fd, rdr);
 			if (fd == ERROR)
 				return (ERROR);
 			dup_fd = dup2(fd, STDIN_FILENO);
@@ -97,21 +83,19 @@ static int	set_stdin_fd(t_rdr *rdr)
 		}
 		rdr = rdr->next;
 	}
-	close(fd);
-	unlink(HD_FILE);
+	if (fd != -1)
+		close(fd);
 	return (fd);
 }
 
 int	exec_rdr(t_rdr *rdr)
 {
-	int	stdout_fd;
-	int	stdin_fd;
+	int	fd_out;
+	int	fd_in;
 
-	stdout_fd = set_stdout_fd(rdr);
-	if (stdout_fd == ERROR)
-		return (-1);
-	stdin_fd = set_stdin_fd(rdr);
-	if (stdin_fd == ERROR)
+	fd_out = set_fd_out(rdr);
+	fd_in = set_fd_in(rdr);
+	if (fd_out == ERROR || fd_in == ERROR)
 		return (-1);
 	return (0);
 }

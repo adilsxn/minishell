@@ -30,9 +30,9 @@
 # include <unistd.h>
 
 # define HD_W "warning: here-document delimited by end-of-file"
-# define HD_FILE "/tmp/heredoc"
+# define HD_FILE "/tmp/heredoc_"
 
-# define ERROR -1
+# define ERROR -3
 // lexer
 typedef enum s_token
 {
@@ -62,6 +62,7 @@ typedef struct s_envy
     struct s_env *env2;
     int     len;
 }			t_envy;
+
 
 typedef struct s_env
 {
@@ -124,7 +125,8 @@ t_env *init_env(char **envp);
 t_env				*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env **env, const char *key);
-t_env				*get_env(t_env *env, const char *key);
+t_env				*env_iter(t_env *env, const char *key);
+char				*get_env(t_env *env, const char *key);
 // int traverse_msh_env(t_msh_envlist *list);
 int					del_env(t_env *env);
 
@@ -168,7 +170,7 @@ t_cmd				*mk_cmd(t_tool *data);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe *pipe);
 bool has_heredoc(t_lexer *lexer);
-int					heredoc(t_lexer *lexi);
+int					heredoc(t_tool *data);
 
 // expander
 
@@ -205,6 +207,8 @@ void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
 
 // signal
-void				sig_handl(void);
+
+void signal_handler(void);
+void signal_handler_idle(void);
 
 #endif

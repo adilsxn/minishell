@@ -49,11 +49,17 @@ char	*double_strj(char *str2, char *str3, char *str1)
 
 int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
 {
-	*env2 = get_env(env, tmp);
+	// *env2 = env_iter(env, tmp);
+	// if (env2 != NULL)
+    (void)env2;
+    *str3 = get_env(env, tmp);
+	if (*str3 == NULL)
+	/* *env2 = get_env(env, tmp);
 	if (*env2 != NULL)
 	{
 		if ((char *)(*env2)->value != NULL)
 			*str3 = (char *)(*env2)->value;
+   */
 		return (1);
 	}
 	else

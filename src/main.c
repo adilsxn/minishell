@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
 /*   Updated: 2024/02/04 21:12:12 by matilde          ###   ########.fr       */
@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
+/* 
 void printin(t_lexer *lex)
 {
 	t_lexer *lexi;
@@ -26,7 +26,7 @@ void printin(t_lexer *lex)
 		lexi = lexi->next;
 	}
 	printf("------printin---------\n");
-}
+} */
 
 int			g_last_ret_code = 0;
 
@@ -34,8 +34,9 @@ static void	minishell_loop(t_tool *shell)
 {
 	while (1)
 	{
-		sig_handl();
+        signal_handler();
 		shell->arg = readline("minishell> ");
+        signal_handler_idle();
 		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
 		shell->arg = ft_strtrim1(shell->arg, " ");
@@ -44,16 +45,14 @@ static void	minishell_loop(t_tool *shell)
 		printin(shell->lexer);
 		if (shell->lexer)
 		{
+            if (has_heredoc(shell->lexer) == true)
+                heredoc(shell);
 			shell->lexer = expander2(shell->env, shell->lexer);
-			printin(shell->lexer);
-			// if (has_heredoc(shell->lexer) == true)
-			// 	heredoc(shell->lexer);
-			// shell->lexer = expander2(shell->env, shell->lexer);
-			// shell->pipes = parser(shell);
-			// if (shell->pipes != NULL)
-			// 	exec_pipe(shell);
-			// else
-			// 	exec_cmd(shell);
+            shell->pipes = parser(shell);
+			if (shell->pipes != NULL)
+				exec_pipe(shell);
+			else
+				exec_cmd(shell);
 		}
 		clean_data(shell, false);
 		shell->reset = 1;
