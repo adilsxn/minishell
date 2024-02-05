@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 11:35:52 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:44:50 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ char	*freer(t_envy **ex, char *str, char **str1)
 		ret = ft_strdup((*ex)->str2);
 	else
 		ret = NULL;
-	free((*ex)->str2);
-	(*ex)->str2 = NULL;
-	free(*ex);
-	*ex = NULL;
-	free(str);
+	ft_free2((void **)&(*ex)->str2);
+	ft_free2((void**)&(*ex));
+	ft_free(str);
 	return (ret);
 }
 

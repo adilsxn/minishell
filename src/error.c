@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:49:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/23 13:37:32 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:37:39 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	ft_free(void *ptr)
 	{
 		free(ptr);
 		ptr = NULL;
+	}
+}
+
+void	ft_free2(void **ptr)
+{
+	if (*ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
 	}
 }
 

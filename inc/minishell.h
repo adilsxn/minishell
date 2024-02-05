@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/04 20:58:17 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:37:51 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int					heredoc(t_tool *data);
 char				*del_quote(char *str, char c);
 char				*get_key(char *str);
 int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
-char				*double_strj(char *str2, char *str3, char *str1);
+//char				*double_strj(char *str2, char *str3, char *str1);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
 char				*expander_help1(int len, char **str2, char **str1, int i);
@@ -188,6 +188,7 @@ char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
 char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
+void				ft_free2(void **ptr);
 char				*freer(t_envy **ex, char *str, char **str1);
 
 // minishell loop

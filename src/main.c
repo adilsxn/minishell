@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 11:36:15 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:55:45 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	minishell_loop(t_tool *shell)
         signal_handler_idle();
 		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
-		shell->arg = ft_strtrim1(shell->arg, " ");
+		shell->arg = ft_strtrim(shell->arg, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
 		printin(shell->lexer);
@@ -48,6 +48,7 @@ static void	minishell_loop(t_tool *shell)
             if (has_heredoc(shell->lexer) == true)
                 heredoc(shell);
 			shell->lexer = expander2(shell->env, shell->lexer);
+			printin(shell->lexer);
             shell->pipes = parser(shell);
 			if (shell->pipes != NULL)
 				exec_pipe(shell);

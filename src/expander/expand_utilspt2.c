@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/04 20:08:45 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:46:52 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@ char	*expander_help1(int len, char **str2, char **str1, int i)
 {
 	char	*temp;
 
-	// if (len == 1)
-	// 	str2 = ft_strdup(str2);
 	if (len != 1 && i > 0 && *str2 != NULL)
 	{
 		temp = ft_strjoin(*str2, str1[i]);
-		free(*str2);
-		*str2 = ft_strdup(temp);
-		free(temp);
+		if (temp)
+		{
+			free(*str2);
+			*str2 = ft_strdup(temp);
+			free(temp);
+		}
+		else
+			ft_free(*str2);
 	}
 	return (*str2);
 }
@@ -37,9 +40,14 @@ void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 	if ((*ex)->i > 0 && *str2 != NULL)
 	{
 		temp = ft_strjoin(*str2, str3);
-		free(*str2);
-		*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
-		free(temp);
+		if (temp)
+		{
+			free(*str2);
+			*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+			free(temp);
+		}
+		else
+			ft_free(*str2);
 	}
 	else
 	{
@@ -64,7 +72,7 @@ char	*init_expand(char **str, char ***str1)
 void	checker(t_env *env2, char **str2, int i)
 {
 	if (i == 0 && env2 == NULL)
-		*str2 = NULL;
+		ft_free2((void **)str2);
 }
 
 char	**ft_arrdup(char **arr)
