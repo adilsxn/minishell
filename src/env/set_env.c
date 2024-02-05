@@ -25,6 +25,7 @@ t_env	*mk_env(const char *key, const char *value, t_env *prev)
 		return (NULL);
 	env->key = ft_strdup(key);
 	env->value = ft_strdup(value);
+	env->ex = NULL;
 	env->next = NULL;
 	env->prev = prev;
 	return (env);

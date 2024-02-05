@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/04 21:14:02 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:22:38 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	clean_data(t_tool *data, bool has_history)
 			if (data != NULL && data->env)
 				del_env(data->env);
 		}
-		if (data->env->ex)
-		{
-			if (data->env->ex->str2)
-				ft_free(data->env->ex->str2);
-			ft_free(data->env->ex);
-		}
+		// if (data->env->ex)
+		// {
+		// 	if (data->env->ex->str2)
+		// 		ft_free(data->env->ex->str2);
+		// 	ft_free(data->env->ex);
+		// }
 	}
 }
 

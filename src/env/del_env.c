@@ -24,6 +24,11 @@ int	del_env(t_env *env)
 		next = tmp->next;
 		ft_free((void *)tmp->key);
 		ft_free((void *)tmp->value);
+		if (tmp->ex)
+		{
+			ft_free(tmp->ex->str2);
+			ft_free(tmp->ex);
+		}
 		ft_free(tmp);
 		tmp = next;
 	}

@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/04 21:12:12 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:32:40 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int ac, char **av, char **envp)
 	}
 	shell.reset = 0;
 	shell.env = init_env(envp);
-	shell.env->ex = NULL;
 	minishell_loop(&shell);
 	return (0);
 }
