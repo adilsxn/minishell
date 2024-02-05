@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 14:55:59 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:38:17 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	clean_data(t_tool *data, bool has_history)
 {
-	printf("OI\n");
 	if (data != NULL)
 	{
-		printf("Oi1\n");
 		if (data->arg != NULL)
 		 	ft_free(data->arg);
 		lst_clear(&data->lexer);

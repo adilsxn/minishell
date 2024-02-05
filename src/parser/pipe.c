@@ -68,7 +68,6 @@ static t_lexer	*peek_pipe(t_lexer *lexer)
 			return (it->next);
 		it = it->next;
 	}
-	lst_clear(&lexer);
 	return (NULL);
 }
 

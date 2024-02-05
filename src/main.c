@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 15:00:58 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 18:10:42 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ int			g_last_ret_code = 0;
 
 static void	minishell_loop(t_tool *shell)
 {
+	char	*tmp;
 	while (1)
 	{
         signal_handler();
-		shell->arg = readline("minishell> ");
+		tmp = readline("minishell> ");
         signal_handler_idle();
-		if (!shell->arg || !shell->arg[0])
+		if (!tmp || !tmp[0])
 			msh_exit(NULL, shell);
-		shell->arg = ft_strtrim(shell->arg, " ");
+		shell->arg = ft_strtrim(tmp, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
 		if (shell->lexer)
@@ -48,12 +49,11 @@ static void	minishell_loop(t_tool *shell)
                 heredoc(shell);
 			shell->lexer = expander2(shell->env, shell->lexer);
             shell->pipes = parser(shell);
-			// if (shell->pipes != NULL)
-			// 	exec_pipe(shell);
-			// else
-			// 	exec_cmd(shell);
+			if (shell->pipes != NULL)
+				exec_pipe(shell);
+			else
+				exec_cmd(shell);
 		}
-		printf("OImain\n");
 		clean_data(shell, false);
 		shell->reset = 1;
 	}
