@@ -49,7 +49,10 @@ char	**build_av(t_lexer *lexi)
 	{
 		if (it->token != 0)
 			break ;
-        av[i++] = ft_strdup(it->str);
+        if(it->str == NULL)
+            av[i++] = ft_strdup("");
+        else
+            av[i++] = ft_strdup(it->str);
 		it = it->next;
 	}
 	av[len] = NULL;
