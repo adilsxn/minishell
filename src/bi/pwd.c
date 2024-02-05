@@ -21,7 +21,7 @@ int	msh_pwd(char **args, t_tool *data)
 	cwd = NULL;
 	if (get_env(data->env, "PWD") != NULL)
 	{
-		ft_putendl_fd((char *)get_env(data->env, "PWD")->value, 1);
+		ft_putendl_fd(get_env(data->env, "PWD"), 1);
 		return (EXIT_SUCCESS);
 	}
 	else

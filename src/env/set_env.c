@@ -50,7 +50,7 @@ t_env	*set_env(t_env **env, const char *key, const char *value)
 		*env = mk_env(key, value, NULL);
 		return (*env);
 	}
-	tmp = get_env(*env, key);
+	tmp = env_iter(*env, key);
 	if (tmp)
 		return (update_env(tmp, value));
 	tmp = *env;

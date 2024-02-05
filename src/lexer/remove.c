@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
 /*   Updated: 2024/01/31 18:04:22 by matilde          ###   ########.fr       */
@@ -26,7 +26,6 @@ void	del_first(t_lexer **lst)
 	t_lexer	*node;
 	t_lexer	*node1;
 
-	printf("lst i: %i\n", (*lst)->i);
 	node = *lst;
 	*lst = node->next;
 	clear_one(&node);
@@ -36,7 +35,6 @@ void	del_first(t_lexer **lst)
 	while (*lst)
 	{
 		(*lst)->i = (*lst)->i - 1;
-		printf("lst i: %i\n", (*lst)->i);
 		(*lst) = (*lst)->next;
 	}
 	*lst = node1;

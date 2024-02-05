@@ -3,120 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:34:39 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 20:14:57 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*get_line_hdoc(char *delim)
+static bool name_heredoc_file(t_lexer *lexi)
 {
-	char	*content;
-	char	*line;
+    int i;
+    char *number;
+    t_lexer *it;
 
-	content = ft_strdup("");
-	line = readline("heredoc> ");
-	while (line != NULL && (ft_strequ(line, delim) != 0))
+    i = 0;
+    it = lexi;
+    while (it != NULL)
+    {
+        number = ft_itoa(i);
+        if (!number)
+            return (ft_err("heredoc failed", ""), false);
+        if (it->token == LESS_LESS)
+            it->str = ft_strjoin(HD_FILE, number);
+        i++;
+        it = it->next;
+        ft_free(number);
+    }
+    return (true);
+}
+
+static bool handle_heredoc(t_tool *data, int fd, char *content, char *delim)
+{
+    if (!content)
+        return (ft_err(HD_W, delim), true);
+    if (ft_strequ(delim, content) == 1)
+        return (true);
+    content = expander(data->env, content);
+    ft_putendl_fd(content, fd);
+    ft_free(content);
+    return (false);
+}
+
+static bool	get_line_hdoc(char *delim, t_tool *data, int fd)
+{
+	char	*input;
+
+	while (true)
 	{
-		content = ft_strjoin(content, line);
-		if (content == NULL)
-			break ;
-		line = readline("heredoc> ");
+        signal_handler();
+        input = readline("heredoc> ");
+        signal_handler_idle();
+        if (handle_heredoc(data, fd, input, delim))
+            break ;
 	}
-	if (!line)
-		ft_free(line);
-	else
-		ft_err(HD_W, delim);
-	return (content);
+    ft_free(input);
+    //TODO: Expand the content before writing to file
+    return (true);
 }
 
-static void	heredoc_proc(int pipe_fd[2], char *delim)
+//TODO: If delim has quotes no expansion, else expand
+int	heredoc(t_tool *data)
 {
-	char	*line;
-
-	sig_handl();
-	line = get_line_hdoc(delim);
-	if (line == NULL)
-		exit(EXIT_FAILURE);
-	ft_putstr_fd(line, pipe_fd[1]);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	ft_free(line);
-	exit(EXIT_SUCCESS);
-}
-
-static char	*get_line_pipe(int pipe_fd[2])
-{
-	char	*line;
-	char	*content;
-
-	content = ft_strdup("");
-	line = get_next_line(pipe_fd[0]);
-	while (line != NULL)
-	{
-		content = ft_strjoin(content, line);
-		line = get_next_line(pipe_fd[0]);
-		if (content == NULL)
-			return (NULL);
-	}
-	ft_free(line);
-	return (content);
-}
-
-static char	*handle_child_exit(int pid, int pipe_fd[2])
-{
-	int		status;
-	char	*content;
-
-	sig_handl();
-	content = NULL;
-	close(pipe_fd[1]);
-	if ((waitpid(pid, &status, 0) == -1))
-		ft_err("heredoc", strerror(errno));
-	if (WIFEXITED(status))
-	{
-		g_last_ret_code = WEXITSTATUS(status);
-		if (g_last_ret_code == 0)
-		{
-			content = get_line_pipe(pipe_fd);
-			if (content == NULL)
-				ft_err(NULL, NULL);
-		}
-		else
-			g_last_ret_code = 130;
-	}
-	close(pipe_fd[0]);
-	return (content);
-}
-
-int	heredoc(t_lexer *lexi)
-{
-	int		pid;
-	int		fd[2];
+    t_lexer *it;
+    int fd;
 	char	*delim;
-	char	*line;
 
-	line = NULL;
-	while (lexi != NULL)
+    it = data->lexer;
+    name_heredoc_file(it);
+	while (it != NULL)
 	{
-		if (lexi->token == LESS_LESS)
+		if (it->token == LESS_LESS)
 		{
-			delim = lexi->next->str;
-			if ((pipe(fd) == -1))
-				return (ft_err("pipe failed", strerror(errno)), 1);
-			pid = fork();
-			if (pid == -1)
-				return (ft_err("fork failed", strerror(errno)), 1);
-			else if (pid == 0)
-				heredoc_proc(fd, delim);
-			else
-				line = handle_child_exit(pid, fd);
-			lexi->str = line;
+            delim = it->next->str;
+            unlink(it->str);
+            fd = open(it->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            if (fd == -1)
+                return (ft_err("heredoc failed", NULL), 1);
+            get_line_hdoc(delim, data, fd);
+            if (fd != -1)
+                close(fd);
 		}
-		lexi = lexi->next;
+		it = it->next;
 	}
 	return (0);
 }

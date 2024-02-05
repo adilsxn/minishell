@@ -19,7 +19,7 @@ int	unset_env(t_env **env, const char *key)
 
 	if (!env || !key)
 		return (1);
-	tmp = get_env(*env, key);
+	tmp = env_iter(*env, key);
 	if (tmp == NULL)
 		return (1);
 	if (tmp->prev != NULL)
@@ -32,6 +32,6 @@ int	unset_env(t_env **env, const char *key)
 	tmp->next = NULL;
 	free((void *)tmp->key);
 	free((void *)tmp->value);
-	free(tmp);
+	free(tmp);  
 	return (0);
 }

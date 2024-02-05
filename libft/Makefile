@@ -20,7 +20,7 @@ OBJS		= $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = obj
 INCS		= inc/
 CC			= cc
-CFLAGS 		= -Wall -Wextra -Werror
+CFLAGS 		= -Wall -Wextra -Werror -g
 NAME		= libft.a
 RM       = rm -rf
 

@@ -13,19 +13,26 @@
 
 #include "../../inc/minishell.h"
 
-t_env	*get_env(t_env *env, const char *key)
+t_env *env_iter(t_env *env, const char *key)
+{
+    t_env *it;
+
+    it = env;
+    if (!it)
+        return (NULL);
+    while(it != NULL && !ft_strequ(key, it->key))
+        it = it->next;
+    return (it);
+}
+
+char	*get_env(t_env *env, const char *key)
 {
 	t_env	*tmp;
 
-
 	if (!env)
 		return (NULL);
-	if (ft_strequ(key, "?"))
-		set_env(&env, "?", ft_itoa(g_last_ret_code));
-	tmp = env;
-	while (tmp != NULL && !ft_strequ(key, tmp->key))
-	{
-		tmp = tmp->next;
-	}
-	return (tmp);
+    if (ft_strequ(key, "?"))
+        return (ft_itoa(g_last_ret_code));
+    tmp = env_iter(env, key);
+    return (tmp->value);
 }

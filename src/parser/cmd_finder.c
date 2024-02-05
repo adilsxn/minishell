@@ -56,7 +56,7 @@ char	*cmd_finder(t_tool *data, char *cmd)
 		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
-	paths = useful_paths((char *)get_env(data->env, "PATH")->value);
+	paths = useful_paths(get_env(data->env, "PATH"));
 	while (paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], cmd);
