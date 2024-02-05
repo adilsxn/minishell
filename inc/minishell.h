@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/01 18:01:51 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/04 20:58:17 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,25 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }					t_lexer;
 
-typedef struct s_env
-{
-	const char		*key;
-	const char		*value;
-	struct s_env	*prev;
-	struct s_env	*next;
-}					t_env;
-
 typedef struct s_envy
 {
-	char			*str2;
-	char			*str3;
-	char			*tmp;
-	int				i;
-	t_env			*env2;
-	int				len;
-}					t_envy;
+    char    *str2;
+    char    *str3;
+    char    *tmp;
+    int     i;
+    struct s_env *env2;
+    int     len;
+}			t_envy;
+
+typedef struct s_env
+{
+    const char  *key;
+    const char  *value;
+    t_envy       *ex;
+    struct s_env *prev;
+    struct s_env *next;
+} t_env;
+
 
 // parser
 typedef enum e_rdirkind
@@ -145,12 +147,14 @@ t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
 char				*del_quotes(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
-
+t_lexer				*lex_check(t_lexer *lexer);
+int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
+int					token_help(int i, char *str, int *trig);
+void				lex_del(t_lexer **lexer);
 void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
 void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
-// int					ft_error(int error, t_tool *tool);
 
 // parser
 bool				is_builtin(char *str);
@@ -174,15 +178,15 @@ int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*double_strj(char *str2, char *str3, char *str1);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
-char				*expander_help1(int len, char *str2, char **str1, int i);
+char				*expander_help1(int len, char **str2, char **str1, int i);
 char				**ft_arrdup(char **arr);
-void				loop_help2(int *i, char **str2, char *str3, char **str1);
+void				loop_help2(t_envy **ex, char **str2, char *str3, char **str1);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
 char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
 char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
-char				*freer(t_envy *ex, char *str, char **str1);
+char				*freer(t_envy **ex, char *str, char **str1);
 
 // minishell loop
 int					count_token(t_lexer *lexi);
@@ -194,13 +198,13 @@ int					exec_bi(t_cmd *cmd, t_tool *data);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
+char				*ft_strtrim1(char const *s1, char const *set);
 
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
 void				clean_fds(void);
-void				sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
+
 // signal
 void				sig_handl(void);
-char	*ft_strtrim1(char const *s1, char const *set);
 
 #endif

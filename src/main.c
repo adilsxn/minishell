@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/01 16:47:00 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/04 21:12:12 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static void	minishell_loop(t_tool *shell)
 		{
 			shell->lexer = expander2(shell->env, shell->lexer);
 			printin(shell->lexer);
-			if (has_heredoc(shell->lexer) == true)
-				heredoc(shell->lexer);
-			shell->lexer = expander2(shell->env, shell->lexer);
-			shell->pipes = parser(shell);
-			if (shell->pipes != NULL)
-				exec_pipe(shell);
-			else
-				exec_cmd(shell);
+			// if (has_heredoc(shell->lexer) == true)
+			// 	heredoc(shell->lexer);
+			// shell->lexer = expander2(shell->env, shell->lexer);
+			// shell->pipes = parser(shell);
+			// if (shell->pipes != NULL)
+			// 	exec_pipe(shell);
+			// else
+			// 	exec_cmd(shell);
 		}
 		clean_data(shell, false);
 		shell->reset = 1;
@@ -73,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	shell.reset = 0;
 	shell.env = init_env(envp);
+	shell.env->ex = NULL;
 	minishell_loop(&shell);
 	return (0);
 }

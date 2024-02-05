@@ -6,44 +6,57 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/01 18:31:22 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/04 20:08:45 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*expander_help1(int len, char *str2, char **str1, int i)
+char	*expander_help1(int len, char **str2, char **str1, int i)
 {
-	if (len == 1)
-		str2 = ft_strdup(str2);
-	else if (i > 0 && str2 != NULL)
-		str2 = ft_strjoin(str2, str1[i]);
-	return (str2);
+	char	*temp;
+
+	// if (len == 1)
+	// 	str2 = ft_strdup(str2);
+	if (len != 1 && i > 0 && *str2 != NULL)
+	{
+		temp = ft_strjoin(*str2, str1[i]);
+		free(*str2);
+		*str2 = ft_strdup(temp);
+		free(temp);
+	}
+	return (*str2);
 }
 
-void	loop_help2(int *i, char **str2, char *str3, char **str1)
+void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 {
 	char	*tmp;
+	char	*temp;
 
-	tmp = get_key(str1[*i]);
-	if (*i > 0 && *str2 != NULL)
+	tmp = get_key(str1[(*ex)->i]);
+	if ((*ex)->i > 0 && *str2 != NULL)
 	{
-		*str2 = ft_strjoin(*str2, str3);
-		*str2 = ft_strjoin(*str2, str1[*i] + ft_strlen(tmp) + 1);
+		temp = ft_strjoin(*str2, str3);
+		free(*str2);
+		*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+		free(temp);
 	}
 	else
-		*str2 = ft_strjoin(str3, str1[*i] + ft_strlen(tmp) + 1);
+	{
+		free(*str2);
+		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+	}
 	free(tmp);
 }
 
 char	*init_expand(char **str, char ***str1)
 {
-	*str = del_quotes(*str, '\"');
 	if ((*str)[0] == 39)
 	{
 		del_quotes(*str, '\'');
 		return (*str);
 	}
+	*str = del_quotes(*str, '\"');
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
 }

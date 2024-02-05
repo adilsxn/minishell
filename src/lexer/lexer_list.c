@@ -6,11 +6,21 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/31 17:35:21 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/04 15:53:38 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	node_help(int in, t_tool *tool)
+{
+	if (tool->reset == 1)
+	{
+		in = 0;
+		tool->reset = 0;
+	}
+	return (in);
+}
 
 int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 {
@@ -25,11 +35,7 @@ int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 	if (str)
 		new_node->str = ft_strdup(str);
 	new_node->token = token;
-	if (tool->reset == 1)
-	{
-		in = 0;
-		tool->reset = 0;
-	}
+	in = node_help(in, tool);
 	new_node->i = in++;
 	new_node->next = NULL;
 	if (*lexer_list == NULL)
@@ -57,15 +63,8 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 			if (check_token(str[i], str[i + 1]) == 3 \
 				|| check_token(str[i], str[i + 1]) == 5)
 			{
-				trig = 1;
-				if (str[i + 2] && str[i + 3])
-				{
-					if (check_token(str[i + 2], str[i + 3] != 0))
-					{
-						ft_err("Double token", "Syntax error");
-						return (-1);
-					}
-				}
+				if (token_help(i, str, &trig) == -1)
+					return (-1);
 			}
 			else if (check_token(str[i + 1], 0) != 0)
 			{
@@ -95,54 +94,14 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 		count += len_quote(i + count, str, 34);
 		count += len_quote(i + count, str, 39);
 		if (ft_isspace(str[i + count]) == 1)
-		{
-			sub(str, i, count, lexer, tool);
-			return (count);
-		}
+			return (sub(str, i, count, lexer, tool));
 		if (check_token(str[i + count], 0) != 0)
-		{
-			sub(str, i, count, lexer, tool);
-			return (count - 1);
-		}
+			return (sub(str, i, count, lexer, tool) - 1);
 		if (str[i + count] != '\0')
 			count++;
 	}
 	sub(str, i, count, lexer, tool);
 	return (count);
-}
-
-void	lex_del(t_lexer **lexer)
-{
-	t_lexer	*lex;
-
-	lex = *lexer;
-	while (lex)
-	{
-		if (lex->str)
-		{
-			if (lex->str[0] == 0)
-			{
-				del_one(lexer, lex->i);
-				lex = *lexer;
-			}
-		}
-		lex = lex->next;
-	}
-}
-
-t_lexer	*lex_check(t_lexer *lexer)
-{
-	t_lexer	*lex;
-
-	lex = lexer;
-	while (lex->next)
-		lex = lex->next;
-	if (lex->token != 0 && lex->token != 1)
-	{
-		ft_err("Syntax error", "token at end of commands");
-		return (NULL);
-	}
-	return (lexer);
 }
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
