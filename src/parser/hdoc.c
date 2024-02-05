@@ -26,22 +26,48 @@ static bool name_heredoc_file(t_lexer *lexi)
         if (!number)
             return (ft_err("heredoc failed", ""), false);
         if (it->token == LESS_LESS)
+        {
             it->str = ft_strjoin(HD_FILE, number);
-        i++;
+            i++;
+        }
         it = it->next;
         ft_free(number);
     }
     return (true);
 }
 
+static bool delim_has_quotes(char *str)
+{
+    int i;
+    int nbr_quotes;
+
+    i = -1;
+    nbr_quotes = 0;
+    while(str[++i] != '\0')
+    {
+        if ( str[i] == '\'' || str[i] == '\"')
+            nbr_quotes++;
+    }
+    if (nbr_quotes >= 2)
+        return (true);
+    return(false);
+}
 static bool handle_heredoc(t_tool *data, int fd, char *content, char *delim)
 {
+    bool has_quotes;
+    char *clean_delim;
+
+    has_quotes = delim_has_quotes(delim);
+    clean_delim = del_quote(delim, '\"');
+    clean_delim = del_quote(clean_delim, '\'');
     if (!content)
-        return (ft_err(HD_W, delim), true);
-    if (ft_strequ(delim, content) == 1)
+        return (ft_err(HD_W, clean_delim), true);
+    if (ft_strequ(clean_delim, content) == 1)
         return (true);
-    content = expander(data->env, content);
+    if(has_quotes == false) 
+        content = expander(data->env, content);
     ft_putendl_fd(content, fd);
+    ft_free(clean_delim);
     ft_free(content);
     return (false);
 }

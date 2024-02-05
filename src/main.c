@@ -42,13 +42,11 @@ static void	minishell_loop(t_tool *shell)
 		shell->arg = ft_strtrim(shell->arg, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
-		printin(shell->lexer);
 		if (shell->lexer)
 		{
             if (has_heredoc(shell->lexer) == true)
                 heredoc(shell);
 			shell->lexer = expander2(shell->env, shell->lexer);
-			printin(shell->lexer);
             shell->pipes = parser(shell);
 			// if (shell->pipes != NULL)
 			// 	exec_pipe(shell);

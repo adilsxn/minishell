@@ -26,24 +26,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (i && ft_strchr(set, s1[i]))
 		i--;
     tmp = ft_substr(s1, 0, i + 1);
-    free((void *)s1);
 	return (tmp);
 }
 
-
-char	*ft_strtrim1(char const *s1, char const *set)
-{
-    char *tmp;
-	size_t	i;
-
-    tmp = NULL;
-	if (!s1 || !set)
-		return (NULL);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	i = ft_strlen(s1);
-	while (i && ft_strchr(set, s1[i]))
-		i--;
-    tmp = ft_substr(s1, 0, i + 1);
-	return (tmp);
-}
