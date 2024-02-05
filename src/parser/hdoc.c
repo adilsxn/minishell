@@ -11,7 +11,16 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+#include <stdbool.h>
+/* Process terminating with default action of signal 11 (SIGSEGV)
+==29867==  General Protection Fault
+==29867==    at 0x10E881: ft_strequ (ft_strequ.c:19)
+==29867==    by 0x10A4A1: handle_heredoc (hdoc.c:70)
+==29867==    by 0x10A54E: get_line_hdoc (hdoc.c:89)
+==29867==    by 0x10A61B: heredoc (hdoc.c:115)
+==29867==    by 0x10D157: minishell_loop (main.c:49)
+==29867==    by 0x10D28B: main (main.c:75)
+ */
 static bool name_heredoc_file(t_lexer *lexi)
 {
     int i;
@@ -52,22 +61,24 @@ static bool delim_has_quotes(char *str)
         return (true);
     return(false);
 }
-static bool handle_heredoc(t_tool *data, int fd, char *content, char *delim)
+static bool handle_heredoc(t_tool *data, int fd, char *content, char **delim)
 {
     bool has_quotes;
-    char *clean_delim;
 
-    has_quotes = delim_has_quotes(delim);
-    clean_delim = del_quote(delim, '\"');
-    clean_delim = del_quote(clean_delim, '\'');
+    has_quotes = delim_has_quotes(*delim);
+    if (has_quotes == true)
+    {
+        if (*delim[0] == '\'')
+            del_quote(*delim, '\'');
+        del_quote(*delim, '\"');
+    }
     if (!content)
-        return (ft_err(HD_W, clean_delim), true);
-    if (ft_strequ(clean_delim, content) == 1)
+        return (ft_err(HD_W, *delim), true);
+    if (ft_strequ(*delim, content) == 1)
         return (true);
     if(has_quotes == false) 
         content = expander(data->env, content);
     ft_putendl_fd(content, fd);
-    ft_free(clean_delim);
     ft_free(content);
     return (false);
 }
@@ -81,7 +92,7 @@ static bool	get_line_hdoc(char *delim, t_tool *data, int fd)
         signal_handler();
         input = readline("heredoc> ");
         signal_handler_idle();
-        if (handle_heredoc(data, fd, input, delim))
+        if (handle_heredoc(data, fd, input, &delim))
             break ;
 	}
     ft_free(input);
