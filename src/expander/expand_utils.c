@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/24 12:43:47 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/04 20:11:42 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,19 @@ char	*get_key(char *str)
 
 char	*double_strj(char *str2, char *str3, char *str1)
 {
-	str2 = ft_strjoin(str2, str3);
+	char	*temp;
+
+	temp = ft_strjoin(str2, str3);
+	free(str2);
+	str2 = ft_strdup(temp);
+	free(temp);
 	if (str2)
-		str2 = ft_strjoin(str2, str1);
+	{
+		temp = ft_strjoin(str2, str1);
+		free(str2);
+		str2 = ft_strdup(temp);
+		free(temp);
+	}
 	return (str2);
 }
 
@@ -44,13 +54,25 @@ int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
     (void)env2;
     *str3 = get_env(env, tmp);
 	if (*str3 == NULL)
+	/* *env2 = get_env(env, tmp);
+	if (*env2 != NULL)
+	{
+		if ((char *)(*env2)->value != NULL)
+			*str3 = (char *)(*env2)->value;
+   */
 		return (1);
+	}
+	else
+		*str3 = NULL;
 	return (0);
 }
 
 char	*tmpcheck(char **tmp, char **str1, int i)
 {
 	*tmp = get_key(str1[i]);
+	if (*tmp != NULL)
+		if ((*tmp)[0] == '\0')
+			return (NULL);
 	return (*tmp);
 }
 

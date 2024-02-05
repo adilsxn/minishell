@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/27 19:22:48 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/04 21:14:02 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,23 @@ void	clean_data(t_tool *data, bool has_history)
 			if (data != NULL && data->env)
 				del_env(data->env);
 		}
+		if (data->env->ex)
+		{
+			if (data->env->ex->str2)
+				ft_free(data->env->ex->str2);
+			ft_free(data->env->ex);
+		}
 	}
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
 }
 
 void	clean_fds(void)
@@ -42,19 +58,21 @@ void	clean_fds(void)
 	unlink(HD_FILE);
 }
 
-void	freer(t_envy *ex, char *str)
+char	*freer(t_envy **ex, char *str, char **str1)
 {
-	free(ex);
+	char	*ret;
+
+	free_array(str1);
+	if ((*ex)->str2 != NULL)
+		ret = ft_strdup((*ex)->str2);
+	else
+		ret = NULL;
+	free((*ex)->str2);
+	(*ex)->str2 = NULL;
+	free(*ex);
+	*ex = NULL;
 	free(str);
-}
-
-void	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)
-{
-	char	*tmp;
-
-	tmp = ft_substr(str, i, count);
-	new_node(tmp, 0, lexer, tool);
-	ft_free(tmp);
+	return (ret);
 }
 
 bool has_heredoc(t_lexer *lexer)

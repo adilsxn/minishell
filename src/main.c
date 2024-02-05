@@ -6,7 +6,7 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/04 21:12:12 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	minishell_loop(t_tool *shell)
         signal_handler_idle();
 		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
-		shell->arg = ft_strtrim(shell->arg, " ");
+		shell->arg = ft_strtrim1(shell->arg, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
 		printin(shell->lexer);
@@ -72,7 +72,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	shell.reset = 0;
 	shell.env = init_env(envp);
+	shell.env->ex = NULL;
 	minishell_loop(&shell);
 	return (0);
 }
-

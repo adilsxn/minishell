@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 15:22:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/24 18:36:42 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:31:46 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	**ft_split2(char const *s, char c)
 	trig = 0;
 	if (s[0] == c)
 		trig = 1;
-	str_count = ft_wordcount(s, c);
+	str_count = ft_wordcount1(s, c);
 	arr = ft_split3(s, c, trig, str_count);
 	return (arr);
 }
