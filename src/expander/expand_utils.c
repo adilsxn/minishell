@@ -31,11 +31,16 @@ char	*get_key(char *str)
 
 int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
 {
+    if (ft_strequ(tmp, "?") == 1)
+    {
+        *str3 = ft_itoa(g_last_ret_code);
+        return (1);
+    }
 	*env2 = env_iter(env, tmp);
 	if (*env2 != NULL)
 	{
 		if ((char *)(*env2)->value != NULL)
-			*str3 = (char *)(*env2)->value;
+			*str3 = ft_strdup((*env2)->value);
    		return (1);
 	}
 	else

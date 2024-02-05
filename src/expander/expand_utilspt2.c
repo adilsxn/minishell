@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utilspt2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/05 13:46:52 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 19:47:43 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 	{
 		free(*str2);
 		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
-	}
+	} 
+    ft_free(str3);
 	free(tmp);
 }
 
