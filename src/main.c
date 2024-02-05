@@ -39,7 +39,7 @@ static void	minishell_loop(t_tool *shell)
         signal_handler_idle();
 		if (!shell->arg || !shell->arg[0])
 			msh_exit(NULL, shell);
-		shell->arg = ft_strtrim1(shell->arg, " ");
+		shell->arg = ft_strtrim(shell->arg, " ");
 		add_history(shell->arg);
 		shell->lexer = lexer(shell->arg, shell->lexer, shell);
 		printin(shell->lexer);

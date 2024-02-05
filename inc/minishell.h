@@ -66,8 +66,8 @@ typedef struct s_envy
 
 typedef struct s_env
 {
-    const char  *key;
-    const char  *value;
+    char  *key;
+    char  *value;
     t_envy       *ex;
     struct s_env *prev;
     struct s_env *next;
