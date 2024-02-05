@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 11:55:45 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:00:58 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ static void	minishell_loop(t_tool *shell)
 			shell->lexer = expander2(shell->env, shell->lexer);
 			printin(shell->lexer);
             shell->pipes = parser(shell);
-			if (shell->pipes != NULL)
-				exec_pipe(shell);
-			else
-				exec_cmd(shell);
+			// if (shell->pipes != NULL)
+			// 	exec_pipe(shell);
+			// else
+			// 	exec_cmd(shell);
 		}
+		printf("OImain\n");
 		clean_data(shell, false);
 		shell->reset = 1;
 	}

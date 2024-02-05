@@ -87,13 +87,14 @@ void	lst_clear(t_lexer **lst)
 {
 	t_lexer	*tmp;
 
-	if (!*lst)
-		return ;
+	printf("OIla\n");
 	while (*lst)
 	{
+		printf("Oiii\n");
 		tmp = (*lst)->next;
-		free((*lst)->str);
-		free(*lst);
+		ft_free((*lst)->str);
+		ft_free(*lst);
+		printf("what\n");
 		*lst = tmp;
 	}
 }
