@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
+/* 
 void printin(t_lexer *lex)
 {
 	t_lexer *lexi;
@@ -26,7 +26,7 @@ void printin(t_lexer *lex)
 		lexi = lexi->next;
 	}
 	printf("------printin---------\n");
-}
+} */
 
 int			g_last_ret_code = 0;
 
@@ -75,5 +75,4 @@ int	main(int ac, char **av, char **envp)
 	minishell_loop(&shell);
 	return (0);
 }
-
 

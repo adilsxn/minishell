@@ -85,7 +85,6 @@ static int	set_fd_in(t_rdr *rdr)
 	}
 	if (fd != -1)
 		close(fd);
-	// unlink(HD_FILE);
 	return (fd);
 }
 
