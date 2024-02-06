@@ -21,6 +21,8 @@ static int	get_out(int fd, t_rdr *rdr)
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	if (rdr->kind == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
+    if (ft_strequ("\"\"", rdr->value) == 1)
+        return(ft_err(" ", "No such file or directory", NULL, 1), ERROR);
 	fd = open(rdr->value, fmode, 0644);
 	if (fd == -1)
 		return (ERROR);
@@ -40,6 +42,8 @@ static int	set_fd_out(t_rdr *rdr)
 		if (rdr->kind == RDR_OUT || rdr->kind == RDR_APP)
 		{
 			fd = get_out(fd, rdr);
+            if (fd == ERROR)
+                return (ERROR);
 			dup_fd = dup2(fd, STDOUT_FILENO);
 			close(fd);
 			if (dup_fd == -1)
@@ -47,7 +51,7 @@ static int	set_fd_out(t_rdr *rdr)
 		}
 		rdr = rdr->next;
 	}
-	if (fd != -1)
+	if (fd != -1 || fd != ERROR)
 		close(fd);
 	return (fd);
 }
