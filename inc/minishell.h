@@ -122,6 +122,7 @@ typedef struct s_tool
 extern int			g_last_ret_code;
 
 t_env *init_env(char **envp);
+bool                valid_key(char *key);
 t_env				*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env **env, const char *key);
