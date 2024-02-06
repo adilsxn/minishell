@@ -59,7 +59,7 @@ t_rdr	*build_rdr(t_lexer *lexi)
 			if (rdir == NULL)
 			{
 				free_rdr(start);
-				return (ft_err("redirection", NULL), NULL);
+				return (ft_err("redirection", NULL, NULL, 1), NULL);
 			}
 			if (start == NULL)
 				start = rdir;

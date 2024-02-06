@@ -164,7 +164,7 @@ int					reti(int trig);
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
 void				ft_free(void *ptr);
-void				ft_err(char *message, char *detail);
+void ft_err(char *message, char *detail, char *errorstr, int ret_code);
 void				free_rdr(t_rdr *rdir);
 t_rdr				*build_rdr(t_lexer *lexi);
 void				free_cmd(t_cmd *cmd);

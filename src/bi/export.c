@@ -41,13 +41,13 @@ static int	real_export(char *input, t_env *env)
 	if (sign == NULL)
 		return (1);
 	if (sign == input)
-		return (ft_err("export: invalid key", NULL), 1);
+		return (ft_err("export: invalid key", NULL, NULL, 1), 1);
 	key = ft_substr(input, 0, sign - input);
 	valid = valid_key(key);
 	if (valid == false)
 	{
 		ft_free(key);
-		return (ft_err("export: invalid key", NULL), 1);
+		return (ft_err("export: invalid key", NULL, NULL, 1), 1);
 	}
 	else
 	{

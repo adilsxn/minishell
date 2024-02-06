@@ -16,18 +16,18 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "cmd not found");
+		ft_err(cmd->args[0], "command not found", NULL, 1);
 		return (127);
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
-		ft_err("redirection failed", NULL);
+		ft_err("redirection failed", NULL, NULL, 1);
 		return (1);
 	}
 	if (cmd->path == NULL)
 		return (0);
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno));
+		ft_err("execve failed", strerror(errno), NULL, 1);
 	return (errno);
 }
 

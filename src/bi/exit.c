@@ -69,23 +69,20 @@ static int	get_code(char *str, bool *error)
 int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
-	int		exit_code;
 
+    error = false;
 	if (!args || !args[1])
-		exit_code = g_last_ret_code;
+        g_last_ret_code = 2;
 	else
 	{
-		exit_code = get_code(args[1], &error);
+		g_last_ret_code = get_code(args[1], &error);
 		if (error == true)
-		{
-			exit_code = 2;
-			return (ft_err("exit: non numeric arg", args[1]), exit_code);
-		}
+			ft_err(args[1], "exit: numeric argument required", NULL, 2);
 		else if (args[2])
-			return (ft_err("exit: too many arguments", args[1]), 1);
+			ft_err("exit: too many arguments", NULL, NULL, 1);
 	}
-	ft_putendl_fd("exit", 2);
+	// ft_putendl_fd("exit", 2);
 	clean_fds();
 	clean_data(data, true);
-	exit(exit_code);
+	exit(g_last_ret_code);
 }

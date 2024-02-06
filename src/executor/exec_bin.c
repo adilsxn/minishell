@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <math.h>
 
 static void	child_proc(t_cmd *cmd)
 {
@@ -24,7 +25,7 @@ static void	child_proc(t_cmd *cmd)
 		exit(0);
 	clean_fds();
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno));
+		ft_err("execve failed", strerror(errno), NULL, 1);
 	exit(1);
 }
 
@@ -43,14 +44,14 @@ void	exec_bin(t_cmd *cmd)
 
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "command not found");
+		ft_err(cmd->args[0], "command not found", NULL, 1);
 		g_last_ret_code = 127;
 		return ;
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_err("fork failed", strerror(errno));
+		ft_err("fork failed", strerror(errno), NULL, 1);
 		g_last_ret_code = 1;
 	}
 	else if (pid == 0)
@@ -59,7 +60,7 @@ void	exec_bin(t_cmd *cmd)
 	{
 		signal_handler();
 		if (waitpid(pid, &status, 0) == -1)
-			ft_err("waitpid failed", strerror(errno));
+			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);
 	}
 }

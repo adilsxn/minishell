@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <errno.h>
 #include <stdbool.h>
+#include <string.h>
 /* Process terminating with default action of signal 11 (SIGSEGV)
 ==29867==  General Protection Fault
 ==29867==    at 0x10E881: ft_strequ (ft_strequ.c:19)
@@ -33,7 +35,7 @@ static bool name_heredoc_file(t_lexer *lexi)
     {
         number = ft_itoa(i);
         if (!number)
-            return (ft_err("heredoc failed", ""), false);
+            return (ft_err("heredoc failed", NULL, NULL, 1), false);
         if (it->token == LESS_LESS)
         {
             it->str = ft_strjoin(HD_FILE, number);
@@ -73,7 +75,7 @@ static bool handle_heredoc(t_tool *data, int fd, char *content, char **delim)
         del_quote(*delim, '\"');
     }
     if (!content)
-        return (ft_err(HD_W, *delim), true);
+        return (ft_err(HD_W, *delim, NULL, 1), true);
     if (ft_strequ(*delim, content) == 1)
         return (true);
     if(has_quotes == false) 
@@ -117,7 +119,7 @@ int	heredoc(t_tool *data)
             unlink(it->str);
             fd = open(it->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (fd == -1)
-                return (ft_err("heredoc failed", NULL), 1);
+                return (ft_err("heredoc failed", it->str, strerror(errno), 1), 1);
             get_line_hdoc(delim, data, fd);
             if (fd != -1)
                 close(fd);

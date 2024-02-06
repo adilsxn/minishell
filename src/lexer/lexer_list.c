@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/06 15:07:51 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/06 17:36:59 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 			}
 			else if (check_token(str[i + 1], 0) != 0)
 			{
-				ft_err("Double token", "Syntax error");
+				ft_err("Double token", "Syntax error", NULL, 1);
 				lst_clear(lexer);
 				return (-1);
 			}

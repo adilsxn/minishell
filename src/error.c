@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <string.h>
 
 void	ft_free(void *ptr)
 {
@@ -44,14 +45,21 @@ static char	*join_str(char *str1, char *str2)
 	return (str1);
 }
 
-void	ft_err(char *message, char *detail)
+void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 {
 	char	*str;
 
 	str = ft_strdup("minishell: ");
 	str = join_str(str, message);
-	str = join_str(str, ": ");
+	if (detail != NULL)
+		str = join_str(str, ": ");
 	str = join_str(str, detail);
+    if (errorstr != NULL)
+    {
+        str = join_str(str, ": ");
+        str = join_str(str, errorstr);
+    }
 	ft_putendl_fd(str, STDERR_FILENO);
+    g_last_ret_code = ret_code;
 	ft_free(str);
 }

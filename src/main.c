@@ -48,9 +48,9 @@ static void	minishell_loop(t_tool *shell)
 		{
             if (has_heredoc(shell->lexer) == true)
                 heredoc(shell);
-			printin(shell->lexer);
+			// printin(shell->lexer);
 			shell->lexer = expander2(shell->env, shell->lexer);
-			printin(shell->lexer);
+			// printin(shell->lexer);
             shell->pipes = parser(shell);
 			if (shell->pipes != NULL)
 				exec_pipe(shell);
@@ -70,7 +70,7 @@ int	main(int ac, char **av, char **envp)
 	shell = (t_tool){NULL, NULL, NULL, NULL, 0};
 	if (ac != 1 || av[1])
 	{
-		ft_err("no args accepted", NULL);
+		ft_err("no args accepted", NULL, NULL, 1);
 		exit(EXIT_FAILURE);
 	}
 	shell.reset = 0;
