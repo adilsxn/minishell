@@ -1,2 +1,8 @@
 .idea/
 .gdb_history
+.cache/
+.gdb_history
+.cache
+*.o
+.vscode
+*.json

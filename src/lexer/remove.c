@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2023/10/12 12:32:44 by matilde          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:04:22 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,46 @@
 void	*clear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
-		free((*lst)->str);
-	free(*lst);
+		ft_free((*lst)->str);
+	ft_free(*lst);
 	return (NULL);
 }
 
 void	del_first(t_lexer **lst)
 {
 	t_lexer	*node;
+	t_lexer	*node1;
 
 	node = *lst;
 	*lst = node->next;
 	clear_one(&node);
 	if (*lst)
 		(*lst)->prev = NULL;
+	node1 = *lst;
+	while (*lst)
+	{
+		(*lst)->i = (*lst)->i - 1;
+		(*lst) = (*lst)->next;
+	}
+	*lst = node1;
 }
 
-//update the prev->next pointer to skip the node deleted
+static void	del_one1(t_lexer *prev, t_lexer *node)
+{
+	t_lexer	*current;
+
+	prev->next = node->next;
+	current = prev->next;
+	while (current)
+	{
+		current->i = current->i - 1;
+		current->prev = prev;
+		prev = current;
+		current = current->next;
+	}
+}
+
+// update the prev->next pointer to skip the node deleted
 // update lst, pointing to start
 void	del_one(t_lexer **lst, int i)
 {
@@ -52,8 +75,8 @@ void	del_one(t_lexer **lst, int i)
 		prev = node;
 		node = node->next;
 	}
-	if (node)
-		prev->next = node->next;
+	if (node->next)
+		del_one1(prev, node);
 	else
 		prev->next = NULL;
 	clear_one(&node);
@@ -64,15 +87,11 @@ void	lst_clear(t_lexer **lst)
 {
 	t_lexer	*tmp;
 
-	if (!*lst)
-		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		if ((*lst)->str)
-			free((*lst)->str);
-		free(*lst);
+		ft_free((*lst)->str);
+		ft_free(*lst);
 		*lst = tmp;
 	}
-	*lst = NULL;
 }

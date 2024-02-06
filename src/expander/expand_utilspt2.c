@@ -6,32 +6,75 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/12 20:11:33 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 19:47:43 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//incrementing the i, to skip over it
-size_t	equal_sign(char *str)
+char	*expander_help1(int len, char **str2, char **str1, int i)
 {
-	size_t	i;
+	char	*temp;
 
-	i = 0;
-	while (str[i])
+	if (len != 1 && i > 0 && *str2 != NULL)
 	{
-		if (str[i] == '=')
-			return (i + 1);
-		i++;
+		temp = ft_strjoin(*str2, str1[i]);
+		if (temp)
+		{
+			free(*str2);
+			*str2 = ft_strdup(temp);
+			free(temp);
+		}
+		else
+			ft_free(*str2);
 	}
-	return (0);
+	return (*str2);
 }
 
-int	question_mark(char **tmp)
+void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 {
-	free(*tmp);
-	*tmp = ft_itoa(1);
-	return (ft_strlen(*tmp) + 1);
+	char	*tmp;
+	char	*temp;
+
+	tmp = get_key(str1[(*ex)->i]);
+	if ((*ex)->i > 0 && *str2 != NULL)
+	{
+		temp = ft_strjoin(*str2, str3);
+		if (temp)
+		{
+			free(*str2);
+			*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+			free(temp);
+		}
+		else
+			ft_free(*str2);
+	}
+	else
+	{
+		free(*str2);
+		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+	} 
+    ft_free(str3);
+	free(tmp);
+}
+
+char	*init_expand(char **str, char ***str1)
+{
+	if ((*str)[0] == 39)
+	{
+		del_quotes(*str, '\'');
+		return (*str);
+	}
+	if (*str[0] != '\"' && *str[1] != '\"')
+		*str = del_quotes(*str, '\"');
+	*str1 = ft_split2(*str, '$');
+	return (NULL);
+}
+
+void	checker(t_env *env2, char **str2, int i)
+{
+	if (i == 0 && env2 == NULL)
+		ft_free2((void **)str2);
 }
 
 char	**ft_arrdup(char **arr)
@@ -57,14 +100,4 @@ char	**ft_arrdup(char **arr)
 		i++;
 	}
 	return (array2);
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
 }

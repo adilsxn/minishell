@@ -3,143 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/01/15 20:36:23 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 12:42:08 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//question mark function and loop_if_dollar change the tmp
-//i increments after these functions or not if the functions return 0
-//i increments after assigning str[i] to tmp2 and then update tmp
-char	*check_dollar(t_tool *tool, char *str)
+int	loopin(t_env **env2, char **str3, char *tmp, int i)
 {
-	int		i;
-	char	*tmp;
-	char	*tmp2;
-	char	*tmp3;
+	i++;
+	free(tmp);
+	*env2 = NULL;
+	*str3 = NULL;
+	return (i);
+}
 
-	i = 0;
-	tmp = ft_calloc(1, 1);
-	while (str[i])
+void	loop_help1(t_env *env2, char **str3)
+{
+	if (env2 != NULL)
+		*str3 = (char *)env2->value;
+}
+
+int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
+{
+	int	len;
+
+	len = 0;
+	*env2 = NULL;
+	*i = 0;
+	while (str1[len])
+		len++;
+	*str2 = malloc(ft_strlen(str1[0]) + 1);
+	if (*str2 != NULL)
+    	ft_strlcpy(*str2, str1[0], ft_strlen(str1[0]) + 1);
+	else
+		return (-1);
+	return (len);
+}
+
+char	*expander(t_env *env, char *str)
+{
+	char	**str1;
+	t_envy	*ex1;
+
+	ex1 = env->ex;
+	ex1 = malloc(sizeof(t_envy));
+	if (init_expand(&str, &str1) != NULL)
 	{
-		i += digit_after_dollar(i, str);
-		if (str[i] == '$' && str[i + 1] == '?')
-			i += question_mark(&tmp);
-		else if (str[i] == '$' && (str[i + 1] != ' ' && (str[i + 1] != '"' \
-					|| str[i + 2] != '\0')) && str[i + 1] != '\0')
-			i += loop_dollar_sign(tool, str, &tmp, i);
+		ft_free(ex1);
+		return (str);
+	}
+	ex1->len = initialize_expander(&ex1->env2, &ex1->i, &ex1->str2, str1);
+	while (str1[ex1->i] != NULL && ex1->len != -1)
+	{
+		if (tmpcheck(&ex1->tmp, str1, ex1->i) != NULL)
+		{
+			if (envy(&ex1->env2, env, &ex1->str3, ex1->tmp) == 1)
+				loop_help2(&ex1, &ex1->str2, ex1->str3, str1);
+			else
+				checker(ex1->env2, &ex1->str2, ex1->i);
+		}
 		else
-		{
-			tmp2 = char_to_str(str[i++]);
-			tmp3 = ft_strjoin(tmp, tmp2);
-			free(tmp);
-			tmp = tmp3;
-			free(tmp2);
-		}
+			ex1->str2 = expander_help1(ex1->len, &ex1->str2, str1, ex1->i);
+		ex1->i = loopin(&ex1->env2, &ex1->str3, ex1->tmp, ex1->i);
 	}
-	return (tmp);
+	return (freer(&ex1, str, str1));
 }
 
-//after the dollar sign
-//env=value
-//comparing env with str, str[i] + 1 so its not $
-//and -1 so its not the = 
-//minus j to be the len after the dollar and before the equal sign
-//atribute the value of the env(key) to tmp transforming it to its correspondent
-//return an int to increment the i in the original function
-int	loop_dollar_sign(t_tool *tool, char *str, char **tmp, int j)
+t_lexer	*expander2(t_env *env, t_lexer *lexi)
 {
-	int		i;
-	int		final;
-	char	*tmp2;
-	char	*tmp3;
+	t_lexer	*lex;
 
-	i = 0;
-	final = 0;
-	while (tool->env[i])
+	lex = lexi;
+	while (lex)
 	{
-		if (ft_strncmp(str + j + 1, tool->env[i], \
-			equal_sign(tool->env[i]) - 1) == 0 && after_dollar_len(str, j) \
-			- j == (int)equal_sign(tool->env[i]))
+		if (lex->str)
 		{
-			tmp2 = ft_strdup(tool->env[i] + equal_sign(tool->env[i]));
-			tmp3 = ft_strjoin(*tmp, tmp2);
-			free(*tmp);
-			*tmp = tmp3;
-			free(tmp2);
-			final = equal_sign(tool->env[i]);
+			if (lex->i == 0 || (lex->i > 0 && (!lex->prev->token \
+						|| lex->prev->token != 5)))
+            {
+				lex->str = expander(env, lex->str);
+            }
+			else
+				lex->str = del_quotes(lex->str, 34);
 		}
-		i++;
+		lex = lex->next;
 	}
-	if (final == 0)
-		final = after_dollar_len(str, j) - j;
-	return (final);
-}
-
-//export makes a variable available to other processes
-//started from the current shell session
-//str is already broken into diffent cmd
-//quotes are not removed for export command
-char	**expander(t_tool *tool, char **str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = NULL;
-	while (str[i] != NULL)
-	{
-		if (str[i][dollar_sign(str[i]) - 2] != '\'' && dollar_sign(str[i]) != 0
-			&& str[i][dollar_sign(str[i])] != '\0')
-		{
-			tmp = check_dollar(tool, str[i]);
-			free(str[i]);
-			str[i] = tmp;
-		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
-		{
-			str[i] = del_quote(str[i], '\"');
-			str[i] = del_quote(str[i], '\'');
-		}
-		i++;
-	}
-	return (str);
-}
-
-char	*expander_str(t_tool *tool, char *str)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
-		&& str[dollar_sign(str)] != '\0')
-	{
-		tmp = check_dollar(tool, str);
-		free(str);
-		str = tmp;
-	}
-	str = del_quote(str, '\"');
-	str = del_quote(str, '\'');
-	return (str);
-}
-
-//expansion + redirection
-t_simple_cmd	*call_expander(t_tool *tool, t_simple_cmd *cmd)
-{
-	t_lexer	*start;
-
-	cmd->str = expander(tool, cmd->str);
-	start = cmd->redirect;
-	while (cmd->redirect)
-	{
-		if (cmd->redirect->token != LESS_LESS)
-			cmd->redirect->str = expander_str(tool, cmd->redirect->str);
-		cmd->redirect = cmd->redirect->next;
-	}
-	cmd->redirect = start;
-	return (cmd);
+	return (lexi);
 }

@@ -3,51 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 22:13:21 by acuva-nu          #+#    #+#             */
 /*   Updated: 2024/01/11 22:13:21 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-static int count_token(t_tree *tree)
+int	count_token(t_lexer *lexi)
 {
-    int i;
-    t_tree *it;
+	int	i;
+	t_lexer *it;
 
-    i = 0;
-    it = tree;
-    if (!it)
-        return (0);
-    while (it != NULL)
-    {
-        i++;
-        it = it->right;
-    }
-    return (i);
+	i = 0;
+	it = lexi;
+	if (!it)
+		return (0);
+	while (it != NULL)
+	{
+		if (it->token != 0)
+			break ;
+		i++;
+		it = it->next;
+	}
+	return (i);
 }
 
-char **build_av(t_tree *tree)
+char	**build_av(t_lexer *lexi)
 {
-    char **av;
-    int len;
-    int i;
-    t_tree *curr;
+	char	**av;
+	t_lexer *it;
+	int		len;
+	int		i;
 
-    len = count_token(tree);
-    av = ft_calloc(len + 1, sizeof(*av));
-    if (av == NULL)
-        return (NULL);
-    curr = tree;
-    i = 0;
-    while (i < len)
-    {
-        av[i] = ft_strdup(curr->token);
-        curr = curr->right;
-        i++;
-    }
-    av[len + 1] = "\0";
-    return (av);
+	it = lexi;
+	len = count_token(lexi);
+	av = (char **)malloc(sizeof(char *) * (len + 1));
+	if (av == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (it->token != 0)
+			break ;
+        if(it->str == NULL)
+            av[i++] = ft_strdup("");
+        else
+            av[i++] = ft_strdup(it->str);
+		it = it->next;
+	}
+	av[len] = NULL;
+	return (av);
 }

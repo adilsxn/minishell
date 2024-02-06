@@ -3,40 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2023/11/08 13:41:08 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:46:59 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//returns the number of the char that is a $
-size_t	dollar_sign(char *str)
+char	*get_key(char *str)
 {
-	size_t	i;
+	int		i;
+	char	*str1;
 
+	str1 = ft_strchr(str, '$');
+	if (str1 == NULL)
+		return (NULL);
+	if (str1 != NULL && *str1 == '$')
+		str1++;
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (i + 1);
+	while (str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47
+		&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
 		i++;
+	return (ft_substr(str1, 0, i));
+}
+
+int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
+{
+    if (ft_strequ(tmp, "?") == 1)
+    {
+        *str3 = ft_itoa(g_last_ret_code);
+        return (1);
+    }
+	*env2 = env_iter(env, tmp);
+	if (*env2 != NULL)
+	{
+		if ((char *)(*env2)->value != NULL)
+			*str3 = ft_strdup((*env2)->value);
+   		return (1);
 	}
+	else
+		*str3 = NULL;
 	return (0);
 }
 
-int	after_dollar_len(char *str, int j)
+char	*tmpcheck(char **tmp, char **str1, int i)
 {
-	int	i;
-
-	i = j + 1;
-	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-'
-		&& str[i] != ':')
-		i++;
-	return (i);
+	*tmp = get_key(str1[i]);
+	if (*tmp != NULL)
+		if ((*tmp)[0] == '\0')
+			return (NULL);
+	return (*tmp);
 }
 
 char	*del_quote(char *str, char c)
@@ -58,26 +76,4 @@ char	*del_quote(char *str, char c)
 		i++;
 	}
 	return (str);
-}
-
-char	*char_to_str(char c)
-{
-	char	*str;
-
-	str = ft_calloc(sizeof(char), 2);
-	str[0] = c;
-	return (str);
-}
-
-int	digit_after_dollar(int j, char *str)
-{
-	int	i;
-
-	i = j;
-	if (str[j] == '$')
-	{
-		if ((str[j + 1] > 47 && str[j + 1] < 58))
-			j += 2;
-	}
-	return (j - i);
 }

@@ -6,37 +6,61 @@
 /*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/14 23:17:23 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/01/22 21:25:18 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void printerx(int i, char **str)
+static bool	is_flag_on(char *str)
 {
-    while(str[i])
-        ft_putstr_fd(str[i++], 1);
-            if (str[i])
-                ft_putchar_fd(' ', 1);
-        
+	int		i;
+	bool	nflag;
+
+	nflag = false;
+	i = 0;
+	if (str[i] != '-'  || str[i + 1] != 'n')
+		return (nflag);
+	i++;
+	while (str[i] && str[i] == 'n')
+		i++;
+	if (str[i] == '\0')
+		nflag = true;
+	return (nflag);
 }
 
-int msh_echo(char **args)
+static void	printerx(char **args, bool nflag, int i)
 {
-    int nflag;
-    int i;
+	if (args[i] == NULL)
+	{
+		if (nflag == false)
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		return ;
+	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		else if (!args[i + 1] && nflag == false)
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		i++;
+	}
+}
 
-    i = 1;
-    nflag = 1;
-    if (args[i] != NULL)
-    {
-        ft_putchar_fd('\n', 1);
-        return (EXIT_SUCCESS);
-    }
-    if (ft_strequ(args[1], "-n") == 0)
-        nflag = 0;
-    printerx(i, args);
-    if (nflag)
-        ft_putstr_fd("\n", 1);
-    return (EXIT_SUCCESS);
+int	msh_echo(char **args, t_tool *data)
+{
+	bool	nflag;
+	int		i;
+
+	i = 1;
+	nflag = false;
+	(void)data;
+	while (args[i] && is_flag_on(args[i]))
+	{
+		nflag = true;
+		i++;
+	}
+	printerx(args, nflag, i);
+	return (EXIT_SUCCESS);
 }
