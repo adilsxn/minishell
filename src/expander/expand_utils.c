@@ -31,9 +31,18 @@ char	*get_key(char *str)
 
 int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
 {
+	char	*str4;
+
     if (ft_strequ(tmp, "?") == 1)
     {
         *str3 = ft_itoa(g_last_ret_code);
+        return (1);
+    }
+	if (tmp[0] == '?')
+	{
+		str4 = ft_itoa(g_last_ret_code);
+		*str3 = ft_strjoin(str4, tmp + 1);
+		free(str4);
         return (1);
     }
 	*env2 = env_iter(env, tmp);
