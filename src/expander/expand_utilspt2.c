@@ -65,7 +65,7 @@ char	*init_expand(char **str, char ***str1)
 		del_quotes(*str, '\'');
 		return (*str);
 	}
-	if (*str[0] != '\"' && *str[1] != '\"')
+	if (*str[0] != '\"' || *str[1] != '\"')
 		*str = del_quotes(*str, '\"');
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
@@ -75,29 +75,4 @@ void	checker(t_env *env2, char **str2, int i)
 {
 	if (i == 0 && env2 == NULL)
 		ft_free2((void **)str2);
-}
-
-char	**ft_arrdup(char **arr)
-{
-	char	**array2;
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	array2 = ft_calloc(sizeof(char *), i + 1);
-	if (!array2)
-		return (NULL);
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		array2[i] = ft_strdup(arr[i]);
-		if (array2[i] == NULL)
-		{
-			free_array(array2);
-			return (array2);
-		}
-		i++;
-	}
-	return (array2);
 }

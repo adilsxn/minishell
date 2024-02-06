@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/04 15:53:38 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:07:51 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,18 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 			if (check_token(str[i], str[i + 1]) == 3 \
 				|| check_token(str[i], str[i + 1]) == 5)
 			{
-				if (token_help(i, str, &trig) == -1)
+				if (token_help(i, str, &trig, lexer) == -1)
 					return (-1);
 			}
 			else if (check_token(str[i + 1], 0) != 0)
 			{
 				ft_err("Double token", "Syntax error");
+				lst_clear(lexer);
 				return (-1);
 			}
 		}
 		new_node(NULL, check_token(str[i], str[i + 1]), lexer, tool);
-		if (trig == 1)
-			return (2);
-		return (1);
+		return (reti(trig));
 	}
 	return (0);
 }
@@ -118,5 +117,7 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 	if (lex_check(lexer) == NULL)
 		return (NULL);
     lex_del(&lexer);
+	if (lex_check_again(lexer) == -1)
+		return (NULL);
 	return (lexer);
 }

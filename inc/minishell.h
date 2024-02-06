@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 13:37:51 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:50:15 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,14 @@ char				*del_quotes(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
 t_lexer				*lex_check(t_lexer *lexer);
 int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
-int					token_help(int i, char *str, int *trig);
+int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
 void				*clear_one(t_lexer **lst);
 void				del_first(t_lexer **lst);
 void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
+int					lex_check_again(t_lexer *lex);
+int					reti(int trig);
 
 // parser
 bool				is_builtin(char *str);
@@ -177,11 +179,9 @@ int					heredoc(t_tool *data);
 char				*del_quote(char *str, char c);
 char				*get_key(char *str);
 int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
-//char				*double_strj(char *str2, char *str3, char *str1);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
 char				*expander_help1(int len, char **str2, char **str1, int i);
-char				**ft_arrdup(char **arr);
 void				loop_help2(t_envy **ex, char **str2, char *str3, char **str1);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
 char				**ft_split2(char const *s, char c);
