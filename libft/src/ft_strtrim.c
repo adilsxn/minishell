@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 14:48:31 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 18:10:34 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/06 11:44:06 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (i && ft_strchr(set, s1[i]))
 		i--;
     tmp = ft_substr(s1, 0, i + 1);
-	free((char *)s1);
 	return (tmp);
 }
