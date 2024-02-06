@@ -87,8 +87,6 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
             {
 				lex->str = expander(env, lex->str);
             }
-			else
-				lex->str = del_quotes(lex->str, 34);
 		}
 		lex = lex->next;
 	}
