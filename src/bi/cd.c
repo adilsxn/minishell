@@ -35,7 +35,7 @@ static bool	ft_chdir(char *path, t_env *env)
 
 	ret = NULL;
 	if (chdir(path) != 0)
-		ft_err("cd", path, strerror(errno), 1);
+		return (ft_err("cd", path, strerror(errno), 1), false);
 	ret = getcwd(cwd, PATH_MAX);
 	if (ret == NULL)
 		ft_err("cd: error getting current dir", strerror(errno), NULL, 1);
@@ -57,7 +57,7 @@ int	msh_cd(char **args, t_tool *data)
 	}
 	if (args[2])
 		return (ft_err("cd: too many arguments", NULL, NULL, 1), 1);
-	if (ft_strncmp(args[1], "-", 2) == 0)
+	if (ft_strequ(args[1], "-") == 1)
 	{
 		path = get_env(data->env, "OLDPWD");
 		if (!path)
