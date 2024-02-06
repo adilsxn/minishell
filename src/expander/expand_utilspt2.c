@@ -65,7 +65,8 @@ char	*init_expand(char **str, char ***str1)
 		del_quotes(*str, '\'');
 		return (*str);
 	}
-	*str = del_quotes(*str, '\"');
+	if (*str[0] != '\"' && *str[1] != '\"')
+		*str = del_quotes(*str, '\"');
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
 }
