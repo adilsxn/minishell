@@ -13,10 +13,10 @@
 
 #include "../../inc/minishell.h"
 
-static bool control_for_null(t_rdr *redir, t_rdr *start, t_lexer *it)
+static bool control_for_null(t_rdr *redir, t_rdr **start, t_lexer *it)
 {
-	if (start == NULL)
-        start = redir;
+	if (*start == NULL)
+        *start = redir;
     redir->value = it->next->str;
     if (redir->kind == RDR_OUT || redir->kind == RDR_APP)
     {
@@ -29,12 +29,19 @@ static bool control_for_null(t_rdr *redir, t_rdr *start, t_lexer *it)
     return (false);
 }
 
-void	free_rdr(t_rdr *rdir)
+void	free_rdr(t_rdr **rdir)
 {
-	if (rdir == NULL)
-		return ;
-	free_rdr(rdir->next);
-	ft_free(rdir);
+    t_rdr *it;
+    t_rdr *tmp;
+
+    it = *rdir;
+    tmp = NULL;
+    while (it != NULL)
+    {
+        tmp = it->next;
+        ft_free(it);
+        it = tmp;
+    }
 }
 
 static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
@@ -75,10 +82,10 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 			rdir = mk_rdr(it->token, rdir);
 			if (rdir == NULL)
 			{
-				free_rdr(start);
+				free_rdr(&start);
 				return (ft_err("redirection", NULL, NULL, 1), NULL);
 			}
-            if (control_for_null(rdir, start, it) == true)
+            if (control_for_null(rdir, &start, it) == true)
                 return (NULL);
             if (it->token == LESS_LESS)
 				rdir->value = it->str;

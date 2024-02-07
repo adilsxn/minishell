@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <errno.h>
+#include <string.h>
 
 static int	exec_bin_pipe(t_cmd *cmd)
 {
@@ -21,7 +23,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
-		ft_err("redirection failed", NULL, NULL, 1);
+		ft_err(cmd->rdir->value, strerror(errno), NULL, 1);
 		return (1);
 	}
 	if (cmd->path == NULL)
