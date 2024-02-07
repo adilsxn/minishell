@@ -99,6 +99,7 @@ typedef struct s_cmd
 	int				argc;
 	char			**args;
 	t_rdr			*rdir;
+    bool            io;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -167,8 +168,8 @@ void				free_arr(char **arr);
 void				ft_free(void *ptr);
 void ft_err(char *message, char *detail, char *errorstr, int ret_code);
 void				free_rdr(t_rdr *rdir);
-t_rdr				*build_rdr(t_lexer *lexi);
-void				free_cmd(t_cmd *cmd);
+t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd);
+void				free_cmd(t_cmd **cmd);
 t_cmd				*mk_cmd(t_lexer *lexer, t_env *env);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe *pipe);

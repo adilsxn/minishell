@@ -53,7 +53,7 @@ void	free_pipe(t_ppe *pipe)
 	if (pipe == NULL)
 		return ;
 	free_pipe(pipe->next);
-	free_cmd(pipe->cmd);
+	free_cmd(&(pipe->cmd));
 	ft_free(pipe);
 }
 

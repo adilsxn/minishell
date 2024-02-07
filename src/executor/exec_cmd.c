@@ -23,5 +23,5 @@ void	exec_cmd(t_tool *data)
 		g_last_ret_code = exec_bi(cmd, data);
 	else
 		exec_bin(cmd);
-	free_cmd(cmd);
+	free_cmd(&cmd);
 }

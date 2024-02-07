@@ -32,17 +32,18 @@ bool	is_builtin(char *str)
 	return (false);
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd **cmd)
 {
-	if (cmd == NULL)
+	if ((*cmd) == NULL)
 		return ;
-	if (cmd->path != NULL)
-		ft_free(cmd->path);
-	if (cmd->args != NULL)
-		free_arr(cmd->args);
-	if (cmd->rdir != NULL)
-		free_rdr(cmd->rdir);
-	ft_free(cmd);
+	if ((*cmd)->path != NULL)
+		ft_free((*cmd)->path);
+	if ((*cmd)->args != NULL)
+		free_arr((*cmd)->args);
+	if ((*cmd)->rdir != NULL)
+		free_rdr((*cmd)->rdir);
+	ft_free(*cmd);
+    *cmd = NULL;
 }
 
 t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
@@ -53,11 +54,13 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 	if (!cmd)
 		return (NULL);
 	cmd->args = build_av(lexer);
-	cmd->rdir = build_rdr(lexer);
+	cmd->rdir = build_rdr(lexer, cmd);
 	cmd->argc = count_token(lexer);
 	if (cmd->args != NULL && is_builtin(cmd->args[0]) == false)
 		cmd->path = cmd_finder(env, cmd->args[0]);
-	if (cmd->args == NULL || (cmd->rdir == NULL && cmd->argc == 0))
-		free_cmd(cmd);
+	if (cmd->args == NULL || cmd->argc == 0)
+		free_cmd(&cmd);
+	if (cmd->io == true && cmd->rdir == NULL)
+		free_cmd(&cmd);
 	return (cmd);
 }

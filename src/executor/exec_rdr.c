@@ -21,8 +21,6 @@ static int	get_out(int fd, t_rdr *rdr)
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	if (rdr->kind == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
-    if (ft_strequ("\"\"", rdr->value) == 1)
-        return(ft_err(" ", "No such file or directory", NULL, 1), ERROR);
 	fd = open(rdr->value, fmode, 0644);
 	if (fd == -1)
 		return (ERROR);

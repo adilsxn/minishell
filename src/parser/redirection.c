@@ -13,6 +13,22 @@
 
 #include "../../inc/minishell.h"
 
+static bool control_for_null(t_rdr *redir, t_rdr *start, t_lexer *it)
+{
+	if (start == NULL)
+        start = redir;
+    redir->value = it->next->str;
+    if (redir->kind == RDR_OUT || redir->kind == RDR_APP)
+    {
+        if (ft_strequ("\"\"", redir->value) == 1)
+        {
+            free_rdr(start);
+            return (ft_err(" ", "No such file or directory", NULL, 1), true);
+        }
+    }
+    return (false);
+}
+
 void	free_rdr(t_rdr *rdir)
 {
 	if (rdir == NULL)
@@ -41,31 +57,31 @@ static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
 	return (rdir);
 }
 
-t_rdr	*build_rdr(t_lexer *lexi)
+t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 {
 	t_rdr	*start;
 	t_rdr	*rdir;
-	t_lexer *it;
+	t_lexer	*it;
 
 	start = NULL;
 	rdir = NULL;
 	it = lexi;
 	while (it != NULL && it->token != PIPE)
 	{
-		if (it->token == GREAT || it->token == LESS
-			|| it->token == GREAT_GREAT || it->token == LESS_LESS)
+		if (it->token == GREAT || it->token == LESS || it->token == GREAT_GREAT
+			|| it->token == LESS_LESS)
 		{
+            cmd->io = true;
 			rdir = mk_rdr(it->token, rdir);
 			if (rdir == NULL)
 			{
 				free_rdr(start);
 				return (ft_err("redirection", NULL, NULL, 1), NULL);
 			}
-			if (start == NULL)
-				start = rdir;
-			rdir->value = it->next->str;
+            if (control_for_null(rdir, start, it) == true)
+                return (NULL);
             if (it->token == LESS_LESS)
-                rdir->value = it->str;
+				rdir->value = it->str;
 		}
 		it = it->next;
 	}
