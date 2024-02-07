@@ -20,7 +20,7 @@ static bool control_for_null(t_rdr *redir, t_rdr *start, t_lexer *it)
     redir->value = it->next->str;
     if (redir->kind == RDR_OUT || redir->kind == RDR_APP)
     {
-        if (ft_strequ("\"\"", redir->value) == 1)
+        if (ft_strequ("\"\"", redir->value) == 1 || !(redir->value))
         {
             free_rdr(start);
             return (ft_err(" ", "No such file or directory", NULL, 1), true);
