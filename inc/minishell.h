@@ -151,7 +151,7 @@ t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
 char				*del_quotes(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
-void lexer_redux(t_lexer *lexer);
+void lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
 int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);

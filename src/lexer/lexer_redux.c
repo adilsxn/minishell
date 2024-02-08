@@ -12,13 +12,27 @@
 
 # include "../../inc/minishell.h"
 
+static void renumber(t_lexer **lst)
+{
+    int i;
+    t_lexer *it;
 
-void lexer_redux(t_lexer *lexer)
+    i = 0;
+    it = *lst; 
+    while(it != NULL)
+    {
+        it->i = i;
+        it = it->next;
+        i++;
+    }
+}
+
+void lexer_redux(t_lexer **lexer)
 {
     t_lexer *it;
     t_lexer *del;
 
-    it = lexer;
+    it = *lexer;
     del = NULL;
     while(it != NULL && it->next != NULL)
     {
@@ -26,13 +40,12 @@ void lexer_redux(t_lexer *lexer)
         {
             it->str = it->next->str;
             del = it->next;
+            it->next = del->next;
             if (del->next != NULL)
-            {
-                it->next = del->next;
                 del->next->prev = it;
-            }
-            ft_free2((void **)&del); 
+            ft_free(del); 
         }    
         it = it->next;
     }
+    renumber(lexer);
 }
