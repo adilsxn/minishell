@@ -51,7 +51,7 @@ void	clean_fds(void)
 	if (fd < 0)
 		return ;
 	while (fd > STDERR_FILENO)
-		close(fd--);
+		ft_close(fd--);
 	unlink(HD_FILE);
 }
 

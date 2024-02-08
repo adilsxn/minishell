@@ -17,7 +17,7 @@ static int	get_out(int fd, t_rdr *rdr)
 	int	fmode;
 
 	if (fd >= 0)
-		close(fd);
+		ft_close(fd);
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	if (rdr->kind == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
@@ -43,21 +43,20 @@ static int	set_fd_out(t_rdr *rdr)
             if (fd == ERROR)
                 return (ERROR);
 			dup_fd = dup2(fd, STDOUT_FILENO);
-			close(fd);
+			ft_close(fd);
 			if (dup_fd == -1)
 				return (ERROR);
 		}
 		rdr = rdr->next;
 	}
-	if (fd != -1 || fd != ERROR)
-		close(fd);
+    ft_close(fd);
 	return (fd);
 }
 
 static int	get_in(int fd, t_rdr *rdr)
 {
 	if (fd >= 0)
-		close(fd);
+		ft_close(fd);
 	if (rdr->kind == RDR_HD || rdr->kind == RDR_IN)
 		fd = open(rdr->value, O_RDONLY);
 	if (fd == -1)
@@ -79,14 +78,13 @@ static int	set_fd_in(t_rdr *rdr)
 			if (fd == ERROR)
 				return (ERROR);
 			dup_fd = dup2(fd, STDIN_FILENO);
-			close(fd);
+			ft_close(fd);
 			if (dup_fd == -1)
 				return (ERROR);
 		}
 		rdr = rdr->next;
 	}
-	if (fd != -1)
-		close(fd);
+    ft_close(fd);
 	return (fd);
 }
 

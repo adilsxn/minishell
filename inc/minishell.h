@@ -151,6 +151,7 @@ t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
 char				*del_quotes(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
+void lexer_redux(t_lexer *lexer);
 t_lexer				*lex_check(t_lexer *lexer);
 int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
@@ -195,7 +196,7 @@ char				*freer(t_envy **ex, char *str, char **str1);
 
 // minishell loop
 int					count_token(t_lexer *lexi);
-char				**build_av(t_lexer *lexi);
+char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
@@ -207,6 +208,7 @@ char				*ft_strtrim1(char const *s1, char const *set);
 
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
+void                ft_close(int fd);
 void				clean_fds(void);
 
 // signal

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <string.h>
 
 void	ft_free(void *ptr)
 {

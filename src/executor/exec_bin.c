@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <math.h>
 
 static void	child_proc(t_cmd *cmd)
 {

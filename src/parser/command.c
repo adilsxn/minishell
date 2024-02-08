@@ -53,9 +53,9 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->args = build_av(lexer);
+    cmd->argc = count_token(lexer);
+	cmd->args = build_av(lexer, cmd->argc);
 	cmd->rdir = build_rdr(lexer, cmd);
-	cmd->argc = count_token(lexer);
 	if (cmd->args != NULL && is_builtin(cmd->args[0]) == false)
 		cmd->path = cmd_finder(env, cmd->args[0]);
 	if (cmd->args == NULL || cmd->argc == 0)

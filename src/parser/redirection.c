@@ -17,7 +17,7 @@ static bool control_for_null(t_rdr *redir, t_rdr **start, t_lexer *it)
 {
 	if (*start == NULL)
         *start = redir;
-    redir->value = it->next->str;
+    redir->value = it->str;
     if (redir->kind == RDR_OUT || redir->kind == RDR_APP)
     {
         if (ft_strequ("\"\"", redir->value) == 1 || !(redir->value))
@@ -87,8 +87,6 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 			}
             if (control_for_null(rdir, &start, it) == true)
                 return (NULL);
-            if (it->token == LESS_LESS)
-				rdir->value = it->str;
 		}
 		it = it->next;
 	}

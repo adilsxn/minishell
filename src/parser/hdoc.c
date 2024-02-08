@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <errno.h>
-#include <stdbool.h>
-#include <string.h>
 /* Process terminating with default action of signal 11 (SIGSEGV)
 ==29867==  General Protection Fault
 ==29867==    at 0x10E881: ft_strequ (ft_strequ.c:19)
@@ -121,8 +118,7 @@ int	heredoc(t_tool *data)
             if (fd == -1)
                 return (ft_err("heredoc failed", it->str, strerror(errno), 1), 1);
             get_line_hdoc(delim, data, fd);
-            if (fd != -1)
-                close(fd);
+            ft_close(fd);
 		}
 		it = it->next;
 	}
