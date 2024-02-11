@@ -12,80 +12,68 @@
 
 #include "../../inc/minishell.h"
 
-static int	get_out(int fd, t_rdr *rdr)
+/* static int	get_out(int fd, t_rdr *rdr)
 {
 	int	fmode;
 
 	if (fd >= 0)
 		ft_close(fd);
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
-	if (rdr->kind == RDR_APP)
+	if (rdr->type == RDR_APP)
 		fmode = O_WRONLY | O_CREAT | O_APPEND;
 	fd = open(rdr->value, fmode, 0644);
 	if (fd == -1)
-		return (ERROR);
-	if (rdr->kind == RDR_OUT)
+		return (ft_err(rdr->value, NULL, NULL, 1), ERROR);
+	if (rdr->type == RDR_OUT)
 		ft_putstr_fd("", fd);
 	return (fd);
-}
+} */
 
 static int	set_fd_out(t_rdr *rdr)
 {
-	int	fd;
 	int	dup_fd;
 
-	fd = -1;
 	while (rdr != NULL)
 	{
-		if (rdr->kind == RDR_OUT || rdr->kind == RDR_APP)
+		if (rdr->type == GREAT || rdr->type == GREAT_GREAT)
 		{
-			fd = get_out(fd, rdr);
-            if (fd == ERROR)
-                return (ERROR);
-			dup_fd = dup2(fd, STDOUT_FILENO);
-			ft_close(fd);
+			dup_fd = dup2(rdr->fd, STDOUT_FILENO);
+			ft_close(rdr->fd);
 			if (dup_fd == -1)
 				return (ERROR);
 		}
 		rdr = rdr->next;
 	}
-    ft_close(fd);
-	return (fd);
+	return (0);
 }
 
-static int	get_in(int fd, t_rdr *rdr)
+/* static int	get_in(int fd, t_rdr *rdr)
 {
 	if (fd >= 0)
 		ft_close(fd);
-	if (rdr->kind == RDR_HD || rdr->kind == RDR_IN)
+	if (rdr->type == RDR_HD || rdr->type == RDR_IN)
 		fd = open(rdr->value, O_RDONLY);
 	if (fd == -1)
-		return (ERROR);
+		return (ft_err(rdr->value, NULL, NULL, 1), ERROR);
 	return (fd);
-}
+} */
 
 static int	set_fd_in(t_rdr *rdr)
 {
-	int	fd;
 	int	dup_fd;
 
-	fd = -1;
 	while (rdr != NULL)
 	{
-		if (rdr->kind == RDR_IN || rdr->kind == RDR_HD)
+		if (rdr->type == LESS || rdr->type == LESS_LESS)
 		{
-			fd = get_in(fd, rdr);
-			if (fd == ERROR)
-				return (ERROR);
-			dup_fd = dup2(fd, STDIN_FILENO);
-			ft_close(fd);
+			dup_fd = dup2(rdr->fd, STDIN_FILENO);
+			ft_close(rdr->fd);
 			if (dup_fd == -1)
 				return (ERROR);
 		}
 		rdr = rdr->next;
 	}
-    ft_close(fd);
-	return (fd);
+	return (0);
 }
 
 int	exec_rdr(t_rdr *rdr)

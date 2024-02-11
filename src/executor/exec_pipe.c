@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <errno.h>
-#include <string.h>
 
 static int	exec_bin_pipe(t_cmd *cmd)
 {
@@ -37,7 +35,7 @@ static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 {
     signal_handler();
 	ft_close(proc_fd[STDIN_FILENO]);
-	clean_fds();
+	// clean_fds();
 	if ((is_builtin(proc->cmd->args[0]) != 0))
 		proc->exit_code = exec_bi(proc->cmd, data);
 	else

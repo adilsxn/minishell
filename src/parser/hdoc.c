@@ -20,22 +20,23 @@
 ==29867==    by 0x10D157: minishell_loop (main.c:49)
 ==29867==    by 0x10D28B: main (main.c:75)
  */
-static bool name_heredoc_file(t_lexer *lexi)
+static bool name_heredoc_file(t_rdr *rdr)
 {
     int i;
     char *number;
-    t_lexer *it;
+    t_rdr *it;
 
     i = 0;
-    it = lexi;
+    it = rdr;
+    number = NULL;
     while (it != NULL)
     {
         number = ft_itoa(i);
         if (!number)
             return (ft_err("heredoc failed", NULL, NULL, 1), false);
-        if (it->token == LESS_LESS)
+        if (it->type == LESS_LESS)
         {
-            it->str = ft_strjoin(HD_FILE, number);
+            it->value = ft_strjoin(HD_FILE, number);
             i++;
         }
         it = it->next;
@@ -60,7 +61,8 @@ static bool delim_has_quotes(char *str)
         return (true);
     return(false);
 }
-static bool handle_heredoc(t_tool *data, int fd, char *content, char **delim)
+
+static bool expand_heredoc(t_env *env, int fd, char *content, char **delim)
 {
     bool has_quotes;
 
@@ -76,13 +78,13 @@ static bool handle_heredoc(t_tool *data, int fd, char *content, char **delim)
     if (ft_strequ(*delim, content) == 1)
         return (true);
     if(has_quotes == false) 
-        content = expander(data->env, content);
+        content = expander(env, content);
     ft_putendl_fd(content, fd);
     ft_free(content);
     return (false);
 }
 
-static bool	get_line_hdoc(char *delim, t_tool *data, int fd)
+static bool	get_line_hdoc(char *delim, t_env *env, int fd)
 {
 	char	*input;
 
@@ -90,35 +92,34 @@ static bool	get_line_hdoc(char *delim, t_tool *data, int fd)
 	{
         signal_handler();
         input = readline("heredoc> ");
-        signal_handler_idle();
-        if (handle_heredoc(data, fd, input, &delim))
+        if (expand_heredoc(env, fd, input, &delim))
             break ;
 	}
     ft_free(input);
-    //TODO: Expand the content before writing to file
+    close(fd);
     return (true);
 }
 
 //TODO: If delim has quotes no expansion, else expand
-int	heredoc(t_tool *data)
+int	handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr)
 {
     t_lexer *it;
     int fd;
 	char	*delim;
 
-    it = data->lexer;
-    name_heredoc_file(it);
+    it = lexer;
 	while (it != NULL)
 	{
 		if (it->token == LESS_LESS)
 		{
-            delim = it->next->str;
+            delim = it->str;
+            name_heredoc_file(rdr);
             unlink(it->str);
             fd = open(it->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (fd == -1)
                 return (ft_err("heredoc failed", it->str, strerror(errno), 1), 1);
-            get_line_hdoc(delim, data, fd);
-            ft_close(fd);
+            get_line_hdoc(delim, env, fd);
+            ft_free(it->str);
 		}
 		it = it->next;
 	}

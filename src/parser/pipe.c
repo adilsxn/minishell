@@ -13,7 +13,7 @@
 
 #include "../../inc/minishell.h"
 
-static int	has_pipe(t_lexer *lexer)
+int	has_pipe(t_lexer *lexer)
 {
     t_lexer *it;
 
@@ -48,13 +48,22 @@ static t_ppe	*mk_pipe(t_lexer *lexer, t_env *env, t_ppe *prev)
     return (proc);
 }
 
-void	free_pipe(t_ppe *pipe)
+void	free_pipe(t_ppe **pipe)
 {
-	if (pipe == NULL)
-		return ;
-	free_pipe(pipe->next);
-	free_cmd(&(pipe->cmd));
-	ft_free(pipe);
+    t_ppe *it;
+    t_ppe *tmp;
+
+    it = *pipe;
+    tmp = NULL;
+    while (it != NULL)
+    {
+        tmp = it->next;
+        free_cmd(&(it->cmd));
+        ft_free(it);
+        it = tmp;
+    }
+    ft_free(*pipe);
+    *pipe = NULL;
 }
 
 static t_lexer	*peek_pipe(t_lexer *lexer)
@@ -80,15 +89,13 @@ t_ppe	*parser(t_tool *data)
 	start = NULL;
 	pipeline = NULL;
     it = data->lexer;
-	if (has_pipe(it) == 0)
-		return (NULL);
 	while (it != NULL)
 	{
 		pipeline = mk_pipe(it, data->env, pipeline);
 		it = peek_pipe(it);
 		if (pipeline == NULL)
 		{
-			free_pipe(start);
+			free_pipe(&start);
 			return (NULL);
 		}
 		if (start == NULL)

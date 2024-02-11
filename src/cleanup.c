@@ -23,7 +23,7 @@ void	clean_data(t_tool *data, bool has_history)
 		}
 		lst_clear(&data->lexer);
 		if (data->pipes)
-			free_pipe(data->pipes);
+			free_pipe(&(data->pipes));
 		if (has_history == true)
 		{
 			rl_clear_history();
@@ -51,7 +51,7 @@ void	clean_fds(void)
 	if (fd < 0)
 		return ;
 	while (fd > STDERR_FILENO)
-		ft_close(fd--);
+		close(fd--);
 	unlink(HD_FILE);
 }
 

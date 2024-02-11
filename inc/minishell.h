@@ -41,7 +41,6 @@ typedef enum s_token
 	GREAT_GREAT,
 	LESS,
 	LESS_LESS,
-	TWORD,
 }					t_token;
 
 typedef struct s_lexer
@@ -74,23 +73,13 @@ typedef struct s_env
 } t_env;
 
 
-// parser
-typedef enum e_rdirkind
-{
-	RDR_OUT,
-	RDR_IN,
-	RDR_APP,
-	RDR_HD,
-	RDR_CNT,
-}					t_rdirkind;
 
 typedef struct s_rdr
 {
-	t_rdirkind		kind;
+	t_token         type;
 	char			*value;
+    int fd;
 	struct s_rdr	*next;
-	t_lexer			*lex;
-
 }					t_rdr;
 
 typedef struct s_cmd
@@ -163,19 +152,24 @@ void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
 int					reti(int trig);
 
+
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
 void				ft_free(void *ptr);
 void ft_err(char *message, char *detail, char *errorstr, int ret_code);
 void				free_rdr(t_rdr **rdir);
-t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd);
+t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env);
 void				free_cmd(t_cmd **cmd);
 t_cmd				*mk_cmd(t_lexer *lexer, t_env *env);
+int	has_pipe(t_lexer *lexer);
 t_ppe				*parser(t_tool *data);
-void				free_pipe(t_ppe *pipe);
+void				free_pipe(t_ppe **pipe);
+int handle_input(t_rdr *rdr);
+int handle_append(t_rdr *rdr);
+int handle_output(t_rdr *rdr);
 bool has_heredoc(t_lexer *lexer);
-int					heredoc(t_tool *data);
+int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
 
 // expander
 

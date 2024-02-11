@@ -13,58 +13,47 @@
 
 #include "../../inc/minishell.h"
 
-static bool control_for_null(t_rdr *redir, t_rdr **start, t_lexer *it)
-{
-	if (*start == NULL)
-        *start = redir;
-    redir->value = it->str;
-    if (redir->kind == RDR_OUT || redir->kind == RDR_APP)
-    {
-        if (ft_strequ("\"\"", redir->value) == 1 || !(redir->value))
-        {
-            free_rdr(start);
-            return (ft_err(" ", "No such file or directory", NULL, 1), true);
-        }
-    }
-    return (false);
-}
-
 void	free_rdr(t_rdr **rdir)
 {
-    t_rdr *it;
-    t_rdr *tmp;
+	t_rdr	*it;
+	t_rdr	*tmp;
 
-    it = *rdir;
-    tmp = NULL;
-    while (it != NULL)
-    {
-        tmp = it->next;
-        ft_free(it);
-        it = tmp;
-    }
+	it = *rdir;
+	tmp = NULL;
+	while (it != NULL)
+	{
+		tmp = it->next;
+		ft_free(it);
+		it = tmp;
+	}
 }
 
-static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
+static t_rdr	*mk_rdr(t_lexer *lexer, t_env *env, t_rdr *prev)
 {
 	t_rdr	*rdir;
+	int		ret;
 
+	ret = 0;
 	rdir = ft_calloc(1, sizeof(t_rdr));
 	if (rdir == NULL)
 		return (NULL);
-	if (type == GREAT)
-		rdir->kind = RDR_OUT;
-	else if (type == LESS)
-		rdir->kind = RDR_IN;
-	else if (type == GREAT_GREAT)
-		rdir->kind = RDR_APP;
+	rdir->value = lexer->str;
+	if (lexer->token == GREAT)
+		ret = handle_output(rdir);
+	else if (lexer->token == LESS)
+		ret = handle_input(rdir);
+	else if (lexer->token == GREAT_GREAT)
+		ret = handle_append(rdir);
 	else
-		rdir->kind = RDR_HD;
+		ret = handle_heredoc(lexer, env, rdir);
 	if (prev != NULL)
 		prev->next = rdir;
+	if (ret == -1)
+		return (NULL);
 	return (rdir);
 }
 
-t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
+t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env)
 {
 	t_rdr	*start;
 	t_rdr	*rdir;
@@ -75,18 +64,14 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 	it = lexi;
 	while (it != NULL && it->token != PIPE)
 	{
-		if (it->token == GREAT || it->token == LESS || it->token == GREAT_GREAT
-			|| it->token == LESS_LESS)
+		if (it->token > PIPE)
 		{
-            cmd->io = true;
-			rdir = mk_rdr(it->token, rdir);
+			cmd->io = true;
+			rdir = mk_rdr(it, env, rdir);
 			if (rdir == NULL)
-			{
-				free_rdr(&start);
-				return (ft_err("redirection", NULL, NULL, 1), NULL);
-			}
-            if (control_for_null(rdir, &start, it) == true)
-                return (NULL);
+				return (free_rdr(&start), NULL);
+			if (start == NULL)
+				start = rdir;
 		}
 		it = it->next;
 	}
