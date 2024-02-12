@@ -120,11 +120,12 @@ t_env				*env_iter(t_env *env, const char *key);
 char				*get_env(t_env *env, const char *key);
 // int traverse_msh_env(t_msh_envlist *list);
 int					del_env(t_env *env);
-
+ 
 // bi
 typedef int			t_bi(char **args, t_tool *data);
 int					msh_cd(char **args, t_tool *data);
 int					msh_echo(char **args, t_tool *data);
+int msh_void(char **args, t_tool *data);
 int					msh_env(char **args, t_tool *data);
 int					msh_exit(char **args, t_tool *data);
 int					msh_export(char **args, t_tool *data);

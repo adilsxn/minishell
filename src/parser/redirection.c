@@ -69,10 +69,10 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env)
 		{
 			cmd->io = true;
 			rdir = mk_rdr(it, env, rdir);
-			if (rdir == NULL)
-				return (free_rdr(&start), NULL);
 			if (start == NULL)
 				start = rdir;
+            if (rdir == NULL)
+                return (free_rdr(&start), NULL);
 		}
 		it = it->next;
 	}
