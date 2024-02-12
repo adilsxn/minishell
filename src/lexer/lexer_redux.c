@@ -50,10 +50,28 @@ void lexer_redux(t_lexer **lexer)
     renumber(lexer);
 }
 
+int	count_quote(char *str, int q)
+{
+    	int	i;
+	int a;
+
+	i = 0;
+	a = 0;
+	while (str[i])
+	{
+		if (str[i] == q)
+			a++;
+		i++;
+	}
+	return (a);
+}
+
 void	quote_help(t_lexer *shell)
 {
 	t_lexer	*le;
+	int a;
 
+	a = 1;
 	le = shell;
 	while (le)
 	{
@@ -66,9 +84,14 @@ void	quote_help(t_lexer *shell)
 				else if (quote_assist(le->str, 39) < 2)
 					le->str = del_quote(le->str, 34);
 			}
+            else if (le->str[0] == 34 && le->str[1] == 34)
+				a = 0;
+            else
+				le->str = del_quote(le->str, 34);
 		}
 		le = le->next;
 	}
+	(void)a;
 }
 
 int	quote_assist(char *str, int q)
