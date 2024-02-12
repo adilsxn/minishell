@@ -53,7 +53,7 @@ char	*expander(t_env *env, char *str)
 	ex1 = malloc(sizeof(t_envy));
 	if (init_expand(&str, &str1) != NULL)
 	{
-		ft_free(ex1);
+		ft_free((void **)&ex1);
 		return (str);
 	}
 	ex1->len = initialize_expander(&ex1->env2, &ex1->i, &ex1->str2, str1);

@@ -22,14 +22,14 @@ int	del_env(t_env *env)
 	while (tmp != NULL)
 	{
 		next = tmp->next;
-		ft_free((void *)tmp->key);
-		ft_free((void *)tmp->value);
+		ft_free((void **)&tmp->key);
+		ft_free((void **)&tmp->value);
 		if (tmp->ex)
 		{
-			ft_free(tmp->ex->str2);
-			ft_free(tmp->ex);
+			ft_free((void **)&tmp->ex->str2);
+			ft_free((void **)&tmp->ex);
 		}
-		ft_free(tmp);
+		ft_free((void **)&tmp);
 		tmp = next;
 	}
 	env = NULL;

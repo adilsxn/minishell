@@ -16,8 +16,8 @@
 void	*clear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
-		ft_free((*lst)->str);
-	ft_free(*lst);
+		ft_free((void **)&(*lst)->str);
+	ft_free((void **)&*lst);
 	return (NULL);
 }
 
@@ -90,8 +90,8 @@ void	lst_clear(t_lexer **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_free((*lst)->str);
-		ft_free(*lst);
+		ft_free((void **)&(*lst)->str);
+		ft_free((void **)&*lst);
 		*lst = tmp;
 	}
 }

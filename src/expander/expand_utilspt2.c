@@ -26,7 +26,7 @@ char	*expander_help1(int len, char **str2, char **str1, int i)
 			free(temp);
 		}
 		else
-			ft_free(*str2);
+			ft_free((void **)&*str2);
 	}
 	return (*str2);
 }
@@ -47,14 +47,14 @@ void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 			free(temp);
 		}
 		else
-			ft_free(*str2);
+			ft_free((void **)&*str2);
 	}
 	else
 	{
 		free(*str2);
 		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
 	} 
-    ft_free(str3);
+    ft_free((void **)&str3);
 	free(tmp);
 }
 
@@ -80,5 +80,5 @@ char	*init_expand(char **str, char ***str1)
 void	checker(t_env *env2, char **str2, int i)
 {
 	if (i == 0 && env2 == NULL)
-		ft_free2((void **)str2);
+		ft_free((void **)str2);
 }

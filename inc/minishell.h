@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/06 15:50:15 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 11:00:32 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int					reti(int trig);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
-void				ft_free(void *ptr);
+void				ft_free(void **ptr);
 void ft_err(char *message, char *detail, char *errorstr, int ret_code);
 void				free_rdr(t_rdr **rdir);
 t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env);
@@ -185,7 +185,6 @@ char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
 char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
-void				ft_free2(void **ptr);
 char				*freer(t_envy **ex, char *str, char **str1);
 
 // minishell loop

@@ -44,8 +44,8 @@ static int	real_export(char *input, t_env *env)
 			key = ft_substr(input, 0, ft_strchr(input, '=') - input);
 			data = ft_strdup(ft_strchr(input, '=') + 1);
 			set_env(&env, key, data);
-			ft_free(key);
-			ft_free(data);
+			ft_free((void **)&key);
+			ft_free((void **)&data);
 		}
 		return (0);
 	}

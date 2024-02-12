@@ -38,7 +38,7 @@ static t_ppe	*mk_pipe(t_lexer *lexer, t_env *env, t_ppe *prev)
     proc = ft_calloc(1, sizeof(t_ppe));
     if (proc == NULL)
     {
-        ft_free(cmd);
+        ft_free((void **)&cmd);
         return (NULL);
     }
     if (prev != NULL)
@@ -59,11 +59,10 @@ void	free_pipe(t_ppe **pipe)
     {
         tmp = it->next;
         free_cmd(&(it->cmd));
-        ft_free(it);
+        ft_free((void **)&it);
         it = tmp;
     }
-    ft_free(*pipe);
-    *pipe = NULL;
+    ft_free((void **)pipe);
 }
 
 static t_lexer	*peek_pipe(t_lexer *lexer)

@@ -54,13 +54,12 @@ void	free_cmd(t_cmd **cmd)
 	if ((*cmd) == NULL)
 		return ;
 	if ((*cmd)->path != NULL)
-		ft_free((*cmd)->path);
+		ft_free((void **)&(*cmd)->path);
 	if ((*cmd)->args != NULL)
 		free_arr((*cmd)->args);
 	if ((*cmd)->rdir != NULL)
 		free_rdr(&((*cmd)->rdir));
-	ft_free(*cmd);
-    *cmd = NULL;
+	ft_free((void **)&(*cmd));
 }
 
 t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)

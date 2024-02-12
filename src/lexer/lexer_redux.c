@@ -43,7 +43,7 @@ void lexer_redux(t_lexer **lexer)
             it->next = del->next;
             if (del->next != NULL)
                 del->next->prev = it;
-            ft_free(del); 
+            ft_free((void **)&del); 
         }    
         it = it->next;
     }

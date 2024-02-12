@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/05 19:13:50 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:59:55 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ void	clean_data(t_tool *data, bool has_history)
 	if (data != NULL)
 	{
 		if (data->arg != NULL)
-		{
-		 	ft_free(data->arg);
-			data->arg = NULL;
-		}
+            ft_free((void **)&(data->arg));
 		lst_clear(&data->lexer);
-		if (data->pipes)
-			free_pipe(&(data->pipes));
+		if (data->pipes != NULL)
+			// free_pipe(&(data->pipes));
 		if (has_history == true)
 		{
 			rl_clear_history();
@@ -64,9 +61,9 @@ char	*freer(t_envy **ex, char *str, char **str1)
 		ret = ft_strdup((*ex)->str2);
 	else
 		ret = NULL;
-	ft_free2((void **)&(*ex)->str2);
-	ft_free2((void**)&(*ex));
-	ft_free(str);
+	ft_free((void **)&(*ex)->str2);
+	ft_free((void**)&(*ex));
+	ft_free((void **)&str);
 	return (ret);
 }
 

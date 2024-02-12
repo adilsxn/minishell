@@ -25,7 +25,7 @@ static void	update_env(t_env *env, bool success)
 		set_env(&env, "OLDPWD", get_env(env, "PWD"));
 		set_env(&env, "PWD", pwd);
 	}
-	ft_free((char *)pwd);
+	ft_free((void **)&pwd);
 }
 
 static bool	ft_chdir(char *path, t_env *env)

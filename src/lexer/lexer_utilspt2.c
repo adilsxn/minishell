@@ -18,7 +18,7 @@ int	sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool)
 
 	tmp = ft_substr(str, i, count);
 	new_node(tmp, 0, lexer, tool);
-	ft_free(tmp);
+	ft_free((void **)&tmp);
 	return (count);
 }
 

@@ -12,23 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/* static int	get_out(int fd, t_rdr *rdr)
-{
-	int	fmode;
-
-	if (fd >= 0)
-		ft_close(fd);
-	fmode = O_WRONLY | O_CREAT | O_TRUNC;
-	if (rdr->type == RDR_APP)
-		fmode = O_WRONLY | O_CREAT | O_APPEND;
-	fd = open(rdr->value, fmode, 0644);
-	if (fd == -1)
-		return (ft_err(rdr->value, NULL, NULL, 1), ERROR);
-	if (rdr->type == RDR_OUT)
-		ft_putstr_fd("", fd);
-	return (fd);
-} */
-
 static int	set_fd_out(t_rdr *rdr)
 {
 	int	dup_fd;
@@ -46,17 +29,6 @@ static int	set_fd_out(t_rdr *rdr)
 	}
 	return (0);
 }
-
-/* static int	get_in(int fd, t_rdr *rdr)
-{
-	if (fd >= 0)
-		ft_close(fd);
-	if (rdr->type == RDR_HD || rdr->type == RDR_IN)
-		fd = open(rdr->value, O_RDONLY);
-	if (fd == -1)
-		return (ft_err(rdr->value, NULL, NULL, 1), ERROR);
-	return (fd);
-} */
 
 static int	set_fd_in(t_rdr *rdr)
 {

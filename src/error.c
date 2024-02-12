@@ -3,25 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:49:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/06 15:05:47 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 11:02:07 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	ft_free(void *ptr)
-{
-	if (ptr != NULL)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}
-
-void	ft_free2(void **ptr)
+void	ft_free(void **ptr)
 {
 	if (*ptr != NULL)
 	{
@@ -40,7 +31,7 @@ static char	*join_str(char *str1, char *str2)
 		return (ft_strdup(str2));
 	tmp = str1;
 	str1 = ft_strjoin(tmp, str2);
-	ft_free(tmp);
+	ft_free((void **)&tmp);
 	return (str1);
 }
 
@@ -60,5 +51,5 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
     }
 	ft_putendl_fd(str, STDERR_FILENO);
     g_last_ret_code = ret_code;
-	ft_free(str);
+	ft_free((void **)&str);
 }

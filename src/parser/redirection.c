@@ -23,7 +23,8 @@ void	free_rdr(t_rdr **rdir)
 	while (it != NULL)
 	{
 		tmp = it->next;
-		ft_free(it);
+        ft_free((void **)&it->value);
+		ft_free((void **)&it);
 		it = tmp;
 	}
 }
@@ -37,7 +38,7 @@ static t_rdr	*mk_rdr(t_lexer *lexer, t_env *env, t_rdr *prev)
 	rdir = ft_calloc(1, sizeof(t_rdr));
 	if (rdir == NULL)
 		return (NULL);
-	rdir->value = lexer->str;
+	rdir->value = ft_strdup(lexer->str);
 	if (lexer->token == GREAT)
 		ret = handle_output(rdir);
 	else if (lexer->token == LESS)
