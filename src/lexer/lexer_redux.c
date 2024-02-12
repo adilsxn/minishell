@@ -49,3 +49,42 @@ void lexer_redux(t_lexer **lexer)
     }
     renumber(lexer);
 }
+
+void	quote_help(t_lexer *shell)
+{
+	t_lexer	*le;
+
+	le = shell;
+	while (le)
+	{
+		if (le->str)
+		{
+			if (ft_strequ(shell->str, "echo"))
+			{
+				if (quote_assist(le->str, 34) < 2)
+					le->str = del_quote(le->str, 39);
+				else if (quote_assist(le->str, 39) < 2)
+					le->str = del_quote(le->str, 34);
+			}
+		}
+		le = le->next;
+	}
+}
+
+int	quote_assist(char *str, int q)
+{
+	int	i;
+	int a;
+
+	i = 0;
+	a = 0;
+	while (str[i])
+	{
+		if (str[i] == q)
+			a = 1;
+		i++;
+		if (str[i] && str[i] == q && a == 1)
+			return (2);
+	}
+	return (a);
+}

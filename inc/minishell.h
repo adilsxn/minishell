@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 18:36:57 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 19:07:08 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
 int					reti(int trig);
 int					quote_assist(char *str, int q);
+void				quote_help(t_lexer *shell);
 
 
 // parser
