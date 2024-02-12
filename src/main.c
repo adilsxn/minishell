@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/06 20:00:15 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:55:58 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int			g_last_ret_code = 0;
 
 static bool parse_input(t_tool *shell)
 {
-    char *tmp;
+    char	*tmp;
+	t_lexer	*le;
 
     signal_handler();
     tmp = readline("minishell> ");
@@ -46,14 +47,47 @@ static bool parse_input(t_tool *shell)
     shell->lexer = lexer(shell->arg, shell->lexer, shell);
     if (shell->lexer)
     {
-       lexer_redux(&shell->lexer);
-       shell->lexer = expander2(shell->env, shell->lexer);
+		lexer_redux(&shell->lexer);
+		shell->lexer = expander2(shell->env, shell->lexer);
+		le = shell->lexer;
+		while (le)
+		{
+			if (le->str)
+			{
+				if (ft_strequ(shell->lexer->str, "echo"))
+				{
+					if (quote_assist(le->str, 34) < 2)
+						le->str = del_quote(le->str, 39);
+					else if (quote_assist(le->str, 39) < 2)
+						le->str = del_quote(le->str, 34);
+				}
+			}
+			le = le->next;
+		}
        if (has_pipe(shell->lexer) == 1)
             shell->pipes = parser(shell);
        else
            return(exec_cmd(shell), false);
     }
     return (true);
+}
+
+int	quote_assist(char *str, int q)
+{
+	int	i;
+	int a;
+
+	i = 0;
+	a = 0;
+	while (str[i])
+	{
+		if (str[i] == q)
+			a = 1;
+		i++;
+		if (str[i] && str[i] == q && a == 1)
+			return (2);
+	}
+	return (a);
 }
 
 static void	minishell_loop(t_tool *shell)

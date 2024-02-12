@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 16:19:43 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:34:10 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_token	check_token(int c1, int c2)
 	return (0);
 }
 
-char	*del_quotes(char *str, char c)
+char	*del_quote(char *str, char c)
 {
 	int	i;
 	int	j;

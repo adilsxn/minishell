@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 11:00:32 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:36:57 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int					new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
-char				*del_quotes(char *str, char c);
+char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
 void lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
@@ -151,6 +151,7 @@ void				del_one(t_lexer **lst, int i);
 void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
 int					reti(int trig);
+int					quote_assist(char *str, int q);
 
 
 // parser
@@ -172,8 +173,6 @@ bool has_heredoc(t_lexer *lexer);
 int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
 
 // expander
-
-char				*del_quote(char *str, char c);
 char				*get_key(char *str);
 int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);

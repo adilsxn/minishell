@@ -65,13 +65,13 @@ char	*init_expand(char **str, char ***str1)
 	a = 1;
 	if ((*str)[0] == 39)
 	{
-		del_quotes(*str, '\'');
+		del_quote(*str, '\'');
 		return (*str);
 	}
-	if ((*str)[0] == '\"' && (*str)[1] == '\"')
-		a = 0;
-	else
-		*str = del_quotes(*str, '\"');
+	// if ((*str)[0] == '\"' && (*str)[1] == '\"')
+	// 	a = 0;
+	// else
+	// 	*str = del_quote(*str, '\"');
 	(void)a;
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
