@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/06 15:07:30 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 16:19:43 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	len_quote(int i, char *str, char quote)
 	int	count;
 
 	count = 0;
-	if (str[i + count] == quote)
+	if (str != NULL && i + count < (int)ft_strlen(str) && str[i + count] == quote)
 	{
 		count++;
-		while (str[i + count] != quote && str[i + count] != '\0')
+		while (str[i + count] != '\0' && str[i + count] != quote)
 			count++;
 		count++;
 	}

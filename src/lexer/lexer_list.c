@@ -88,15 +88,15 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 		return (count - 1);
 	if (count == -1)
 		return (-10000000);
-	while (str[i + count] != '\0')
+	while (i + count < (int)ft_strlen(str) && str[i + count] != '\0')
 	{
 		count += len_quote(i + count, str, 34);
 		count += len_quote(i + count, str, 39);
-		if (ft_isspace(str[i + count]) == 1)
+		if (str && i + count < (int)ft_strlen(str) && ft_isspace(str[i + count]) == 1)
 			return (sub(str, i, count, lexer, tool));
-		if (check_token(str[i + count], 0) != 0)
+		if (str  && i + count < (int)ft_strlen(str) && check_token(str[i + count], 0) != 0)
 			return (sub(str, i, count, lexer, tool) - 1);
-		if (str[i + count] != '\0')
+		if (i + count < (int)ft_strlen(str) && str[i + count] != '\0')
 			count++;
 	}
 	sub(str, i, count, lexer, tool);
