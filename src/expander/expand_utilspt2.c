@@ -60,19 +60,11 @@ void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 
 char	*init_expand(char **str, char ***str1)
 {
-	int a;
-	
-	a = 1;
 	if ((*str)[0] == 39)
 	{
 		del_quote(*str, '\'');
 		return (*str);
 	}
-	// if ((*str)[0] == '\"' && (*str)[1] == '\"')
-	// 	a = 0;
-	// else
-	// 	*str = del_quote(*str, '\"');
-	(void)a;
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
 }
