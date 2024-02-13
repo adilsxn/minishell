@@ -11,17 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <fcntl.h>
 
-/* Process terminating with default action of signal 11 (SIGSEGV)
-==29867==  General Protection Fault
-==29867==    at 0x10E881: ft_strequ (ft_strequ.c:19)
-==29867==    by 0x10A4A1: handle_heredoc (hdoc.c:70)
-==29867==    by 0x10A54E: get_line_hdoc (hdoc.c:89)
-==29867==    by 0x10A61B: heredoc (hdoc.c:115)
-==29867==    by 0x10D157: minishell_loop (main.c:49)
-==29867==    by 0x10D28B: main (main.c:75)
- */
 static bool	name_heredoc_file(t_rdr *rdr)
 {
 	static int	i;
@@ -34,6 +24,7 @@ static bool	name_heredoc_file(t_rdr *rdr)
 	number = ft_itoa(i);
 	if (!number)
 		return (ft_err("heredoc failed", NULL, NULL, 1), false);
+    free(it->value);
 	it->value = ft_strjoin(HD_FILE, number);
 	i++;
 	ft_free((void **)&number);

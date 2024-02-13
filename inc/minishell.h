@@ -123,7 +123,6 @@ t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env **env, const char *key);
 t_env				*env_iter(t_env *env, const char *key);
 char				*get_env(t_env *env, const char *key);
-// int traverse_msh_env(t_msh_envlist *list);
 int					del_env(t_env *env);
 // bi
 typedef int			t_bi(char **args, t_tool *data);
@@ -200,6 +199,7 @@ char				*freer(t_envy **ex, char *str, char **str1);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
+int cmd_error(char *cmd, char *cmd_path);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);

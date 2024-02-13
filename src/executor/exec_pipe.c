@@ -16,8 +16,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "command not found", NULL, 1);
-		return (127);
+        return (cmd_error(cmd->args[0], cmd->path));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
