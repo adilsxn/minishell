@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 19:07:08 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 22:02:13 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,35 @@ typedef struct s_lexer
 
 typedef struct s_envy
 {
-    char    *str2;
-    char    *str3;
-    char    *tmp;
-    int     i;
-    struct s_env *env2;
-    int     len;
+	char    *str2;
+	char    *str3;
+	char    *tmp;
+	int     i;
+	struct s_env *env2;
+	int     len;
 }			t_envy;
 
+typedef struct s_bitx
+{
+	char    *str;
+	int     i;
+	int     count;
+}			t_bitx;
 
 typedef struct s_env
 {
-    char  *key;
-    char  *value;
-    t_envy       *ex;
-    struct s_env *prev;
-    struct s_env *next;
+	char  *key;
+	char  *value;
+	t_envy       *ex;
+	struct s_env *prev;
+	struct s_env *next;
 } t_env;
-
-
 
 typedef struct s_rdr
 {
 	t_token         type;
 	char			*value;
-    int fd;
+	int fd;
 	struct s_rdr	*next;
 }					t_rdr;
 
@@ -88,7 +92,7 @@ typedef struct s_cmd
 	int				argc;
 	char			**args;
 	t_rdr			*rdir;
-    bool            io;
+	bool            io;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -107,6 +111,7 @@ typedef struct s_tool
 	t_ppe			*pipes;
 	t_env			*env;
 	int				reset;
+	t_bitx			*bix;
 }					t_tool;
 
 extern int			g_last_ret_code;
@@ -120,7 +125,6 @@ t_env				*env_iter(t_env *env, const char *key);
 char				*get_env(t_env *env, const char *key);
 // int traverse_msh_env(t_msh_envlist *list);
 int					del_env(t_env *env);
- 
 // bi
 typedef int			t_bi(char **args, t_tool *data);
 int					msh_cd(char **args, t_tool *data);
@@ -143,7 +147,8 @@ char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
 void lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
-int					sub(char *str, int i, int count, t_lexer **lexer, t_tool *tool);
+int					sub(t_bitx *bix, t_lexer **lexer, \
+					t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
 void				*clear_one(t_lexer **lst);
@@ -154,8 +159,7 @@ int					lex_check_again(t_lexer *lex);
 int					reti(int trig);
 int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
-
-
+int					node_help(int in, t_tool *tool);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);

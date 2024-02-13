@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:50:03 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 10:59:55 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:04:27 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	clean_data(t_tool *data, bool has_history)
 	if (data != NULL)
 	{
 		if (data->arg != NULL)
-            ft_free((void **)&(data->arg));
+			ft_free((void **)&(data->arg));
+		// if (data->bix)
+		// 	ft_free((void *)data->bix);
 		lst_clear(&data->lexer);
-		if (data->pipes != NULL)
+		//if (data->pipes != NULL)
 			// free_pipe(&(data->pipes));
 		if (has_history == true)
 		{

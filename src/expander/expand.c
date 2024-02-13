@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/05 12:42:08 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/12 21:06:09 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
 		len++;
 	*str2 = malloc(ft_strlen(str1[0]) + 1);
 	if (*str2 != NULL)
-    	ft_strlcpy(*str2, str1[0], ft_strlen(str1[0]) + 1);
+		ft_strlcpy(*str2, str1[0], ft_strlen(str1[0]) + 1);
 	else
 		return (-1);
 	return (len);
@@ -84,9 +84,9 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 		{
 			if (lex->i == 0 || (lex->i > 0 && (!lex->prev->token \
 						|| lex->prev->token != 5)))
-            {
+			{
 				lex->str = expander(env, lex->str);
-            }
+			}
 		}
 		lex = lex->next;
 	}

@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/11 20:25:25 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:00:40 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	node_help(int in, t_tool *tool)
-{
-	if (tool->reset == 1)
-	{
-		in = 0;
-		tool->reset = 0;
-	}
-	return (in);
-}
 
 int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 {
@@ -81,42 +71,47 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 
 int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 {
-	int		count;
-
-	count = token_checker(i, str, lexer, tool);
-	if (count > 0)
-		return (count - 1);
-	if (count == -1)
+	if (tool->bix->count > 0)
+		return (tool->bix->count - 1);
+	if (tool->bix->count == -1)
 		return (-10000000);
-	while (i + count < (int)ft_strlen(str) && str[i + count] != '\0')
+	while (i + tool->bix->count < (int)ft_strlen(str))
 	{
-		count += len_quote(i + count, str, 34);
-		count += len_quote(i + count, str, 39);
-		if (str && i + count < (int)ft_strlen(str) && ft_isspace(str[i + count]) == 1)
-			return (sub(str, i, count, lexer, tool));
-		if (str  && i + count < (int)ft_strlen(str) && check_token(str[i + count], 0) != 0)
-			return (sub(str, i, count, lexer, tool) - 1);
-		if (i + count < (int)ft_strlen(str) && str[i + count] != '\0')
-			count++;
+		tool->bix->count += len_quote(i + tool->bix->count, str, 34);
+		tool->bix->count += len_quote(i + tool->bix->count, str, 39);
+		if (str && i + tool->bix->count < (int)ft_strlen(str) \
+			&& ft_isspace(str[i + tool->bix->count]) == 1)
+			return (sub(tool->bix, lexer, tool));
+		if (str && i + tool->bix->count < (int)ft_strlen(str) \
+			&& check_token(str[i + tool->bix->count], 0))
+			return (sub(tool->bix, lexer, tool) - 1);
+		if (i + tool->bix->count < (int)ft_strlen(str))
+			tool->bix->count++;
 	}
-	sub(str, i, count, lexer, tool);
-	return (count);
+	sub(tool->bix, lexer, tool);
+	return (tool->bix->count);
 }
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
-	int	i;
+	int		i;
 
 	i = -1;
+	tool->bix = malloc(sizeof(t_bitx));
+	if (tool->bix == NULL)
+		return (NULL);
+	tool->bix->str = str;
 	while ((size_t)++i < ft_strlen(str))
 	{
+		tool->bix->count = token_checker(i, str, &lexer, tool);
+		tool->bix->i = i;
 		i += len_word(i, str, &lexer, tool);
 		if (i < 0)
 			return (NULL);
 	}
 	if (lex_check(lexer) == NULL)
 		return (NULL);
-    lex_del(&lexer);
+	lex_del(&lexer);
 	if (lex_check_again(lexer) == -1)
 		return (NULL);
 	return (lexer);
