@@ -23,7 +23,7 @@ void	free_rdr(t_rdr **rdir)
 	while (it != NULL)
 	{
 		tmp = it->next;
-        ft_free((void **)&it->value);
+        free(it->value);
 		ft_free((void **)&it);
 		it = tmp;
 	}
