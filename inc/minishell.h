@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 22:02:13 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:12:15 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,35 +54,35 @@ typedef struct s_lexer
 
 typedef struct s_envy
 {
-	char    *str2;
-	char    *str3;
-	char    *tmp;
-	int     i;
-	struct s_env *env2;
-	int     len;
+	char			*str2;
+	char			*str3;
+	char			*tmp;
+	int				i;
+	struct s_env	*env2;
+	int				len;
 }			t_envy;
 
 typedef struct s_bitx
 {
-	char    *str;
-	int     i;
-	int     count;
+	char	*str;
+	int		i;
+	int		count;
 }			t_bitx;
 
 typedef struct s_env
 {
-	char  *key;
-	char  *value;
-	t_envy       *ex;
-	struct s_env *prev;
-	struct s_env *next;
-} t_env;
+	char			*key;
+	char			*value;
+	t_envy			*ex;
+	struct s_env	*prev;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_rdr
 {
-	t_token         type;
+	t_token			type;
 	char			*value;
-	int fd;
+	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;
 
@@ -92,7 +92,7 @@ typedef struct s_cmd
 	int				argc;
 	char			**args;
 	t_rdr			*rdir;
-	bool            io;
+	bool			io;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -116,8 +116,8 @@ typedef struct s_tool
 
 extern int			g_last_ret_code;
 
-t_env *init_env(char **envp);
-bool                valid_key(char *key);
+t_env				*init_env(char **envp);
+bool				valid_key(char *key);
 t_env				*mk_env(const char *key, const char *value, t_env *prev);
 t_env				*set_env(t_env **env, const char *key, const char *value);
 int					unset_env(t_env **env, const char *key);
@@ -129,7 +129,7 @@ int					del_env(t_env *env);
 typedef int			t_bi(char **args, t_tool *data);
 int					msh_cd(char **args, t_tool *data);
 int					msh_echo(char **args, t_tool *data);
-int msh_void(char **args, t_tool *data);
+int					msh_void(char **args, t_tool *data);
 int					msh_env(char **args, t_tool *data);
 int					msh_exit(char **args, t_tool *data);
 int					msh_export(char **args, t_tool *data);
@@ -139,13 +139,15 @@ int					msh_unset(char **args, t_tool *data);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
-int					new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool);
+int					new_node(char *str, int token, t_lexer **lexer_list, \
+					t_tool *tool);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
-int					len_word(int i, char *str, t_lexer **lexer_list, t_tool *tool);
+int					len_word(int i, char *str, t_lexer **lexer_list, \
+					t_tool *tool);
 char				*del_quote(char *str, char c);
-t_lexer				*lexer(char *str, t_lexer *lexer,  t_tool *tool);
-void lexer_redux(t_lexer **lexer);
+t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
+void				lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
 int					sub(t_bitx *bix, t_lexer **lexer, \
 					t_tool *tool);
@@ -164,18 +166,19 @@ int					node_help(int in, t_tool *tool);
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
 void				ft_free(void **ptr);
-void ft_err(char *message, char *detail, char *errorstr, int ret_code);
+void				ft_err(char *message, char *detail, char *errorstr, \
+					int ret_code);
 void				free_rdr(t_rdr **rdir);
 t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env);
 void				free_cmd(t_cmd **cmd);
 t_cmd				*mk_cmd(t_lexer *lexer, t_env *env);
-int	has_pipe(t_lexer *lexer);
+int					has_pipe(t_lexer *lexer);
 t_ppe				*parser(t_tool *data);
 void				free_pipe(t_ppe **pipe);
-int handle_input(t_rdr *rdr);
-int handle_append(t_rdr *rdr);
-int handle_output(t_rdr *rdr);
-bool has_heredoc(t_lexer *lexer);
+int					handle_input(t_rdr *rdr);
+int					handle_append(t_rdr *rdr);
+int					handle_output(t_rdr *rdr);
+bool				has_heredoc(t_lexer *lexer);
 int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
 
 // expander
@@ -184,7 +187,8 @@ int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
 char				*expander_help1(int len, char **str2, char **str1, int i);
-void				loop_help2(t_envy **ex, char **str2, char *str3, char **str1);
+void				loop_help2(t_envy **ex, char **str2, char *str3, \
+					char **str1);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
 char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
@@ -206,12 +210,12 @@ char				*ft_strtrim1(char const *s1, char const *set);
 
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
-void                ft_close(int fd);
+void				ft_close(int fd);
 void				clean_fds(void);
 
 // signal
 
-void signal_handler(void);
-void signal_handler_idle(void);
+void				signal_handler(void);
+void				signal_handler_idle(void);
 
 #endif
