@@ -6,20 +6,20 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 21:19:59 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:09:36 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	sub(t_bitx *bix, t_lexer **lexer, t_tool *tool)
+int	sub(t_var *var, t_lexer **lexer, t_tool *tool)
 {
 	char	*tmp;
 
-	tmp = ft_substr(bix->str, bix->i, bix->count);
+	tmp = ft_substr(var->str, var->i, var->count);
 	new_node(tmp, 0, lexer, tool);
 	ft_free((void **)&tmp);
-	return (bix->count);
+	return (var->count);
 }
 
 t_lexer	*lex_check(t_lexer *lexer)

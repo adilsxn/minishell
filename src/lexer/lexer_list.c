@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/13 19:00:40 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:03:04 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,25 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 
 int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 {
-	if (tool->bix->count > 0)
-		return (tool->bix->count - 1);
-	if (tool->bix->count == -1)
+	if (tool->var->count > 0)
+		return (tool->var->count - 1);
+	if (tool->var->count == -1)
 		return (-10000000);
-	while (i + tool->bix->count < (int)ft_strlen(str))
+	while (i + tool->var->count < (int)ft_strlen(str))
 	{
-		tool->bix->count += len_quote(i + tool->bix->count, str, 34);
-		tool->bix->count += len_quote(i + tool->bix->count, str, 39);
-		if (str && i + tool->bix->count < (int)ft_strlen(str) \
-			&& ft_isspace(str[i + tool->bix->count]) == 1)
-			return (sub(tool->bix, lexer, tool));
-		if (str && i + tool->bix->count < (int)ft_strlen(str) \
-			&& check_token(str[i + tool->bix->count], 0))
-			return (sub(tool->bix, lexer, tool) - 1);
-		if (i + tool->bix->count < (int)ft_strlen(str))
-			tool->bix->count++;
+		tool->var->count += len_quote(i + tool->var->count, str, 34);
+		tool->var->count += len_quote(i + tool->var->count, str, 39);
+		if (str && i + tool->var->count < (int)ft_strlen(str) \
+			&& ft_isspace(str[i + tool->var->count]) == 1)
+			return (sub(tool->var, lexer, tool));
+		if (str && i + tool->var->count < (int)ft_strlen(str) \
+			&& check_token(str[i + tool->var->count], 0))
+			return (sub(tool->var, lexer, tool) - 1);
+		if (i + tool->var->count < (int)ft_strlen(str))
+			tool->var->count++;
 	}
-	sub(tool->bix, lexer, tool);
-	return (tool->bix->count);
+	sub(tool->var, lexer, tool);
+	return (tool->var->count);
 }
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
@@ -97,14 +97,14 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 	int		i;
 
 	i = -1;
-	tool->bix = malloc(sizeof(t_bitx));
-	if (tool->bix == NULL)
+	tool->var = malloc(sizeof(t_var));
+	if (tool->var == NULL)
 		return (NULL);
-	tool->bix->str = str;
+	tool->var->str = str;
 	while ((size_t)++i < ft_strlen(str))
 	{
-		tool->bix->count = token_checker(i, str, &lexer, tool);
-		tool->bix->i = i;
+		tool->var->count = token_checker(i, str, &lexer, tool);
+		tool->var->i = i;
 		i += len_word(i, str, &lexer, tool);
 		if (i < 0)
 			return (NULL);

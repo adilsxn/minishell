@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 21:05:21 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:04:52 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_key(char *str)
 	return (ft_substr(str1, 0, i));
 }
 
-int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
+int	env1_func(t_env **env2, t_env *env, char **str3, char *tmp)
 {
 	char	*str4;
 

@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/13 19:12:15 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:05:42 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }					t_lexer;
 
-typedef struct s_envy
+typedef struct s_env1
 {
 	char			*str2;
 	char			*str3;
@@ -60,20 +60,20 @@ typedef struct s_envy
 	int				i;
 	struct s_env	*env2;
 	int				len;
-}			t_envy;
+}			t_env1;
 
-typedef struct s_bitx
+typedef struct s_var
 {
 	char	*str;
 	int		i;
 	int		count;
-}			t_bitx;
+}			t_var;
 
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	t_envy			*ex;
+	t_env1			*env1;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
@@ -111,7 +111,7 @@ typedef struct s_tool
 	t_ppe			*pipes;
 	t_env			*env;
 	int				reset;
-	t_bitx			*bix;
+	t_var			*var;
 }					t_tool;
 
 extern int			g_last_ret_code;
@@ -148,7 +148,7 @@ char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 void				lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
-int					sub(t_bitx *bix, t_lexer **lexer, \
+int					sub(t_var *var, t_lexer **lexer, \
 					t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
@@ -182,18 +182,18 @@ int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
 
 // expander
 char				*get_key(char *str);
-int					envy(t_env **env2, t_env *env, char **str3, char *tmp);
+int					env1_func(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
 char				*expander_help1(int len, char **str2, char **str1, int i);
-void				loop_help2(t_envy **ex, char **str2, char *str3, \
+void				loop_help2(t_env1 **ex, char **str2, char *str3, \
 					char **str1);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
 char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
 char				*expander(t_env *env, char *str1);
 void				free_array(char **array);
-char				*freer(t_envy **ex, char *str, char **str1);
+char				*freer(t_env1 **ex, char *str, char **str1);
 
 // minishell loop
 int					count_token(t_lexer *lexi);

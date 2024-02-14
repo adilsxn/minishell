@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 21:06:09 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:08:53 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,30 @@ int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
 char	*expander(t_env *env, char *str)
 {
 	char	**str1;
-	t_envy	*ex1;
+	t_env1	*env1;
 
-	ex1 = env->ex;
-	ex1 = malloc(sizeof(t_envy));
+	env1 = env->env1;
+	env1 = malloc(sizeof(t_env1));
 	if (init_expand(&str, &str1) != NULL)
 	{
-		ft_free((void **)&ex1);
+		ft_free((void **)&env1);
 		return (str);
 	}
-	ex1->len = initialize_expander(&ex1->env2, &ex1->i, &ex1->str2, str1);
-	while (str1[ex1->i] != NULL && ex1->len != -1)
+	env1->len = initialize_expander(&env1->env2, &env1->i, &env1->str2, str1);
+	while (str1[env1->i] != NULL && env1->len != -1)
 	{
-		if (tmpcheck(&ex1->tmp, str1, ex1->i) != NULL)
+		if (tmpcheck(&env1->tmp, str1, env1->i) != NULL)
 		{
-			if (envy(&ex1->env2, env, &ex1->str3, ex1->tmp) == 1)
-				loop_help2(&ex1, &ex1->str2, ex1->str3, str1);
+			if (env1_func(&env1->env2, env, &env1->str3, env1->tmp) == 1)
+				loop_help2(&env1, &env1->str2, env1->str3, str1);
 			else
-				checker(ex1->env2, &ex1->str2, ex1->i);
+				checker(env1->env2, &env1->str2, env1->i);
 		}
 		else
-			ex1->str2 = expander_help1(ex1->len, &ex1->str2, str1, ex1->i);
-		ex1->i = loopin(&ex1->env2, &ex1->str3, ex1->tmp, ex1->i);
+			env1->str2 = expander_help1(env1->len, &env1->str2, str1, env1->i);
+		env1->i = loopin(&env1->env2, &env1->str3, env1->tmp, env1->i);
 	}
-	return (freer(&ex1, str, str1));
+	return (freer(&env1, str, str1));
 }
 
 t_lexer	*expander2(t_env *env, t_lexer *lexi)

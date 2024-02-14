@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utilspt2.c                                  :+:      :+:    :+:   */
+/*   env1pand_utilspt2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 21:05:34 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:04:06 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ char	*expander_help1(int len, char **str2, char **str1, int i)
 	return (*str2);
 }
 
-void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
+void	loop_help2(t_env1 **env1, char **str2, char *str3, char **str1)
 {
 	char	*tmp;
 	char	*temp;
 
-	tmp = get_key(str1[(*ex)->i]);
-	if ((*ex)->i > 0 && *str2 != NULL)
+	tmp = get_key(str1[(*env1)->i]);
+	if ((*env1)->i > 0 && *str2 != NULL)
 	{
 		temp = ft_strjoin(*str2, str3);
 		if (temp)
 		{
 			free(*str2);
-			*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+			*str2 = ft_strjoin(temp, str1[(*env1)->i] + ft_strlen(tmp) + 1);
 			free(temp);
 		}
 		else
@@ -52,7 +52,7 @@ void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
 	else
 	{
 		free(*str2);
-		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+		*str2 = ft_strjoin(str3, str1[(*env1)->i] + ft_strlen(tmp) + 1);
 	}
 	ft_free((void **)&str3);
 	free(tmp);
