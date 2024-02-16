@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 21:57:24 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:56:14 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static bool	parse_input(t_tool *shell)
 	{
 		lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
+		//printin(shell->lexer);
 		quote_help(shell->lexer);
 		if (has_pipe(shell->lexer) == 1)
 			shell->pipes = parser(shell);
