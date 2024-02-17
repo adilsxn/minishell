@@ -32,7 +32,8 @@ static int	exec_bin_pipe(t_cmd *cmd)
 
 static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 {
-    //TODO: Put signal handler here;
+    signal_handler(sig_new_prompt, SIGINT);
+    signal_handler(SIG_IGN, SIGQUIT);
 	ft_close(proc_fd[STDIN_FILENO]);
 	// clean_fds();
 	if ((is_builtin(proc->cmd->args[0]) != 0))
@@ -90,6 +91,8 @@ void	exec_pipe(t_tool *data)
 	t_ppe	*proc;
 
     //TODO: Put signal handler here;
+    signal_handler(sig_new_prompt, SIGINT);
+    signal_handler(SIG_IGN, SIGQUIT);
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);

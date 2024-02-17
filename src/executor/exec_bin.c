@@ -32,6 +32,8 @@ int cmd_error(char *cmd, char *cmd_path)
 static void	child_proc(t_cmd *cmd)
 {
     //TODO: Put signal handler here;
+    signal_handler(sig_new_prompt, SIGINT);
+    signal_handler(SIG_IGN, SIGQUIT);
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -74,6 +76,8 @@ void	exec_bin(t_cmd *cmd)
 	else
 	{
         //TODO: Put signal handler here'
+        signal_handler(sig_new_prompt, SIGINT);
+        signal_handler(SIG_IGN, SIGQUIT);
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);
