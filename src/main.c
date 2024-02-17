@@ -28,13 +28,14 @@ void	printin(t_lexer *lex)
 	printf("------printin---------\n");
 }
 
-int			g_last_ret_code = 0;
+volatile int			g_last_ret_code = 0;
 
 static bool	parse_input(t_tool *shell)
 {
 	char	*tmp;
 
-	signal_handler();
+	signal_handler(sig_new_prompt, SIGINT);
+    signal_handler(SIG_IGN, SIGQUIT);
 	tmp = readline("minishell> ");
 	if (!tmp)
 		msh_exit(NULL, shell);
@@ -48,7 +49,6 @@ static bool	parse_input(t_tool *shell)
 	{
 		lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
-		//printin(shell->lexer);
 		quote_help(shell->lexer);
 		if (has_pipe(shell->lexer) == 1)
 			shell->pipes = parser(shell);

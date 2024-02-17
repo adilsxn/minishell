@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c cmd_finder.c                           \
+SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c cmd_finder.c hdoc_utils.c                \
 			 cmd_args.c command.c pipe.c hdoc.c redirection_utils.c redirection.c signals.c lexer_redux.c        \
 			 remove.c lexer_utils.c lexer_list.c exec_rdr.c exec_cmd.c exec_pipe.c                             \
 			 exec_bin.c exec_bi.c pwd.c echo.c unset.c exit.c export.c cd.c builtins.c                         \

@@ -49,12 +49,10 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 	{
 		if (it->token == PIPE)
 			break ;
-		if (it->token == 0)
+		if (it->token == 0 && it->str != NULL)
 		{
 			if (it->str != NULL)
 				av[i] = ft_strdup(it->str);
-			else
-				av[i] = NULL;
             i++;
 		}
 		it = it->next;
