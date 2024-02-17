@@ -31,7 +31,9 @@ int cmd_error(char *cmd, char *cmd_path)
 
 static void	child_proc(t_cmd *cmd)
 {
-	signal_handler();
+    //TODO: Put signal handler here;
+    signal_handler(sig_new_prompt, SIGINT);
+    signal_handler(SIG_IGN, SIGQUIT);
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -45,7 +47,7 @@ static void	child_proc(t_cmd *cmd)
 	exit(1);
 }
 
-static void	get_exit_code(int wstatus)
+void	get_exit_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
 		g_last_ret_code = WEXITSTATUS(wstatus);
@@ -73,7 +75,9 @@ void	exec_bin(t_cmd *cmd)
 		child_proc(cmd);
 	else
 	{
-		signal_handler();
+        //TODO: Put signal handler here'
+        signal_handler(sig_new_prompt, SIGINT);
+        signal_handler(SIG_IGN, SIGQUIT);
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);

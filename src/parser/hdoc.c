@@ -12,43 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-static bool	name_heredoc_file(t_rdr *rdr)
-{
-	static int	i;
-	char		*number;
-	t_rdr		*it;
-
-	if (i == 0)
-		i = 0;
-	it = rdr;
-	number = ft_itoa(i);
-	if (!number)
-		return (ft_err("heredoc failed", NULL, NULL, 1), false);
-    free(it->value);
-	it->value = ft_strjoin(HD_FILE, number);
-	i++;
-	ft_free((void **)&number);
-	return (true);
-}
-
-static bool	delim_has_quotes(char *str)
-{
-	int	i;
-	int	nbr_quotes;
-
-	i = 0;
-	nbr_quotes = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			nbr_quotes++;
-		i++;
-	}
-	if (nbr_quotes >= 2)
-		return (true);
-	return (false);
-}
-
 static bool	expand_heredoc(t_env *env, int fd, char *content, char **delim)
 {
 	bool	has_quotes;
@@ -75,24 +38,37 @@ static bool	get_line_hdoc(char *delim, t_env *env, int fd)
 {
 	char	*input;
 
-	g_last_ret_code = 0;
-	while (true && g_last_ret_code == 0)
+	signal_handler(sig_hdoc_child, SIGINT);
+	signal_handler(SIG_IGN, SIGQUIT);
+	while (true)
 	{
-		signal_handler();
 		input = readline("heredoc> ");
 		if (expand_heredoc(env, fd, input, &delim))
 			break ;
 	}
 	ft_free((void **)&input);
 	close(fd);
-	return (true);
+    exit(EXIT_SUCCESS);
 }
 
-//TODO: If delim has quotes no expansion, else expand
+void handle_hdoc_child(pid_t pid, int status, t_rdr *rdr, t_lexer *lexi)
+{
+    signal_handler(sig_hdoc_parent, SIGINT);
+	if (waitpid(pid, &status, 0) == -1)
+			ft_err("waitpid failed", strerror(errno), NULL, 1);
+    get_exit_code(status);
+    rdr->fd = open(rdr->value, O_RDONLY, 0044);
+    if (rdr->fd == -1)
+        ft_err("heredoc failed", lexi->str, strerror(errno), 1);
+}
+
 int	handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr)
 {
 	char	*delim;
+	pid_t	pid;
+	int		status;
 
+    status = 0;
 	rdr->type = LESS_LESS;
 	delim = lexer->str;
 	rdr->fd = -1;
@@ -101,10 +77,10 @@ int	handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr)
 	rdr->fd = open(rdr->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (rdr->fd == -1)
 		return (ft_err("heredoc failed", lexer->str, strerror(errno), 1), 1);
-	get_line_hdoc(delim, env, rdr->fd);
-	// ft_free((void **)&it->str);
-	rdr->fd = open(rdr->value, O_RDONLY, 0044);
-	if (rdr->fd == -1)
-		return (ft_err("heredoc failed", lexer->str, strerror(errno), 1), 1);
-	return (0);
+	pid = fork();
+	if (pid == 0)
+		get_line_hdoc(delim, env, rdr->fd);
+	else
+        handle_hdoc_child(pid, status, rdr, lexer);
+	return (status);
 }

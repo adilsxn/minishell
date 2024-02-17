@@ -114,7 +114,7 @@ typedef struct s_tool
 	t_var			*var;
 }					t_tool;
 
-extern int			g_last_ret_code;
+extern volatile int			g_last_ret_code;
 
 t_env				*init_env(char **envp);
 bool				valid_key(char *key);
@@ -178,6 +178,8 @@ int					handle_input(t_rdr *rdr);
 int					handle_append(t_rdr *rdr);
 int					handle_output(t_rdr *rdr);
 bool				has_heredoc(t_lexer *lexer);
+bool	name_heredoc_file(t_rdr *rdr);
+bool	delim_has_quotes(char *str);
 int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
 
 // expander
@@ -203,6 +205,7 @@ int cmd_error(char *cmd, char *cmd_path);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
+void	get_exit_code(int wstatus);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
@@ -214,8 +217,9 @@ void				ft_close(int fd);
 void				clean_fds(void);
 
 // signal
-
-void				signal_handler(void);
-void				signal_handler_idle(void);
+void	signal_handler(void (*handler)(int), int signal);
+void	sig_new_prompt(int sig);
+void sig_hdoc_child(int sig);
+void sig_hdoc_parent(int sig);
 
 #endif

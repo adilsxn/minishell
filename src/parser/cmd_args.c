@@ -15,8 +15,8 @@
 
 int	count_token(t_lexer *lexi)
 {
-	int	i;
-	t_lexer *it;
+	int		i;
+	t_lexer	*it;
 
 	i = 0;
 	it = lexi;
@@ -26,8 +26,9 @@ int	count_token(t_lexer *lexi)
 	{
 		if (it->token == PIPE)
 			break ;
-        if (it->token == 0)
-            i++;
+		if (it->token == 0)
+			if (it->str != NULL)
+				i++;
 		it = it->next;
 	}
 	return (i);
@@ -36,7 +37,7 @@ int	count_token(t_lexer *lexi)
 char	**build_av(t_lexer *lexi, int tkn_nbr)
 {
 	char	**av;
-	t_lexer *it;
+	t_lexer	*it;
 	int		i;
 
 	it = lexi;
@@ -46,10 +47,14 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 	i = 0;
 	while (i < tkn_nbr)
 	{
-        if (it->token == PIPE)
-            break ;
-        if (it->token == 0)
-               av[i++] = ft_strdup(it->str);
+		if (it->token == PIPE)
+			break ;
+		if (it->token == 0 && it->str != NULL)
+		{
+			if (it->str != NULL)
+				av[i] = ft_strdup(it->str);
+            i++;
+		}
 		it = it->next;
 	}
 	av[tkn_nbr] = NULL;

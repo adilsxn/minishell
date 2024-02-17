@@ -18,6 +18,7 @@ void	clean_data(t_tool *data, bool has_history)
 	{
 		if (data->arg != NULL)
 			ft_free((void **)&(data->arg));
+        ft_free((void **)&data->var);
 		lst_clear(&data->lexer);
 		if (has_history == true)
 		{
