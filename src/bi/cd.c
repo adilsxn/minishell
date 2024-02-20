@@ -12,8 +12,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <errno.h>
-#include <string.h>
 
 static void	update_env(t_env *env, bool success)
 {
