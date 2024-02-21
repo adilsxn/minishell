@@ -35,7 +35,6 @@ static bool	parse_input(t_tool *shell)
 	char	*tmp;
 
 	signal_handler(sig_new_prompt, SIGINT);
-    signal_handler(SIG_IGN, SIGQUIT);
 	tmp = readline("minishell> ");
 	if (!tmp)
 		msh_exit(NULL, shell);
@@ -50,6 +49,8 @@ static bool	parse_input(t_tool *shell)
 		lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
 		quote_help(shell->lexer);
+        if (parse_heredoc(shell->lexer, shell->env))
+            return (false);
 		if (has_pipe(shell->lexer) == 1)
 			shell->pipes = parser(shell);
 		else
@@ -74,7 +75,7 @@ int	main(int ac, char **av, char **envp)
 	t_tool	shell;
 
 	ft_bzero(&shell, sizeof(t_tool));
-	shell = (t_tool){NULL, NULL, NULL, NULL, 0, NULL};
+	shell = (t_tool){NULL, NULL, NULL, NULL, NULL, 0, NULL};
 	if (ac != 1 || av[1])
 	{
 		ft_err("no args accepted", NULL, NULL, 1);

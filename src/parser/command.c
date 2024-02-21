@@ -79,7 +79,7 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 		return (NULL);
 	cmd->argc = count_token(lexer);
 	cmd->args = build_av(lexer, cmd->argc);
-	cmd->rdir = build_rdr(lexer, cmd, env);
+	cmd->rdir = build_rdr(lexer, cmd);
     if (cmd->args == NULL || cmd->argc == 0)
         return (free_cmd(&cmd), cmd);
     if (cmd->io == true && cmd->rdir == NULL)

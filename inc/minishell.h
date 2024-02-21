@@ -110,6 +110,7 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
+    t_rdr           *hdoc;
 	int				reset;
 	t_var			*var;
 }					t_tool;
@@ -168,7 +169,7 @@ void				ft_free(void **ptr);
 void				ft_err(char *message, char *detail, char *errorstr, \
 					int ret_code);
 void				free_rdr(t_rdr **rdir);
-t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env);
+t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd);
 void				free_cmd(t_cmd **cmd);
 t_cmd				*mk_cmd(t_lexer *lexer, t_env *env);
 int					has_pipe(t_lexer *lexer);
@@ -178,9 +179,10 @@ int					handle_input(t_rdr *rdr);
 int					handle_append(t_rdr *rdr);
 int					handle_output(t_rdr *rdr);
 bool				has_heredoc(t_lexer *lexer);
-bool	name_heredoc_file(t_rdr *rdr);
+bool	name_heredoc_file(t_lexer *lexer);
 bool	delim_has_quotes(char *str);
-int					handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr);
+int					handle_heredoc(t_rdr *rdr);
+int					parse_heredoc(t_lexer *lexer, t_env *env);
 
 // expander
 char				*get_key(char *str);

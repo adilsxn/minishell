@@ -39,7 +39,6 @@ static bool	get_line_hdoc(char *delim, t_env *env, int fd)
 	char	*input;
 
 	signal_handler(sig_hdoc_child, SIGINT);
-	signal_handler(SIG_IGN, SIGQUIT);
 	while (true)
 	{
 		input = readline("heredoc> ");
@@ -47,40 +46,46 @@ static bool	get_line_hdoc(char *delim, t_env *env, int fd)
 			break ;
 	}
 	ft_free((void **)&input);
-	close(fd);
-    exit(EXIT_SUCCESS);
+    close(fd);
+	exit(EXIT_SUCCESS);
 }
 
-void handle_hdoc_child(pid_t pid, int status, t_rdr *rdr, t_lexer *lexi)
+static void	handle_hdoc_child(pid_t pid, int status, char *delim)
 {
-    signal_handler(sig_hdoc_parent, SIGINT);
+	signal_handler(sig_hdoc_parent, SIGINT);
+    ft_free((void **)&delim);
 	if (waitpid(pid, &status, 0) == -1)
-			ft_err("waitpid failed", strerror(errno), NULL, 1);
-    get_exit_code(status);
-    rdr->fd = open(rdr->value, O_RDONLY, 0044);
-    if (rdr->fd == -1)
-        ft_err("heredoc failed", lexi->str, strerror(errno), 1);
+		ft_err("waitpid failed", strerror(errno), NULL, 1);
+	get_exit_code(status);
 }
 
-int	handle_heredoc(t_lexer *lexer, t_env *env, t_rdr *rdr)
+int	parse_heredoc(t_lexer *lexer, t_env *env)
 {
 	char	*delim;
+	int		fd;
 	pid_t	pid;
 	int		status;
+	t_lexer	*it;
 
-    status = 0;
-	rdr->type = LESS_LESS;
-	delim = lexer->str;
-	rdr->fd = -1;
-	name_heredoc_file(rdr);
-	unlink(rdr->value);
-	rdr->fd = open(rdr->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (rdr->fd == -1)
-		return (ft_err("heredoc failed", lexer->str, strerror(errno), 1), 1);
-	pid = fork();
-	if (pid == 0)
-		get_line_hdoc(delim, env, rdr->fd);
-	else
-        handle_hdoc_child(pid, status, rdr, lexer);
+	status = 0;
+	fd = -1;
+	it = lexer;
+	while (it != NULL)
+	{
+		if (it->token == LESS_LESS)
+		{
+			delim = ft_strdup(it->str);
+			name_heredoc_file(it);
+			fd = open(it->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+				return (ft_err("heredoc failed", "", strerror(errno), 1), 1);
+			pid = fork();
+			if (pid == 0)
+				get_line_hdoc(delim, env, fd);
+            else
+                handle_hdoc_child(pid, status, delim);
+		}
+		it = it->next;
+	}
 	return (status);
 }
