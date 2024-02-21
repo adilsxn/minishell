@@ -62,7 +62,7 @@ void	free_pipe(t_ppe **pipe)
         ft_free((void **)&it);
         it = tmp;
     }
-    ft_free((void **)pipe);
+    *pipe = NULL;
 }
 
 static t_lexer	*peek_pipe(t_lexer *lexer)
