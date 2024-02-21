@@ -12,20 +12,21 @@
 
 # include "../../inc/minishell.h"
 
-bool	name_heredoc_file(t_rdr *rdr)
+bool	name_heredoc_file(t_lexer *lexer)
 {
 	static int	i;
 	char		*number;
-	t_rdr		*it;
+	t_lexer		*it;
 
 	if (i == 0) 
 		i = 0;
-	it = rdr;
+	it = lexer;
 	number = ft_itoa(i);
 	if (!number)
 		return (ft_err("heredoc failed", NULL, NULL, 1), false);
-	free(it->value);
-	it->value = ft_strjoin(HD_FILE, number);
+	free(it->str);
+    it->str = ft_strjoin(HD_FILE, number);
+    unlink(it->str);
 	i++;
 	ft_free((void **)&number);
 	return (true);

@@ -12,6 +12,15 @@
 
 #include "../inc/minishell.h"
 
+static void ignore_the_sigquit(void)
+{
+    struct sigaction event;
+
+    ft_bzero(&event, sizeof(struct sigaction));
+    event.sa_handler = SIG_IGN;
+    sigaction(SIGQUIT, &event, NULL);
+}
+
 void sig_hdoc_child(int sig)
 {
     if (sig == SIGINT)
@@ -46,6 +55,7 @@ void	signal_handler(void (*handler)(int), int signal)
 {
 	struct sigaction	event;
 
+    ignore_the_sigquit();
     ft_bzero(&event, sizeof(struct sigaction));
 	event.sa_handler = handler;
     event.sa_flags = SA_SIGINFO | SA_RESTART;

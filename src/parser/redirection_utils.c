@@ -40,6 +40,19 @@ int handle_output(t_rdr *rdr)
     return (0);
 };
 
+int handle_heredoc(t_rdr *rdr)
+{
+    int fmode;
+    
+    rdr->fd = -1;
+    rdr->type = LESS_LESS;
+    fmode = O_RDONLY;
+    rdr->fd = open(rdr->value, fmode, 0044);
+    if(rdr->fd == -1) 
+        return (ft_err(rdr->value, NULL, strerror(errno), 1), -1);
+    return (0);
+};
+
 int handle_append(t_rdr *rdr)
 {
     int fmode;

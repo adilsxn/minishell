@@ -42,7 +42,7 @@ void	free_rdr(t_rdr **rdir)
 	}
 }
 
-static t_rdr	*mk_rdr(t_lexer *lexer, t_env *env, t_rdr *prev, int *ret)
+static t_rdr	*mk_rdr(t_lexer *lexer, t_rdr *prev, int *ret)
 {
 	t_rdr	*rdir;
 
@@ -57,13 +57,13 @@ static t_rdr	*mk_rdr(t_lexer *lexer, t_env *env, t_rdr *prev, int *ret)
 	else if (lexer->token == GREAT_GREAT)
 		*ret = handle_append(rdir);
 	else
-		*ret = handle_heredoc(lexer, env, rdir);
+		*ret = handle_heredoc(rdir);
 	if (prev != NULL)
 		prev->next = rdir;
 	return (rdir);
 }
 
-t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env)
+t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 {
 	t_rdr	*start;
 	t_rdr	*rdir;
@@ -79,7 +79,7 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd, t_env *env)
 		if (it->token > PIPE)
 		{
 			cmd->io = true;
-			rdir = mk_rdr(it, env, rdir, &ret);
+			rdir = mk_rdr(it, rdir, &ret);
 			if (start == NULL)
 				start = rdir;
             if (ret == -1)
