@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utilspt2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/14 15:09:36 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/21 13:10:16 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_lexer	*lex_check(t_lexer *lexer)
 		lex = lex->next;
 	if (lex->token != 0 && lex->token != 1)
 	{
-		ft_err("Syntax error", "token at end of commands", NULL, 1);
+		ft_err("Syntax error", "token at end of commands", NULL, 2);
 		lst_clear(&lexer);
 		return (NULL);
 	}
@@ -64,7 +64,7 @@ int	token_help(int i, char *str, int *trig, t_lexer **lexi)
 	{
 		if (check_token(str[i + 2], str[i + 3] != 0))
 		{
-			ft_err("Double token", "Syntax error", NULL, 1);
+			ft_err("Double token", "Syntax error", NULL, 2);
 			lst_clear(lexi);
 			return (-1);
 		}
@@ -82,7 +82,7 @@ int	lex_check_again(t_lexer *lex)
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{
 			ft_err("Space between tokens or different tokens not allowed", \
-				"Syntax error", NULL, 1);
+				"Syntax error", NULL, 2);
 			lst_clear(&lex);
 			return (-1);
 		}
