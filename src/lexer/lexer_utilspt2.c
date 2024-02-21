@@ -81,10 +81,18 @@ int	lex_check_again(t_lexer *lex)
 	{
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{
-			ft_err("Space between tokens or different tokens not allowed", \
-				"Syntax error", NULL, 2);
-			lst_clear(&lex);
-			return (-1);
+			if (lexi->token == 1 && lexi->next->token == 2)
+			{
+				lexi = lexi->next;
+				continue ;
+			}
+			else
+			{
+				ft_err("Space between tokens or different tokens not allowed", \
+					"Syntax error", NULL, 2);
+				lst_clear(&lex);
+				return (-1);
+			}
 		}
 		lexi = lexi->next;
 	}
