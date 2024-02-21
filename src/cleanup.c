@@ -16,9 +16,9 @@ void	clean_data(t_tool *data, bool has_history)
 {
 	if (data != NULL)
 	{
-        ft_free((void **)&(data->arg));
-        free_pipe(&data->pipes);
-        ft_free((void **)&data->var);
+		ft_free((void **)&(data->arg));
+		free_pipe(&data->pipes);
+		ft_free((void **)&data->var);
 		lst_clear(&data->lexer);
 		if (has_history == true)
 		{
@@ -66,11 +66,11 @@ char	*freer(t_env1 **env1, char *str, char **str1)
 	return (ret);
 }
 
-bool has_heredoc(t_lexer *lexer)
+bool	has_heredoc(t_lexer *lexer)
 {
-	t_lexer *it;
-	it = lexer;
+	t_lexer	*it;
 
+	it = lexer;
 	while (it != NULL)
 	{
 		if (it->token == LESS_LESS)

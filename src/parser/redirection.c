@@ -18,7 +18,7 @@
 //     t_lexer *it;
 //     t_rdr *rdir;
 //
-//     
+//
 //     it = lexi;
 //     it
 // 	rdir = ft_calloc(1, sizeof(t_rdr));
@@ -36,7 +36,7 @@ void	free_rdr(t_rdr **rdir)
 	while (it != NULL)
 	{
 		tmp = it->next;
-        free(it->value);
+		free(it->value);
 		ft_free((void **)&it);
 		it = tmp;
 	}
@@ -68,12 +68,12 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 	t_rdr	*start;
 	t_rdr	*rdir;
 	t_lexer	*it;
-    int ret;
+	int		ret;
 
 	start = NULL;
 	rdir = NULL;
 	it = lexi;
-    ret = 0;
+	ret = 0;
 	while (it != NULL && it->token != PIPE)
 	{
 		if (it->token > PIPE)
@@ -82,8 +82,8 @@ t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 			rdir = mk_rdr(it, rdir, &ret);
 			if (start == NULL)
 				start = rdir;
-            if (ret == -1)
-                return (free_rdr(&start), NULL);
+			if (ret == -1)
+				return (free_rdr(&start), NULL);
 		}
 		it = it->next;
 	}

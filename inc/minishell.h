@@ -60,14 +60,14 @@ typedef struct s_env1
 	int				i;
 	struct s_env	*env2;
 	int				len;
-}			t_env1;
+}					t_env1;
 
 typedef struct s_var
 {
-	char	*str;
-	int		i;
-	int		count;
-}			t_var;
+	char			*str;
+	int				i;
+	int				count;
+}					t_var;
 
 typedef struct s_env
 {
@@ -76,7 +76,7 @@ typedef struct s_env
 	t_env1			*env1;
 	struct s_env	*prev;
 	struct s_env	*next;
-}	t_env;
+}					t_env;
 
 typedef struct s_rdr
 {
@@ -110,12 +110,12 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
-    t_rdr           *hdoc;
+	t_rdr			*hdoc;
 	int				reset;
 	t_var			*var;
 }					t_tool;
 
-extern volatile int			g_last_ret_code;
+extern volatile int	g_last_ret_code;
 
 t_env				*init_env(char **envp);
 bool				valid_key(char *key);
@@ -139,18 +139,17 @@ int					msh_unset(char **args, t_tool *data);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
-int					new_node(char *str, int token, t_lexer **lexer_list, \
-					t_tool *tool);
+int					new_node(char *str, int token, t_lexer **lexer_list,
+						t_tool *tool);
 int					len_quote(int i, char *str, char quote);
 t_token				check_token(int c1, int c2);
-int					len_word(int i, char *str, t_lexer **lexer_list, \
-					t_tool *tool);
+int					len_word(int i, char *str, t_lexer **lexer_list,
+						t_tool *tool);
 char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 void				lexer_redux(t_lexer **lexer);
 t_lexer				*lex_check(t_lexer *lexer);
-int					sub(t_var *var, t_lexer **lexer, \
-					t_tool *tool);
+int					sub(t_var *var, t_lexer **lexer, t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
 void				*clear_one(t_lexer **lst);
@@ -166,8 +165,8 @@ int					node_help(int in, t_tool *tool);
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
 void				ft_free(void **ptr);
-void				ft_err(char *message, char *detail, char *errorstr, \
-					int ret_code);
+void				ft_err(char *message, char *detail, char *errorstr,
+						int ret_code);
 void				free_rdr(t_rdr **rdir);
 t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd);
 void				free_cmd(t_cmd **cmd);
@@ -179,10 +178,10 @@ int					handle_input(t_rdr *rdr);
 int					handle_append(t_rdr *rdr);
 int					handle_output(t_rdr *rdr);
 bool				has_heredoc(t_lexer *lexer);
-bool	name_heredoc_file(t_lexer *lexer);
-bool	delim_has_quotes(char *str);
+bool				name_heredoc_file(t_lexer *lexer);
+bool				delim_has_quotes(char *str);
 int					handle_heredoc(t_rdr *rdr);
-int					parse_heredoc(t_lexer *lexer, t_env *env);
+void				parse_heredoc(t_lexer *lexer, t_env *env);
 
 // expander
 char				*get_key(char *str);
@@ -190,8 +189,8 @@ int					env1_func(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);
 void				checker(t_env *env2, char **str2, int i);
 char				*expander_help1(int len, char **str2, char **str1, int i);
-void				loop_help2(t_env1 **ex, char **str2, char *str3, \
-					char **str1);
+void				loop_help2(t_env1 **ex, char **str2, char *str3,
+						char **str1);
 t_lexer				*expander2(t_env *env, t_lexer *lexi);
 char				**ft_split2(char const *s, char c);
 char				*init_expand(char **str, char ***str1);
@@ -203,11 +202,11 @@ char				*freer(t_env1 **ex, char *str, char **str1);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
-int cmd_error(char *cmd, char *cmd_path);
+int					cmd_error(char *cmd, char *cmd_path);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
-void	get_exit_code(int wstatus);
+void				get_exit_code(int wstatus);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
@@ -219,9 +218,9 @@ void				ft_close(int fd);
 void				clean_fds(void);
 
 // signal
-void	signal_handler(void (*handler)(int), int signal);
-void	sig_new_prompt(int sig);
-void sig_hdoc_child(int sig);
-void sig_hdoc_parent(int sig);
+void				signal_handler(void (*handler)(int), int signal);
+void				sig_new_prompt(int sig);
+void				sig_hdoc_child(int sig);
+void				sig_hdoc_parent(int sig);
 
 #endif

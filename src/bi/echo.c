@@ -19,7 +19,7 @@ static bool	is_flag_on(char *str)
 
 	nflag = false;
 	i = 0;
-	if (str[i] != '-'  || str[i + 1] != 'n')
+	if (str[i] != '-' || str[i + 1] != 'n')
 		return (nflag);
 	i++;
 	while (str[i] && str[i] == 'n')

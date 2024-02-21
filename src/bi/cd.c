@@ -45,8 +45,8 @@ int	msh_cd(char **args, t_tool *data)
 {
 	char	*path;
 
-	if (!args || !args[1] || ft_isspace(args[1][0])
-        || args[1][0] == '\0' || ft_strequ(args[1], "--") == 1)
+	if (!args || !args[1] || ft_isspace(args[1][0]) || args[1][0] == '\0'
+		|| ft_strequ(args[1], "--") == 1)
 	{
 		path = get_env(data->env, "HOME");
 		if (!path || *path == '\0' || ft_isspace(*path))
@@ -64,4 +64,3 @@ int	msh_cd(char **args, t_tool *data)
 	}
 	return (!ft_chdir(args[1], data->env));
 }
-

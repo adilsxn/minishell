@@ -46,20 +46,20 @@ static bool	get_line_hdoc(char *delim, t_env *env, int fd)
 			break ;
 	}
 	ft_free((void **)&input);
-    close(fd);
+	close(fd);
 	exit(EXIT_SUCCESS);
 }
 
 static void	handle_hdoc_child(pid_t pid, int status, char *delim)
 {
 	signal_handler(sig_hdoc_parent, SIGINT);
-    ft_free((void **)&delim);
+	ft_free((void **)&delim);
 	if (waitpid(pid, &status, 0) == -1)
 		ft_err("waitpid failed", strerror(errno), NULL, 1);
 	get_exit_code(status);
 }
 
-int	parse_heredoc(t_lexer *lexer, t_env *env)
+void	parse_heredoc(t_lexer *lexer, t_env *env)
 {
 	char	*delim;
 	int		fd;
@@ -78,14 +78,12 @@ int	parse_heredoc(t_lexer *lexer, t_env *env)
 			name_heredoc_file(it);
 			fd = open(it->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (fd == -1)
-				return (ft_err("heredoc failed", "", strerror(errno), 1), 1);
+				ft_err("heredoc failed", "", strerror(errno), 1);
 			pid = fork();
 			if (pid == 0)
 				get_line_hdoc(delim, env, fd);
-            else
-                handle_hdoc_child(pid, status, delim);
+			handle_hdoc_child(pid, status, delim);
 		}
 		it = it->next;
 	}
-	return (status);
 }
