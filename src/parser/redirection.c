@@ -50,7 +50,7 @@ static t_rdr	*mk_rdr(t_lexer *lexer, t_env *env, t_rdr *prev)
 	if (prev != NULL)
 		prev->next = rdir;
 	if (ret == -1)
-		return (free_rdr(&rdir), NULL);
+		return (NULL);
 	return (rdir);
 }
 
