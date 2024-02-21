@@ -34,5 +34,7 @@ char	*get_env(t_env *env, const char *key)
     if (ft_strequ(key, "?"))
         return (ft_itoa(g_last_ret_code));
     tmp = env_iter(env, key);
-    return ((char *)tmp->value);
+    if (tmp != NULL)
+        return ((char *)tmp->value);
+    return (NULL);
 }
