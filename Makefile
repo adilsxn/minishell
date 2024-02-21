@@ -6,14 +6,14 @@
 #    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/02/04 16:50:12 by matilde          ###   ########.fr        #
+#    Updated: 2024/02/15 15:50:07 by matilde          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c cmd_finder.c         \
-			 cmd_args.c command.c pipe.c hdoc.c redirection.c signals.c                      \
-			 remove.c lexer_utils.c lexer_list.c exec_rdr.c exec_cmd.c exec_pipe.c         \
-			 exec_bin.c exec_bi.c pwd.c echo.c unset.c exit.c export.c cd.c builtins.c       \
+SRCS       = set_env.c get_env.c unset_env.c env.c del_env.c init_env.c cmd_finder.c hdoc_utils.c                \
+			 cmd_args.c command.c pipe.c hdoc.c redirection_utils.c redirection.c signals.c lexer_redux.c        \
+			 remove.c lexer_utils.c lexer_list.c exec_rdr.c exec_cmd.c exec_pipe.c                             \
+			 exec_bin.c exec_bi.c pwd.c echo.c unset.c exit.c export.c cd.c builtins.c                         \
 			 error.c cleanup.c main.c expand_utilspt2.c expand_utils.c expand.c lexer_utilspt2.c
 
 #Add any missing folder containing a .c to the vpath
@@ -25,7 +25,7 @@ INCS 	   = inc/
 NAME       = minishell
 
 CC         = cc
-CFLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address,undefined
+CFLAGS     = -g3 -Wall -Wextra -Werror #-fsanitize=address,undefined
 
 LDFLAGS	   = -L./libft -lft -lreadline
 RM         = rm -rf

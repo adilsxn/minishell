@@ -2,7 +2,8 @@
 .gdb_history
 .cache/
 .gdb_history
-.cache
+.vscode/
 *.o
+*.a
 .vscode
 *.json

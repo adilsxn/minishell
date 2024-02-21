@@ -11,10 +11,27 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <stdlib.h>
+
+int	cmd_error(char *cmd, char *cmd_path)
+{
+	struct stat	var;
+
+	stat(cmd, &var);
+	if (!ft_strchr(cmd, '/') && !cmd_path)
+		return (ft_err(cmd, "command not found", NULL, 127), 127);
+	if (access(cmd, F_OK) != 0)
+		return (ft_err(cmd, "", strerror(errno), 127), 127);
+	else if (S_ISDIR(var.st_mode))
+		return (ft_err(cmd, "", "Is a directory", 126), 126);
+	else if (access(cmd, F_OK | X_OK) != 0)
+		return (ft_err(cmd, "", strerror(errno), 126), 126);
+	return (EXIT_SUCCESS);
+}
 
 static void	child_proc(t_cmd *cmd)
 {
-	signal_handler();
+	signal_handler(sig_new_prompt, SIGINT);
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -24,11 +41,11 @@ static void	child_proc(t_cmd *cmd)
 		exit(0);
 	clean_fds();
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno));
+		ft_err("execve failed", strerror(errno), NULL, 1);
 	exit(1);
 }
 
-static void	get_exit_code(int wstatus)
+void	get_exit_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
 		g_last_ret_code = WEXITSTATUS(wstatus);
@@ -43,23 +60,22 @@ void	exec_bin(t_cmd *cmd)
 
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "command not found");
-		g_last_ret_code = 127;
+		g_last_ret_code = cmd_error(cmd->args[0], cmd->path);
 		return ;
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_err("fork failed", strerror(errno));
+		ft_err("fork failed", strerror(errno), NULL, 1);
 		g_last_ret_code = 1;
 	}
 	else if (pid == 0)
 		child_proc(cmd);
 	else
 	{
-		signal_handler();
+		signal_handler(sig_new_prompt, SIGINT);
 		if (waitpid(pid, &status, 0) == -1)
-			ft_err("waitpid failed", strerror(errno));
+			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);
 	}
 }

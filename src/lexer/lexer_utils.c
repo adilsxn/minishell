@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/04 18:32:22 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/21 17:21:29 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	len_quote(int i, char *str, char quote)
 	int	count;
 
 	count = 0;
-	if (str[i + count] == quote)
+	if (str != NULL && i + count < (int)ft_strlen(str) && str[i + count] == quote)
 	{
 		count++;
-		while (str[i + count] != quote && str[i + count] != '\0')
+		while (str[i + count] != '\0' && str[i + count] != quote)
 			count++;
 		count++;
 	}
@@ -52,7 +52,7 @@ t_token	check_token(int c1, int c2)
 	return (0);
 }
 
-char	*del_quotes(char *str, char c)
+char	*del_quote(char *str, char c)
 {
 	int	i;
 	int	j;
@@ -72,3 +72,10 @@ char	*del_quotes(char *str, char c)
 	}
 	return (str);
 }
+
+int	reti(int trig)
+{
+	if (trig == 1)
+		return (2);
+	return (1);
+}	

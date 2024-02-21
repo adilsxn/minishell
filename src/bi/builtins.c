@@ -16,6 +16,8 @@ t_bi	*get_bi(char *cmd)
 {
 	if (ft_strequ(cmd, "echo"))
 		return (msh_echo);
+	else if (ft_strequ(cmd, "void"))
+		return (msh_void);
 	else if (ft_strequ(cmd, "pwd"))
 		return (msh_pwd);
 	else if (ft_strequ(cmd, "env"))

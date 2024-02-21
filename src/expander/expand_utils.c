@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/05 13:46:59 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:04:52 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,28 @@ char	*get_key(char *str)
 	return (ft_substr(str1, 0, i));
 }
 
-int	envy(t_env **env2, t_env *env, char **str3, char *tmp)
+int	env1_func(t_env **env2, t_env *env, char **str3, char *tmp)
 {
-    if (ft_strequ(tmp, "?") == 1)
-    {
-        *str3 = ft_itoa(g_last_ret_code);
-        return (1);
-    }
+	char	*str4;
+
+	if (ft_strequ(tmp, "?") == 1)
+	{
+		*str3 = ft_itoa(g_last_ret_code);
+		return (1);
+	}
+	if (tmp[0] == '?')
+	{
+		str4 = ft_itoa(g_last_ret_code);
+		*str3 = ft_strjoin(str4, tmp + 1);
+		free(str4);
+		return (1);
+	}
 	*env2 = env_iter(env, tmp);
 	if (*env2 != NULL)
 	{
 		if ((char *)(*env2)->value != NULL)
 			*str3 = ft_strdup((*env2)->value);
-   		return (1);
+		return (1);
 	}
 	else
 		*str3 = NULL;
@@ -55,25 +64,4 @@ char	*tmpcheck(char **tmp, char **str1, int i)
 		if ((*tmp)[0] == '\0')
 			return (NULL);
 	return (*tmp);
-}
-
-char	*del_quote(char *str, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			j = 0;
-			while (str[i + j] == c)
-				j++;
-			ft_strlcpy(&str[i], &str[i + j], strlen(str) - i);
-		}
-		i++;
-	}
-	return (str);
 }

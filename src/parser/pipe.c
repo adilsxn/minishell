@@ -13,11 +13,11 @@
 
 #include "../../inc/minishell.h"
 
-static int	has_pipe(t_lexer *lexer)
+int	has_pipe(t_lexer *lexer)
 {
-    t_lexer *it;
+	t_lexer	*it;
 
-    it = lexer;
+	it = lexer;
 	while (it != NULL)
 	{
 		if (it->token == PIPE)
@@ -29,37 +29,45 @@ static int	has_pipe(t_lexer *lexer)
 
 static t_ppe	*mk_pipe(t_lexer *lexer, t_env *env, t_ppe *prev)
 {
-    t_ppe	*proc;
-    t_cmd	*cmd;
+	t_ppe	*proc;
+	t_cmd	*cmd;
 
-    cmd = mk_cmd(lexer, env);
-    if (cmd == NULL)
-        return (NULL);
-    proc = ft_calloc(1, sizeof(t_ppe));
-    if (proc == NULL)
-    {
-        ft_free(cmd);
-        return (NULL);
-    }
-    if (prev != NULL)
-        prev->next = proc;
-    proc->prev = prev;
-    proc->cmd = cmd;
-    return (proc);
+	cmd = mk_cmd(lexer, env);
+	if (cmd == NULL)
+		return (NULL);
+	proc = ft_calloc(1, sizeof(t_ppe));
+	if (proc == NULL)
+	{
+		ft_free((void **)&cmd);
+		return (NULL);
+	}
+	if (prev != NULL)
+		prev->next = proc;
+	proc->prev = prev;
+	proc->cmd = cmd;
+	return (proc);
 }
 
-void	free_pipe(t_ppe *pipe)
+void	free_pipe(t_ppe **pipe)
 {
-	if (pipe == NULL)
-		return ;
-	free_pipe(pipe->next);
-	free_cmd(pipe->cmd);
-	ft_free(pipe);
+	t_ppe	*it;
+	t_ppe	*tmp;
+
+	it = *pipe;
+	tmp = NULL;
+	while (it != NULL)
+	{
+		tmp = it->next;
+		free_cmd(&(it->cmd));
+		ft_free((void **)&it);
+		it = tmp;
+	}
+	*pipe = NULL;
 }
 
 static t_lexer	*peek_pipe(t_lexer *lexer)
 {
-	t_lexer *it;
+	t_lexer	*it;
 
 	it = lexer;
 	while (it != NULL)
@@ -74,21 +82,19 @@ static t_lexer	*peek_pipe(t_lexer *lexer)
 t_ppe	*parser(t_tool *data)
 {
 	t_ppe	*start;
-    t_ppe   *pipeline;
-    t_lexer *it;
+	t_ppe	*pipeline;
+	t_lexer	*it;
 
 	start = NULL;
 	pipeline = NULL;
-    it = data->lexer;
-	if (has_pipe(it) == 0)
-		return (NULL);
+	it = data->lexer;
 	while (it != NULL)
 	{
 		pipeline = mk_pipe(it, data->env, pipeline);
 		it = peek_pipe(it);
 		if (pipeline == NULL)
 		{
-			free_pipe(start);
+			free_pipe(&start);
 			return (NULL);
 		}
 		if (start == NULL)

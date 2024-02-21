@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:13:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/01/22 21:25:18 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:21:11 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	is_flag_on(char *str)
 
 	nflag = false;
 	i = 0;
-	if (str[i] != '-'  || str[i + 1] != 'n')
+	if (str[i] != '-' || str[i + 1] != 'n')
 		return (nflag);
 	i++;
 	while (str[i] && str[i] == 'n')

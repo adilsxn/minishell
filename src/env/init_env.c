@@ -13,9 +13,9 @@
 
 #include "../../inc/minishell.h"
 
-t_env *init_env(char **envp)
+t_env	*init_env(char **envp)
 {
-	t_env *env;
+	t_env		*env;
 	const char	*key;
 	const char	*data;
 	const char	*sign;

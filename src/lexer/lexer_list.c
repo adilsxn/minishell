@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/04 15:53:38 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/21 12:37:25 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	node_help(int in, t_tool *tool)
-{
-	if (tool->reset == 1)
-	{
-		in = 0;
-		tool->reset = 0;
-	}
-	return (in);
-}
 
 int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 {
@@ -63,60 +53,66 @@ int	token_checker(int i, char *str, t_lexer **lexer, t_tool *tool)
 			if (check_token(str[i], str[i + 1]) == 3 \
 				|| check_token(str[i], str[i + 1]) == 5)
 			{
-				if (token_help(i, str, &trig) == -1)
+				if (token_help(i, str, &trig, lexer) == -1)
 					return (-1);
 			}
 			else if (check_token(str[i + 1], 0) != 0)
 			{
-				ft_err("Double token", "Syntax error");
+				ft_err("Double token", "Syntax error", NULL, 2);
+				lst_clear(lexer);
 				return (-1);
 			}
 		}
 		new_node(NULL, check_token(str[i], str[i + 1]), lexer, tool);
-		if (trig == 1)
-			return (2);
-		return (1);
+		return (reti(trig));
 	}
 	return (0);
 }
 
 int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 {
-	int		count;
-
-	count = token_checker(i, str, lexer, tool);
-	if (count > 0)
-		return (count - 1);
-	if (count == -1)
+	if (tool->var->count > 0)
+		return (tool->var->count - 1);
+	if (tool->var->count == -1)
 		return (-10000000);
-	while (str[i + count] != '\0')
+	while (i + tool->var->count < (int)ft_strlen(str))
 	{
-		count += len_quote(i + count, str, 34);
-		count += len_quote(i + count, str, 39);
-		if (ft_isspace(str[i + count]) == 1)
-			return (sub(str, i, count, lexer, tool));
-		if (check_token(str[i + count], 0) != 0)
-			return (sub(str, i, count, lexer, tool) - 1);
-		if (str[i + count] != '\0')
-			count++;
+		tool->var->count += len_quote(i + tool->var->count, str, 34);
+		tool->var->count += len_quote(i + tool->var->count, str, 39);
+		if (str && i + tool->var->count < (int)ft_strlen(str) \
+			&& ft_isspace(str[i + tool->var->count]) == 1)
+			return (sub(tool->var, lexer, tool));
+		if (str && i + tool->var->count < (int)ft_strlen(str) \
+			&& check_token(str[i + tool->var->count], 0))
+			return (sub(tool->var, lexer, tool) - 1);
+		if (i + tool->var->count < (int)ft_strlen(str))
+			tool->var->count++;
 	}
-	sub(str, i, count, lexer, tool);
-	return (count);
+	sub(tool->var, lexer, tool);
+	return (tool->var->count);
 }
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
-	int	i;
+	int		i;
 
 	i = -1;
+	tool->var = malloc(sizeof(t_var));
+	if (tool->var == NULL)
+		return (NULL);
+	tool->var->str = str;
 	while ((size_t)++i < ft_strlen(str))
 	{
+		tool->var->count = token_checker(i, str, &lexer, tool);
+		tool->var->i = i;
 		i += len_word(i, str, &lexer, tool);
 		if (i < 0)
 			return (NULL);
 	}
 	if (lex_check(lexer) == NULL)
 		return (NULL);
-    lex_del(&lexer);
+	lex_del(&lexer);
+	if (lex_check_again(lexer) == -1)
+		return (NULL);
 	return (lexer);
 }

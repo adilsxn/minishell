@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utilspt2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/05 19:47:43 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:31:13 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,35 @@ char	*expander_help1(int len, char **str2, char **str1, int i)
 			free(temp);
 		}
 		else
-			ft_free(*str2);
+			ft_free((void **)&*str2);
 	}
 	return (*str2);
 }
 
-void	loop_help2(t_envy **ex, char **str2, char *str3, char **str1)
+void	loop_help2(t_env1 **env1, char **str2, char *str3, char **str1)
 {
 	char	*tmp;
 	char	*temp;
 
-	tmp = get_key(str1[(*ex)->i]);
-	if ((*ex)->i > 0 && *str2 != NULL)
+	tmp = get_key(str1[(*env1)->i]);
+	if ((*env1)->i > 0 && *str2 != NULL)
 	{
 		temp = ft_strjoin(*str2, str3);
 		if (temp)
 		{
 			free(*str2);
-			*str2 = ft_strjoin(temp, str1[(*ex)->i] + ft_strlen(tmp) + 1);
+			*str2 = ft_strjoin(temp, str1[(*env1)->i] + ft_strlen(tmp) + 1);
 			free(temp);
 		}
 		else
-			ft_free(*str2);
+			ft_free((void **)&*str2);
 	}
 	else
 	{
 		free(*str2);
-		*str2 = ft_strjoin(str3, str1[(*ex)->i] + ft_strlen(tmp) + 1);
-	} 
-    ft_free(str3);
+		*str2 = ft_strjoin(str3, str1[(*env1)->i] + ft_strlen(tmp) + 1);
+	}
+	ft_free((void **)&str3);
 	free(tmp);
 }
 
@@ -62,11 +62,9 @@ char	*init_expand(char **str, char ***str1)
 {
 	if ((*str)[0] == 39)
 	{
-		del_quotes(*str, '\'');
+		del_quote(*str, '\'');
 		return (*str);
 	}
-	if (*str[0] != '\"' && *str[1] != '\"')
-		*str = del_quotes(*str, '\"');
 	*str1 = ft_split2(*str, '$');
 	return (NULL);
 }
@@ -74,30 +72,5 @@ char	*init_expand(char **str, char ***str1)
 void	checker(t_env *env2, char **str2, int i)
 {
 	if (i == 0 && env2 == NULL)
-		ft_free2((void **)str2);
-}
-
-char	**ft_arrdup(char **arr)
-{
-	char	**array2;
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	array2 = ft_calloc(sizeof(char *), i + 1);
-	if (!array2)
-		return (NULL);
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		array2[i] = ft_strdup(arr[i]);
-		if (array2[i] == NULL)
-		{
-			free_array(array2);
-			return (array2);
-		}
-		i++;
-	}
-	return (array2);
+		ft_free((void **)str2);
 }

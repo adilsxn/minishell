@@ -16,26 +16,24 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		ft_err(cmd->args[0], "cmd not found");
-		return (127);
+		return (cmd_error(cmd->args[0], cmd->path));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
-		ft_err("redirection failed", NULL);
+		ft_err(cmd->rdir->value, strerror(errno), NULL, 1);
 		return (1);
 	}
 	if (cmd->path == NULL)
 		return (0);
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno));
+		ft_err("execve failed", strerror(errno), NULL, 1);
 	return (errno);
 }
 
 static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 {
-    signal_handler();
-	close(proc_fd[STDIN_FILENO]);
-	clean_fds();
+	signal_handler(sig_new_prompt, SIGINT);
+	ft_close(proc_fd[STDIN_FILENO]);
 	if ((is_builtin(proc->cmd->args[0]) != 0))
 		proc->exit_code = exec_bi(proc->cmd, data);
 	else
@@ -49,7 +47,7 @@ static void	create_proc(t_ppe *proc, int proc_fd[2], int std_fd[2],
 	int	pipe_fd[2];
 
 	dup2(proc_fd[STDIN_FILENO], STDIN_FILENO);
-	close(proc_fd[STDIN_FILENO]);
+	ft_close(proc_fd[STDIN_FILENO]);
 	if (proc->next != NULL)
 	{
 		pipe(pipe_fd);
@@ -59,12 +57,12 @@ static void	create_proc(t_ppe *proc, int proc_fd[2], int std_fd[2],
 	else
 		proc_fd[STDOUT_FILENO] = dup(std_fd[STDOUT_FILENO]);
 	dup2(proc_fd[STDOUT_FILENO], STDOUT_FILENO);
-	close(proc_fd[STDOUT_FILENO]);
+	ft_close(proc_fd[STDOUT_FILENO]);
 	proc->pid = fork();
 	if (proc->pid == 0)
 	{
-		close(std_fd[STDIN_FILENO]);
-		close(std_fd[STDOUT_FILENO]);
+		ft_close(std_fd[STDIN_FILENO]);
+		ft_close(std_fd[STDOUT_FILENO]);
 		exec_pipe_child(proc, proc_fd, data);
 	}
 }
@@ -90,7 +88,7 @@ void	exec_pipe(t_tool *data)
 	int		proc_fd[2];
 	t_ppe	*proc;
 
-	signal_handler();
+	signal_handler(sig_new_prompt, SIGINT);
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);
@@ -103,7 +101,7 @@ void	exec_pipe(t_tool *data)
 	}
 	dup2(std_fd[STDIN_FILENO], STDIN_FILENO);
 	dup2(std_fd[STDOUT_FILENO], STDOUT_FILENO);
-	close(std_fd[STDIN_FILENO]);
-	close(std_fd[STDOUT_FILENO]);
+	ft_close(std_fd[STDIN_FILENO]);
+	ft_close(std_fd[STDOUT_FILENO]);
 	wait_procs(data->pipes);
 }

@@ -13,59 +13,77 @@
 
 #include "../../inc/minishell.h"
 
-void	free_rdr(t_rdr *rdir)
+// bool alloc_rdr(t_lexer *lexi)
+// {
+//     t_lexer *it;
+//     t_rdr *rdir;
+//
+//
+//     it = lexi;
+//     it
+// 	rdir = ft_calloc(1, sizeof(t_rdr));
+// 	if (rdir == NULL)
+// 		return (false);
+// 	rdir->value = ft_strdup(lexer->str);
+// }
+void	free_rdr(t_rdr **rdir)
 {
-	if (rdir == NULL)
-		return ;
-	free_rdr(rdir->next);
-	ft_free(rdir);
+	t_rdr	*it;
+	t_rdr	*tmp;
+
+	it = *rdir;
+	tmp = NULL;
+	while (it != NULL)
+	{
+		tmp = it->next;
+		free(it->value);
+		ft_free((void **)&it);
+		it = tmp;
+	}
 }
 
-static t_rdr	*mk_rdr(t_token type, t_rdr *prev)
+static t_rdr	*mk_rdr(t_lexer *lexer, t_rdr *prev, int *ret)
 {
 	t_rdr	*rdir;
 
 	rdir = ft_calloc(1, sizeof(t_rdr));
 	if (rdir == NULL)
 		return (NULL);
-	if (type == GREAT)
-		rdir->kind = RDR_OUT;
-	else if (type == LESS)
-		rdir->kind = RDR_IN;
-	else if (type == GREAT_GREAT)
-		rdir->kind = RDR_APP;
+	rdir->value = ft_strdup(lexer->str);
+	if (lexer->token == GREAT)
+		*ret = handle_output(rdir);
+	else if (lexer->token == LESS)
+		*ret = handle_input(rdir);
+	else if (lexer->token == GREAT_GREAT)
+		*ret = handle_append(rdir);
 	else
-		rdir->kind = RDR_HD;
+		*ret = handle_heredoc(rdir);
 	if (prev != NULL)
 		prev->next = rdir;
 	return (rdir);
 }
 
-t_rdr	*build_rdr(t_lexer *lexi)
+t_rdr	*build_rdr(t_lexer *lexi, t_cmd *cmd)
 {
 	t_rdr	*start;
 	t_rdr	*rdir;
-	t_lexer *it;
+	t_lexer	*it;
+	int		ret;
 
 	start = NULL;
 	rdir = NULL;
 	it = lexi;
+	ret = 0;
 	while (it != NULL && it->token != PIPE)
 	{
-		if (it->token == GREAT || it->token == LESS
-			|| it->token == GREAT_GREAT || it->token == LESS_LESS)
+		if (it->token > PIPE)
 		{
-			rdir = mk_rdr(it->token, rdir);
-			if (rdir == NULL)
-			{
-				free_rdr(start);
-				return (ft_err("redirection", NULL), NULL);
-			}
+			cmd->io = true;
+			rdir = mk_rdr(it, rdir, &ret);
 			if (start == NULL)
 				start = rdir;
-			rdir->value = it->next->str;
-            if (it->token == LESS_LESS)
-                rdir->value = it->str;
+			if (ret == -1)
+				return (free_rdr(&start), NULL);
 		}
 		it = it->next;
 	}
