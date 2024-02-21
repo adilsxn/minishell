@@ -16,7 +16,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-        return (cmd_error(cmd->args[0], cmd->path));
+		return (cmd_error(cmd->args[0], cmd->path));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
@@ -32,9 +32,8 @@ static int	exec_bin_pipe(t_cmd *cmd)
 
 static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 {
-    signal_handler(sig_new_prompt, SIGINT);
+	signal_handler(sig_new_prompt, SIGINT);
 	ft_close(proc_fd[STDIN_FILENO]);
-	// clean_fds();
 	if ((is_builtin(proc->cmd->args[0]) != 0))
 		proc->exit_code = exec_bi(proc->cmd, data);
 	else
@@ -89,8 +88,7 @@ void	exec_pipe(t_tool *data)
 	int		proc_fd[2];
 	t_ppe	*proc;
 
-    //TODO: Put signal handler here;
-    signal_handler(sig_new_prompt, SIGINT);
+	signal_handler(sig_new_prompt, SIGINT);
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);

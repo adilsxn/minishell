@@ -28,7 +28,7 @@ void	printin(t_lexer *lex)
 	printf("------printin---------\n");
 }
 
-volatile int			g_last_ret_code = 0;
+volatile int	g_last_ret_code = 0;
 
 static bool	parse_input(t_tool *shell)
 {
@@ -49,8 +49,7 @@ static bool	parse_input(t_tool *shell)
 		lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
 		quote_help(shell->lexer);
-        if (parse_heredoc(shell->lexer, shell->env))
-            return (false);
+		parse_heredoc(shell->lexer, shell->env);
 		if (has_pipe(shell->lexer) == 1)
 			shell->pipes = parser(shell);
 		else

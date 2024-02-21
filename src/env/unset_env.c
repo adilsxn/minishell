@@ -32,6 +32,6 @@ int	unset_env(t_env **env, const char *key)
 	tmp->next = NULL;
 	free((void *)tmp->key);
 	free((void *)tmp->value);
-	free(tmp);  
+	free(tmp);
 	return (0);
 }

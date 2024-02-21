@@ -53,4 +53,3 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 	g_last_ret_code = ret_code;
 	ft_free((void **)&str);
 }
-

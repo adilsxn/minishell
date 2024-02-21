@@ -70,9 +70,9 @@ int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
 
-    error = false;
+	error = false;
 	if (!args || !args[1])
-        g_last_ret_code = 2;
+		g_last_ret_code = 2;
 	else
 	{
 		g_last_ret_code = get_code(args[1], &error);

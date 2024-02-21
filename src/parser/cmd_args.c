@@ -53,7 +53,7 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 		{
 			if (it->str != NULL)
 				av[i] = ft_strdup(it->str);
-            i++;
+			i++;
 		}
 		it = it->next;
 	}

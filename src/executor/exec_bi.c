@@ -12,12 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-void ft_close(int fd)
+void	ft_close(int fd)
 {
-    if (fd < 0)
-        return ;    
-    else
-        close(fd);
+	if (fd < 0)
+		return ;
+	else
+		close(fd);
 }
 
 int	exec_bi(t_cmd *cmd, t_tool *data)
@@ -43,8 +43,8 @@ int	exec_bi(t_cmd *cmd, t_tool *data)
 	{
 		dup2(fd[STDIN_FILENO], STDIN_FILENO);
 		dup2(fd[STDOUT_FILENO], STDOUT_FILENO);
-        ft_close(fd[STDIN_FILENO]);
-	    ft_close(fd[STDOUT_FILENO]);
+		ft_close(fd[STDIN_FILENO]);
+		ft_close(fd[STDOUT_FILENO]);
 	}
 	return (return_code);
 }
