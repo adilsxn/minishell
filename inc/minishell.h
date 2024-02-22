@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/14 16:46:48 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:53:33 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,14 @@ int					msh_export(char **args, t_tool *data);
 int					msh_pwd(char **args, t_tool *data);
 int					msh_unset(char **args, t_tool *data);
 
+void				printin(t_lexer *lex);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
 int					new_node(char *str, int token, t_lexer **lexer_list,
 						t_tool *tool);
 int					len_quote(int i, char *str, char quote);
-t_token				check_token(int c1, int c2);
+t_token				che_tok(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list,
 						t_tool *tool);
 char				*del_quote(char *str, char c);
@@ -161,6 +162,7 @@ int					reti(int trig);
 int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
 int					node_help(int in, t_tool *tool);
+char				*syntax_error(int i);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);

@@ -25,13 +25,24 @@ int	sub(t_var *var, t_lexer **lexer, t_tool *tool)
 t_lexer	*lex_check(t_lexer *lexer)
 {
 	t_lexer	*lex;
+	char	*tmp;
 
 	lex = lexer;
+	if (lex->token == 1)
+	{
+		tmp = syntax_error(lex->token);
+		ft_err(NULL, tmp, NULL, 2);
+		ft_free((void **)&tmp);
+		lst_clear(&lexer);
+		return (NULL);
+	}
 	while (lex->next)
 		lex = lex->next;
 	if (lex->token != 0 && lex->token != 1)
 	{
-		ft_err("Syntax error", "token at end of commands", NULL, 2);
+		tmp = syntax_error(lex->token);
+		ft_err(NULL, tmp, NULL, 2);
+		ft_free((void **)&tmp);
 		lst_clear(&lexer);
 		return (NULL);
 	}
@@ -59,12 +70,16 @@ void	lex_del(t_lexer **lexer)
 
 int	token_help(int i, char *str, int *trig, t_lexer **lexi)
 {
+	char	*tmp;
+
 	*trig = 1;
 	if (str[i + 2] && str[i + 3])
 	{
-		if (check_token(str[i + 2], str[i + 3] != 0))
+		if (che_tok(str[i + 2], str[i + 3]) != 0)
 		{
-			ft_err("Double token", "Syntax error", NULL, 2);
+			tmp = syntax_error(che_tok(str[i + 2], str[i + 3]));
+			ft_err(NULL, tmp, NULL, 2);
+			ft_free((void **)&tmp);
 			lst_clear(lexi);
 			return (-1);
 		}
@@ -74,6 +89,7 @@ int	token_help(int i, char *str, int *trig, t_lexer **lexi)
 
 int	lex_check_again(t_lexer *lex)
 {
+	char	*tmp;
 	t_lexer	*lexi;
 
 	lexi = lex;
@@ -88,8 +104,9 @@ int	lex_check_again(t_lexer *lex)
 			}
 			else
 			{
-				ft_err("Space between tokens or different tokens not allowed", \
-					"Syntax error", NULL, 2);
+				tmp = syntax_error(lexi->token);
+				ft_err(NULL, tmp, NULL, 2);
+				ft_free((void **)&tmp);
 				lst_clear(&lex);
 				return (-1);
 			}

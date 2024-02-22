@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/21 18:31:07 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:37:29 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	len_quote(int i, char *str, char quote)
 	return (count);
 }
 
-t_token	check_token(int c1, int c2)
+t_token	che_tok(int c1, int c2)
 {
 	if (c1 == '<' && c2 == '<')
 		return (LESS_LESS);
