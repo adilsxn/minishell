@@ -58,7 +58,7 @@ void	exec_bin(t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	if (cmd->path == NULL && cmd->rdir == NULL)
+	if (cmd->path == NULL)
 	{
 		g_last_ret_code = cmd_error(cmd->args[0], cmd->path);
 		return ;
