@@ -49,7 +49,8 @@ static t_rdr	*mk_rdr(t_lexer *lexer, t_rdr *prev, int *ret)
 	rdir = ft_calloc(1, sizeof(t_rdr));
 	if (rdir == NULL)
 		return (NULL);
-	rdir->value = ft_strdup(lexer->str);
+	if (lexer->str != NULL)
+		rdir->value = ft_strdup(lexer->str);
 	if (lexer->token == GREAT)
 		*ret = handle_output(rdir);
 	else if (lexer->token == LESS)
