@@ -17,11 +17,14 @@ volatile int	g_last_ret_code = 0;
 static bool parse_noninteractive(t_tool *shell, char **ni_input)
 {
     int i;
+    char *tmp;
 
     i = -1;
     while (ni_input[++i])
     {
-        shell->arg = ft_strdup(ni_input[i]);
+        tmp = ft_strdup(ni_input[i]);
+        shell->arg = ft_strtrim(tmp, " ");
+        free(tmp);
         shell->lexer = lexer(shell->arg, shell->lexer, shell);
         if (shell->lexer)
         {
@@ -88,7 +91,7 @@ int	main(int ac, char **av, char **envp)
     char **ni_arg;
 
 	ft_bzero(&shell, sizeof(t_tool));
-	shell = (t_tool){NULL, NULL, NULL, NULL, NULL, 0, NULL};
+	shell = (t_tool){NULL, NULL, NULL,NULL, false, 0, NULL};
 	if (ac == 3 && ft_strequ(av[1], "-c") && av[2])
 	{
         ni_arg = ft_split(av[2], ';');
@@ -96,6 +99,7 @@ int	main(int ac, char **av, char **envp)
             exit(EXIT_FAILURE);
         shell.env = init_env(envp);
         shell.reset = 0;
+        shell.ninter = true;
         parse_noninteractive(&shell, ni_arg);
         clean_data(&shell, true);
         free_array(ni_arg);

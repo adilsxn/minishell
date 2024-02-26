@@ -110,7 +110,7 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
-	t_rdr			*hdoc;
+    bool            ninter;
 	int				reset;
 	t_var			*var;
 }					t_tool;

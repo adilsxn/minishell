@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
 
 int	cmd_error(char *cmd, char *cmd_path)
 {
 	struct stat	var;
 
+    (void)cmd_path;
 	stat(cmd, &var);
-	if (!ft_strchr(cmd, '/') && !cmd_path)
+	if (!ft_strchr(cmd, '/'))
 		return (ft_err(cmd, "command not found", NULL, 127), 127);
 	if (access(cmd, F_OK) != 0)
 		return (ft_err(cmd, "", strerror(errno), 127), 127);
