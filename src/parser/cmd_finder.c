@@ -12,8 +12,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <string.h>
-#include <sys/stat.h>
 
 /*Code adapted from github.com/adilsxn/pipex*/
 
@@ -22,6 +20,8 @@ void	free_arr(char **arr)
 	int	i;
 
 	i = -1;
+	if (!arr)
+		return ;
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
@@ -34,6 +34,9 @@ static char	**useful_paths(char *path)
 	int		i;
 
 	i = -1;
+	paths = NULL;
+	if (path == NULL)
+		return (NULL);
 	paths = ft_split(path, ':');
 	if (!paths)
 		return (NULL);
@@ -62,7 +65,7 @@ char	*cmd_finder(t_env *env, char *cmd)
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 	paths = useful_paths(get_env(env, "PATH"));
-	while (paths[++i] != NULL)
+	while (paths != NULL && paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], cmd);
 		if (!path)

@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/14 15:08:53 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/26 18:44:59 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +79,8 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	t_lexer	*lex;
 
 	lex = lexi;
+	if (!env)
+		return (lexi);
 	while (lex)
 	{
 		if (lex->str)
