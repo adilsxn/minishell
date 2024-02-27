@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 12:12:20 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/27 12:38:48 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:38:28 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	unclosed_quotes(t_lexer *lexi, int i, int count1, int count2)
 		{
 			i += len_quote(0, lex->str, 34);
 			i += len_quote(0, lex->str, 39);
-			while (lex->str && lex->str[i])
+			while (i < (int)ft_strlen(lex->str))
 			{
 				quotes(lex, i, &count1, &count2);
 				i++;
@@ -78,7 +78,7 @@ int	err_special_char(t_lexer *lexi, int i)
 		{
 			i += len_quote(0, lex->str, 34);
 			i += len_quote(0, lex->str, 39);
-			while (lex->str && lex->str[i])
+			while (i < (int)ft_strlen(lex->str))
 			{
 				if (special_char(lex, i, lexi) == -1)
 					return (-1);
@@ -91,4 +91,20 @@ int	err_special_char(t_lexer *lexi, int i)
 	if (i == -1)
 		lst_clear(&lexi);
 	return (i);
+}
+
+void	printin(t_lexer *lex)
+{
+    t_lexer	*lexi;
+
+	lexi = lex;
+	printf("------printin---------\n");
+	while (lexi)
+	{
+        printf("str: %s\n", lexi->str);
+		printf("token: %d\n", lexi->token);
+		printf("i: %d\n", lexi->i);
+		lexi = lexi->next;
+	}
+	printf("------printin---------\n");
 }

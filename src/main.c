@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/14 11:56:14 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:36:43 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ static bool	parse_input(t_tool *shell)
 	free(tmp);
 	add_history(shell->arg);
 	shell->lexer = lexer(shell->arg, shell->lexer, shell);
+	printin(shell->lexer);
 	if (shell->lexer)
 	{
 		lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
 		quote_help(shell->lexer);
+		//printin(shell->lexer);
 		parse_heredoc(shell->lexer, shell->env);
 		if (has_pipe(shell->lexer) == 1)
 			shell->pipes = parser(shell);
