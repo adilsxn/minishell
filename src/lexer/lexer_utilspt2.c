@@ -22,13 +22,13 @@ int	sub(t_var *var, t_lexer **lexer, t_tool *tool)
 	return (var->count);
 }
 
-t_lexer	*lex_check(t_lexer *lexer)
+t_lexer	*begin_end(t_lexer *lexer)
 {
 	t_lexer	*lex;
 	char	*tmp;
 
 	lex = lexer;
-	if (lex->token == 1)
+	if (lex && lex->token && lex->token == 1)
 	{
 		tmp = syntax_error(lex->token);
 		ft_err(NULL, tmp, NULL, 2);
@@ -36,9 +36,9 @@ t_lexer	*lex_check(t_lexer *lexer)
 		lst_clear(&lexer);
 		return (NULL);
 	}
-	while (lex->next)
+	while (lex && lex->next)
 		lex = lex->next;
-	if (lex->token != 0 && lex->token != 1)
+	if (lex && lex->token != 0 && lex->token != 1)
 	{
 		tmp = syntax_error(lex->token);
 		ft_err(NULL, tmp, NULL, 2);
