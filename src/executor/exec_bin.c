@@ -16,14 +16,15 @@ int	cmd_error(char *cmd, char *cmd_path)
 {
 	struct stat	var;
 
-	stat(cmd, &var);
-	if (!ft_strchr(cmd, '/') && !cmd_path)
+	if (cmd_path)
+		stat(cmd_path, &var);
+	if (!cmd_path)
 		return (ft_err(cmd, "command not found", NULL, 127), 127);
-	if (access(cmd, F_OK) != 0)
+	else if (access(cmd_path, F_OK) != 0)
 		return (ft_err(cmd, "", strerror(errno), 127), 127);
 	else if (S_ISDIR(var.st_mode))
 		return (ft_err(cmd, "", "Is a directory", 126), 126);
-	else if (access(cmd, F_OK | X_OK) != 0)
+	else if (access(cmd_path, F_OK | X_OK) != 0)
 		return (ft_err(cmd, "", strerror(errno), 126), 126);
 	return (EXIT_SUCCESS);
 }
@@ -57,11 +58,9 @@ void	exec_bin(t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	if (cmd->path == NULL)
-	{
-		g_last_ret_code = cmd_error(cmd->args[0], cmd->path);
+	g_last_ret_code = cmd_error(cmd->args[0], cmd->path);
+	if (g_last_ret_code > 120)
 		return ;
-	}
 	pid = fork();
 	if (pid == -1)
 	{
