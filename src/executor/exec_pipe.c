@@ -16,7 +16,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		return (cmd_error(cmd->args[0], cmd->path));
+		return (cmd_error(cmd));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
