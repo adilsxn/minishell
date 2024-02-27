@@ -60,6 +60,7 @@ char	*cmd_finder(t_env *env, char *cmd)
 		return (NULL);
 	i = -1;
 	ft_bzero(&var, sizeof(struct stat));
+    path = NULL;
 	stat(cmd, &var);
 	if (S_ISREG(var.st_mode))
 		if (access(cmd, X_OK) == 0)
