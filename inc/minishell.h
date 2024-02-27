@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/22 10:53:33 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/27 12:19:02 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int					len_word(int i, char *str, t_lexer **lexer_list,
 char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 void				lexer_redux(t_lexer **lexer);
-t_lexer				*lex_check(t_lexer *lexer);
+t_lexer				*begin_end(t_lexer *lexer);
 int					sub(t_var *var, t_lexer **lexer, t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
@@ -163,6 +163,7 @@ int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
 int					node_help(int in, t_tool *tool);
 char				*syntax_error(int i);
+int					err_special_char(t_lexer *lex, int i);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);

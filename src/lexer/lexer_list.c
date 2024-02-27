@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/22 11:20:39 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/27 12:19:17 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,12 @@ t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 		if (i < 0)
 			return (NULL);
 	}
-	if (lex_check(lexer) == NULL)
+	if (begin_end(lexer) == NULL)
 		return (NULL);
 	lex_del(&lexer);
 	if (lex_check_again(lexer) == -1)
+		return (NULL);
+	if (err_special_char(lexer, 0) == -1)
 		return (NULL);
 	return (lexer);
 }
