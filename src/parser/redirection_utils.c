@@ -21,7 +21,7 @@ int	handle_input(t_rdr *rdr)
 	rdr->type = LESS;
 	fmode = O_RDONLY;
 	if (ft_strequ("\"\"", rdr->value) == 1 || !(rdr->value))
-		return (ft_err("", "No such file or directory", NULL, 1), -1);
+		return (ft_err("", "Ambiguous redirect", NULL, 1), -1);
 	rdr->fd = open(rdr->value, fmode, 0044);
 	if (rdr->fd == -1)
 		return (ft_err(rdr->value, NULL, strerror(errno), 1), -1);

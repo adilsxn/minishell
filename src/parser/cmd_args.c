@@ -41,6 +41,8 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 	int		i;
 
 	it = lexi;
+	if (tkn_nbr == 0)
+		return (NULL);
 	av = (char **)malloc(sizeof(char *) * (tkn_nbr + 1));
 	if (av == NULL)
 		return (NULL);
