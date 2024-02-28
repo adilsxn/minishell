@@ -80,6 +80,9 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 	cmd->argc = count_token(lexer);
 	cmd->args = build_av(lexer, cmd->argc);
 	cmd->rdir = build_rdr(lexer, cmd);
+	cmd->path_on = false;
+	if (get_env(env, "PATH"))
+		cmd->path_on = true;
 	if (cmd->args == NULL || cmd->argc == 0)
 		return (free_cmd(&cmd), cmd);
 	if (cmd->io == true && cmd->rdir == NULL)

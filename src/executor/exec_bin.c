@@ -12,20 +12,22 @@
 
 #include "../../inc/minishell.h"
 
-int	cmd_error(char *cmd, char *cmd_path)
+int	cmd_error(t_cmd *cmd)
 {
 	struct stat	var;
 
-	if (cmd_path)
-		stat(cmd_path, &var);
-	if (!cmd_path)
-		return (ft_err(cmd, "command not found", NULL, 127), 127);
-	else if (access(cmd_path, F_OK) != 0)
-		return (ft_err(cmd, "", strerror(errno), 127), 127);
+	if (!cmd->path)
+        cmd->path = ft_strdup("");
+    stat(cmd->path, &var);
+	if (!ft_strchr(cmd->args[0], '/') && cmd->path_on 
+        && ft_strequ(cmd->path, ""))
+		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
+	else if (access(cmd->path, F_OK) != 0)
+		return (ft_err(cmd->args[0], "", strerror(errno), 127), 127);
 	else if (S_ISDIR(var.st_mode))
-		return (ft_err(cmd, "", "Is a directory", 126), 126);
-	else if (access(cmd_path, F_OK | X_OK) != 0)
-		return (ft_err(cmd, "", strerror(errno), 126), 126);
+		return (ft_err(cmd->args[0], "", "Is a directory", 126), 126);
+	else if (access(cmd->path, F_OK | X_OK) != 0)
+		return (ft_err(cmd->args[0], "", strerror(errno), 126), 126);
 	return (EXIT_SUCCESS);
 }
 
@@ -58,7 +60,7 @@ void	exec_bin(t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	g_last_ret_code = cmd_error(cmd->args[0], cmd->path);
+	g_last_ret_code = cmd_error(cmd);
 	if (g_last_ret_code > 120)
 		return ;
 	pid = fork();

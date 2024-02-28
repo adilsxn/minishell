@@ -93,6 +93,7 @@ typedef struct s_cmd
 	char			**args;
 	t_rdr			*rdir;
 	bool			io;
+    bool            path_on;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -205,7 +206,7 @@ char				*freer(t_env1 **ex, char *str, char **str1);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
-int					cmd_error(char *cmd, char *cmd_path);
+int					cmd_error(t_cmd *cmd);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
