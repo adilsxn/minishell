@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/27 12:19:02 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/28 11:19:13 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void				parse_heredoc(t_lexer *lexer, t_env *env);
 char				*get_key(char *str);
 int					env1_func(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);
-void				checker(t_env *env2, char **str2, int i);
+void				checker(t_env1 *env1, int j, char **str1);
 char				*expander_help1(int len, char **str2, char **str1, int i);
 void				loop_help2(t_env1 **ex, char **str2, char *str3,
 						char **str1);
