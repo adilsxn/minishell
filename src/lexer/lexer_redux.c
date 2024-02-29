@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 22:31:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/12 21:57:57 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:31:01 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,29 @@ int	node_help(int in, t_tool *tool)
 void	quote_help(t_lexer *shell)
 {
 	t_lexer	*le;
-	int		a;
 
-	a = 1;
 	le = shell;
 	while (le)
 	{
 		if (le->str)
 		{
-			if (ft_strequ(shell->str, "echo"))
+			if (ft_strequ(le->str, "echo"))
 			{
 				if (quote_assist(le->str, 34) < 2)
 					le->str = del_quote(le->str, 39);
 				else if (quote_assist(le->str, 39) < 2)
 					le->str = del_quote(le->str, 34);
 			}
-			else if (le->str[0] == 34 && le->str[1] == 34)
-				a = 0;
-			else
+			else if (le->str[0] == 34 && le->str[1] == 34 \
+				&& ft_strequ(le->str + 2, "echo"))
+				le->str = del_quote(le->str, 34);
+			if (quote_assist(le->str, 34) < 2)
+				le->str = del_quote(le->str, 39);
+			else if (quote_assist(le->str, 39) < 2)
 				le->str = del_quote(le->str, 34);
 		}
 		le = le->next;
 	}
-	(void)a;
 }
 
 int	quote_assist(char *str, int q)

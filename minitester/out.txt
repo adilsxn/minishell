@@ -1,0 +1,215 @@
+[1m0[0m	[1m[31m[KO] [0m[36m [ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m1[0m	[1m[31m[KO] [0m[36m [ls -la] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m2[0m	[1m[31m[KO] [0m[36m [/usr/bin/ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m9[0m	[1m[31m[KO] [0m[36m [.] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m11[0m	[1m[31m[KO] [0m[36m [$] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m33[0m	[1m[31m[KO] [0m[36m [ls | ls | ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m34[0m	[1m[31m[KO] [0m[36m [ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m37[0m	[1m[31m[KO] [0m[36m [						     ] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m38[0m	[1m[31m[KO] [0m[36m [										      ] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m39[0m	[1m[31m[KO] [0m[36m [	
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m40[0m	[1m[31m[KO] [0m[36m [       	    			       ] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m41[0m	[1m[31m[KO] [0m[36m [ls                        ] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m42[0m	[1m[31m[KO] [0m[36m [           ls             ] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m43[0m	[1m[31m[KO] [0m[36m [                        ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m44[0m	[1m[31m[KO] [0m[36m [ls												] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m45[0m	[1m[31m[KO] [0m[36m [						ls						] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m46[0m	[1m[31m[KO] [0m[36m [												ls] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m47[0m	[1m[31m[KO] [0m[36m [				            		ls] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m48[0m	[1m[31m[KO] [0m[36m [      ls         -l     -a] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m49[0m	[1m[31m[KO] [0m[36m [		ls				-l				-a] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m50[0m	[1m[31m[KO] [0m[36m [	    ls		  -l -a		   ] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m53[0m	[1m[31m[KO] [0m[36m [""echo test] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m79[0m	[1m[31m[KO] [0m[36m ["ls"] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m80[0m	[1m[31m[KO] [0m[36m [l"s"] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m91[0m	[1m[31m[KO] [0m[36m [ls |] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m96[0m	[1m[31m[KO] [0m[36m [ls | cat |] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m99[0m	[1m[31m[KO] [0m[36m [fake_cmd |] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m140[0m	[1m[31m[KO] [0m[36m [cat < $123456] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m142[0m	[1m[31m[KO] [0m[36m [echo hello | ;] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m213[0m	[1m[31m[KO] [0m[36m [export HELLO'WORLD'=a] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m225[0m	[1m[31m[KO] [0m[36m [export 'HELLO"'=hello] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m284[0m	[1m[31m[KO] [0m[36m [export PWD='hello/world'; pwd | cat -e] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m285[0m	[1m[31m[KO] [0m[36m [export PWD='/hello/world/'; pwd | cat -e] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m286[0m	[1m[31m[KO] [0m[36m [export PWD='/usr/bin/'; pwd | cat -e] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m288[0m	[1m[31m[KO] [0m[36m [export PWD=hello/world OLDPWD=abc/def; pwd | cat -e] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m324[0m	[1m[31m[KO] [0m[36m [exit] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m327[0m	[1m[31m[KO] [0m[36m [exit 42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m328[0m	[1m[31m[KO] [0m[36m [exit 42; echo "Should have exited."] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m329[0m	[1m[31m[KO] [0m[36m [exit 240] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m330[0m	[1m[31m[KO] [0m[36m [exit +42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m331[0m	[1m[31m[KO] [0m[36m [exit -42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m332[0m	[1m[31m[KO] [0m[36m [exit 00000000000000000000000000000000000000000000001] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m333[0m	[1m[31m[KO] [0m[36m [exit 00000000000000000000000000000000000000000000000] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m334[0m	[1m[31m[KO] [0m[36m [exit -00000000000000000000000000000000000000000000001] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m335[0m	[1m[31m[KO] [0m[36m [exit -00000000000000000000000000000000000000000000000] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m342[0m	[1m[31m[KO] [0m[36m [exit "0"] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m343[0m	[1m[31m[KO] [0m[36m [exit '0'] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m348[0m	[1m[31m[KO] [0m[36m [exit ' 5'] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m351[0m	[1m[31m[KO] [0m[36m [exit '5 '] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m359[0m	[1m[31m[KO] [0m[36m [exit 2147483647] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m360[0m	[1m[31m[KO] [0m[36m [exit 2147483648] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m361[0m	[1m[31m[KO] [0m[36m [exit -2147483648] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m362[0m	[1m[31m[KO] [0m[36m [exit -2147483649] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m363[0m	[1m[31m[KO] [0m[36m [exit 9223372036854775807] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m364[0m	[1m[31m[KO] [0m[36m [exit -9223372036854775808] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m367[0m	[1m[31m[KO] [0m[36m [exit 9999999999999999999999999999999999999999999999] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m368[0m	[1m[31m[KO] [0m[36m [exit -9999999999999999999999999999999999999999999999] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m371[0m	[1m[31m[KO] [0m[36m [exit 5 < infile.txt] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m372[0m	[1m[31m[KO] [0m[36m [exit 1 | exit 0] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m373[0m	[1m[31m[KO] [0m[36m [exit 0 | exit 1] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m374[0m	[1m[31m[KO] [0m[36m [ls | exit] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m375[0m	[1m[31m[KO] [0m[36m [ls | exit 42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m378[0m	[1m[31m[KO] [0m[36m [exit | ls] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+[1m379[0m	[1m[31m[KO] [0m[36m [exit 42 | ls] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+[1m380[0m	[1m[31m[KO] [0m[36m [exit 12 abc | ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m381[0m	[1m[31m[KO] [0m[36m [exit abc 12 | ls] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m383[0m	[1m[31m[KO] [0m[36m [ls $HOME] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m384[0m	[1m[31m[KO] [0m[36m [echo $] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m385[0m	[1m[31m[KO] [0m[36m [echo $$] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m386[0m	[1m[31m[KO] [0m[36m [echo $$$] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m392[0m	[1m[31m[KO] [0m[36m [echo "|$USER|"] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m412[0m	[1m[31m[KO] [0m[36m [export L="ls -la"; $L] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m413[0m	[1m[31m[KO] [0m[36m [export L='ls -la'; $L] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m583[0m	[1m[31m[KO] [0m[36m [unset PATH; ..] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m593[0m	[1m[31m[KO] [0m[36m [unset PATH; executable_file] [0m
+---------- STDOUT output:[1m[31m KO 
+---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m614[0m	[1m[31m[KO] [0m[36m [unset PATH; export PWD='hello/world'; pwd] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m615[0m	[1m[31m[KO] [0m[36m [unset PATH; export PWD='/hello/world/'; pwd] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m616[0m	[1m[31m[KO] [0m[36m [unset PATH; export PWD='/usr/bin/'; pwd] [0m
+---------- STDOUT output:[1m[31m KO 
+[1m643[0m	[1m[31m[KO] [0m[36m [unset PATH; exit] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m644[0m	[1m[31m[KO] [0m[36m [unset PATH; exit 42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m645[0m	[1m[31m[KO] [0m[36m [unset PATH; exit 42; echo "Should have exited."] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m646[0m	[1m[31m[KO] [0m[36m [unset PATH; exit +42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m647[0m	[1m[31m[KO] [0m[36m [unset PATH; exit -42] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m648[0m	[1m[31m[KO] [0m[36m [unset PATH; exit 00000000000000000000000000000000000000000000001] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m649[0m	[1m[31m[KO] [0m[36m [unset PATH; exit 00000000000000000000000000000000000000000000000] [0m
+[0m---------- STDERR output:[1m[31m KO 
+[1m656[0m	[1m[31m[KO] [0m[36m [unset PATH; exit 9999999999999999999999999999999999999999999999] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[1m657[0m	[1m[31m[KO] [0m[36m [unset PATH; exit -9999999999999999999999999999999999999999999999] [0m
+[0m---------- STDERR output:[1m[31m KO 
+---------- Exit status:[1m[31m KO 
+[0m[1m[32m	OK[31m		KO[0m[1m		TOTAL

@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:56 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/27 15:20:33 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:29:20 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*get_key(char *str)
 		str1++;
 	i = 0;
 	while (str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47
-		&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=')
+		&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=' \
+		&& str1[i] != '|')
 		i++;
 	return (ft_substr(str1, 0, i));
 }

@@ -38,7 +38,7 @@ t_lexer	*begin_end(t_lexer *lexer)
 	}
 	while (lex && lex->next)
 		lex = lex->next;
-	if (lex && lex->token != 0 && lex->token != 1)
+	if (lex && lex->token != 0)
 	{
 		tmp = syntax_error(lex->token);
 		ft_err(NULL, tmp, NULL, 2);
