@@ -73,7 +73,7 @@ void	exec_bin(t_cmd *cmd)
 		child_proc(cmd);
 	else
 	{
-		signal_handler(sig_new_prompt, SIGINT);
+		signal_handler(sig_hdoc_parent, SIGINT);
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);
