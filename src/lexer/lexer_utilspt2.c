@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utilspt2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/21 13:10:16 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:00:28 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,37 @@ t_lexer	*begin_end(t_lexer *lexer)
 	return (lexer);
 }
 
+// void	lex_del(t_lexer **lexer)
+// {
+// 	t_lexer	*lex;
+
+// 	lex = *lexer;
+// 	while (lex != NULL)
+// 	{
+// 		if (lex->str)
+// 		{
+// 			if (lex->str[0] == 0)
+// 			{
+// 				del_one(lexer, lex->i);
+// 				lex = *lexer;
+// 			}
+// 		}
+// 		lex = lex->next;
+// 	}
+// }
 void	lex_del(t_lexer **lexer)
 {
 	t_lexer	*lex;
+	t_lexer	*next_lex;
 
 	lex = *lexer;
-	while (lex)
+	while (lex != NULL)
 	{
-		if (lex->str)
-		{
-			if (lex->str[0] == 0)
-			{
-				del_one(lexer, lex->i);
-				lex = *lexer;
-			}
-		}
-		lex = lex->next;
+		next_lex = lex->next;
+
+		if (lex->str && lex->str[0] == '\0')
+			del_one(lexer, lex->i);
+		lex = next_lex;
 	}
 }
 
@@ -93,7 +108,7 @@ int	lex_check_again(t_lexer *lex)
 	t_lexer	*lexi;
 
 	lexi = lex;
-	while (lexi->next != NULL)
+	while (lexi != NULL && lexi->next != NULL)
 	{
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{

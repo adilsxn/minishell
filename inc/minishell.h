@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/29 14:55:51 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:49:03 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_cmd
 	char			**args;
 	t_rdr			*rdir;
 	bool			io;
-    bool            path_on;
+	bool			path_on;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -111,7 +111,7 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
-    bool            ninter;
+	bool			ninter;
 	int				reset;
 	t_var			*var;
 }					t_tool;

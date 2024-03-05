@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:27:40 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/29 15:44:53 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:47:57 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	bigger_i(t_env1 *env1, char *temp, int i, char **str1)
 	free(temp);
 }
 
-void checker_aux(t_env1 *env1, char *temp)
+void	checker_aux(t_env1 *env1, char *temp)
 {
 	free(env1->str2);
 	env1->str2 = ft_strdup(temp);
