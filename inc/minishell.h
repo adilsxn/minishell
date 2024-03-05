@@ -46,6 +46,7 @@ typedef enum s_token
 typedef struct s_lexer
 {
 	char			*str;
+    char            *str2;
 	t_token			token;
 	int				i;
 	struct s_lexer	*next;
@@ -82,6 +83,7 @@ typedef struct s_rdr
 {
 	t_token			type;
 	char			*value;
+    char            *value2;
 	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;

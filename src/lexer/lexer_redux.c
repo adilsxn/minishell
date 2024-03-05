@@ -39,6 +39,7 @@ void	lexer_redux(t_lexer **lexer)
 		if (it->token > 1)
 		{
 			it->str = it->next->str;
+            it->str2 = it->next->str2;
 			del = it->next;
 			it->next = del->next;
 			if (del->next != NULL)

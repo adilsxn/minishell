@@ -22,8 +22,12 @@ int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 	if (!new_node)
 		return (-1);
 	new_node->str = NULL;
+    new_node->str2 = NULL;
 	if (str)
+    {
 		new_node->str = ft_strdup(str);
+        new_node->str2 = ft_strdup(str);
+    }
 	new_node->token = token;
 	in = node_help(in, tool);
 	new_node->i = in++;

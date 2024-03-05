@@ -13,19 +13,6 @@
 
 #include "../../inc/minishell.h"
 
-// bool alloc_rdr(t_lexer *lexi)
-// {
-//     t_lexer *it;
-//     t_rdr *rdir;
-//
-//
-//     it = lexi;
-//     it
-// 	rdir = ft_calloc(1, sizeof(t_rdr));
-// 	if (rdir == NULL)
-// 		return (false);
-// 	rdir->value = ft_strdup(lexer->str);
-// }
 void	free_rdr(t_rdr **rdir)
 {
 	t_rdr	*it;
@@ -37,6 +24,7 @@ void	free_rdr(t_rdr **rdir)
 	{
 		tmp = it->next;
 		free(it->value);
+		free(it->value2);
 		ft_free((void **)&it);
 		it = tmp;
 	}
@@ -51,6 +39,7 @@ static t_rdr	*mk_rdr(t_lexer *lexer, t_rdr *prev, int *ret)
 		return (NULL);
 	if (lexer->str != NULL)
 		rdir->value = ft_strdup(lexer->str);
+    rdir->value2 = ft_strdup(lexer->str2);
 	if (lexer->token == GREAT)
 		*ret = handle_output(rdir);
 	else if (lexer->token == LESS)
