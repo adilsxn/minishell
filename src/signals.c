@@ -35,6 +35,7 @@ void	sig_hdoc_parent(int sig)
     if (sig == SIGINT)
     {
         (void)sig;
+		ft_putchar_fd('\n', 1);
         rl_redisplay();
     }
 }

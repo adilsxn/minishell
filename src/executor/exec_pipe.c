@@ -88,7 +88,7 @@ void	exec_pipe(t_tool *data)
 	int		proc_fd[2];
 	t_ppe	*proc;
 
-	signal_handler(sig_new_prompt, SIGINT);
+	signal_handler(sig_hdoc_parent, SIGINT);
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);
