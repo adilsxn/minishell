@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utilspt2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/03/05 12:00:28 by matilde          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:45:24 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	lex_del(t_lexer **lexer)
 	while (lex != NULL)
 	{
 		next_lex = lex->next;
-		if (lex->str && lex->str[0] == '\0')
-			del_one(lexer, lex->i);
+		if (ft_strlen(lex->str) == 0  && lex->token == 0)
+			del_1(lex);
 		lex = next_lex;
 	}
 }
