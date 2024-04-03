@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
 /*   Updated: 2024/03/02 10:29:45 by acuva-nu         ###   ########.fr       */
@@ -16,18 +17,19 @@ int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 {
 	t_lexer		*new_node;
 	t_lexer		*last_node;
-	static int	in = 0;
+	static int	in;
 
+	in = 0;
 	new_node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new_node)
 		return (-1);
 	new_node->str = NULL;
-    new_node->str2 = NULL;
+	new_node->str2 = NULL;
 	if (str)
-    {
+	{
 		new_node->str = ft_strdup(str);
-        new_node->str2 = ft_strdup(str);
-    }
+		new_node->str2 = ft_strdup(str);
+	}
 	new_node->token = token;
 	in = node_help(in, tool);
 	new_node->i = in++;
@@ -55,10 +57,10 @@ int	token_checker(int i, char *s, t_lexer **lexer, t_tool *tool)
 	{
 		if (s[i + 1])
 		{
-			if ((che_tok(s[i], s[i + 1]) == 3 || che_tok(s[i], s[i + 1]) == 5) \
+			if ((che_tok(s[i], s[i + 1]) == 3 || che_tok(s[i], s[i + 1]) == 5)
 				&& token_help(i, s, &trig, lexer) == -1)
 				return (-1);
-			if (che_tok(s[i], s[i + 1]) != 3 && che_tok(s[i], s[i + 1]) != 5 \
+			if (che_tok(s[i], s[i + 1]) != 3 && che_tok(s[i], s[i + 1]) != 5
 				&& che_tok(s[i + 1], 0) != 0)
 			{
 				tmp = syntax_error(che_tok(s[i + 1], 0));
@@ -84,11 +86,11 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 	{
 		tool->var->count += len_quote(i + tool->var->count, str, 34);
 		tool->var->count += len_quote(i + tool->var->count, str, 39);
-		if (str && i + tool->var->count < (int)ft_strlen(str) \
+		if (str && i + tool->var->count < (int)ft_strlen(str)
 			&& ft_isspace(str[i + tool->var->count]) == 1)
 			return (sub(tool->var, lexer, tool));
-		if (str && i + tool->var->count < (int)ft_strlen(str) \
-			&& che_tok(str[i + tool->var->count], 0))
+		if (str && i + tool->var->count < (int)ft_strlen(str) && che_tok(str[i
+				+ tool->var->count], 0))
 			return (sub(tool->var, lexer, tool) - 1);
 		if (i + tool->var->count < (int)ft_strlen(str))
 			tool->var->count++;
@@ -99,7 +101,7 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 
 t_lexer	*lexer(char *str, t_lexer *lexer, t_tool *tool)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	tool->var = malloc(sizeof(t_var));

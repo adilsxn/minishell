@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	quotes(t_lexer *lex, int i, int *count1, int *count2)
 {
@@ -95,13 +95,13 @@ int	err_special_char(t_lexer *lexi, int i)
 
 void	printin(t_lexer *lex)
 {
-    t_lexer	*lexi;
+	t_lexer	*lexi;
 
 	lexi = lex;
 	printf("------printin---------\n");
 	while (lexi)
 	{
-        printf("str: %s\n", lexi->str);
+		printf("str: %s\n", lexi->str);
 		printf("token: %d\n", lexi->token);
 		printf("i: %d\n", lexi->i);
 		lexi = lexi->next;

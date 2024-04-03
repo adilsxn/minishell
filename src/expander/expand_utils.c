@@ -24,7 +24,7 @@ char	*get_key(char *str)
 		str1++;
 	i = 0;
 	while (str1[i] != '\0' && !ft_isspace(str1[i]) && str1[i] != 47
-		&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '=' \
+		&& str1[i] != '"' && str1[i] != '\'' && str1[i] != '='
 		&& str1[i] != '|')
 		i++;
 	return (ft_substr(str1, 0, i));

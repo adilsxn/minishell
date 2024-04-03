@@ -76,7 +76,6 @@ void	lex_del(t_lexer **lexer)
 	while (lex != NULL)
 	{
 		next_lex = lex->next;
-
 		if (lex->str && lex->str[0] == '\0')
 			del_one(lexer, lex->i);
 		lex = next_lex;
