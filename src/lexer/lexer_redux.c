@@ -39,7 +39,7 @@ void	lexer_redux(t_lexer **lexer)
 		if (it->token > 1)
 		{
 			it->str = it->next->str;
-            it->str2 = it->next->str2;
+			it->str2 = it->next->str2;
 			del = it->next;
 			it->next = del->next;
 			if (del->next != NULL)
@@ -77,8 +77,8 @@ void	quote_help(t_lexer *shell)
 				else if (quote_assist(le->str, 39) < 2)
 					le->str = del_quote(le->str, 34);
 			}
-			else if (le->str[0] == 34 && le->str[1] == 34 \
-				&& ft_strequ(le->str + 2, "echo"))
+			else if (le->str[0] == 34 && le->str[1] == 34 && ft_strequ(le->str
+					+ 2, "echo"))
 				le->str = del_quote(le->str, 34);
 			if (quote_assist(le->str, 34) < 2)
 				le->str = del_quote(le->str, 39);

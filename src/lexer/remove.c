@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
 /*   Updated: 2024/03/05 18:50:23 by acuva-nu         ###   ########.fr       */
@@ -16,10 +17,10 @@
 void	*clear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
-    {
-		ft_free((void **)&(*lst)->str); 
+	{
+		ft_free((void **)&(*lst)->str);
 		ft_free((void **)&(*lst)->str2);
-    }
+	}
 	ft_free((void **)&*lst);
 	return (NULL);
 }

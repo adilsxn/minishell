@@ -13,32 +13,34 @@
 
 #include "../../inc/minishell.h"
 
+static void	free_2str(void *key, void *data)
+{
+	free((void *)key);
+	free((void *)data);
+}
+
 t_env	*init_env(char **envp)
 {
 	t_env		*env;
 	const char	*key;
 	const char	*data;
-	const char	*sign;
 
 	env = NULL;
 	key = NULL;
 	data = NULL;
-	sign = NULL;
-    if (*envp == NULL)
-    {
-        data = getcwd(NULL, 0);
-        set_env(&env, "PWD", data);
-        ft_free((void **)&data);
-        return(env);
-    }
+	if (*envp == NULL)
+	{
+		data = getcwd(NULL, 0);
+		set_env(&env, "PWD", data);
+		ft_free((void **)&data);
+		return (env);
+	}
 	while (*envp != NULL)
 	{
-		sign = ft_strchr(*envp, '=');
-		key = ft_substr(*envp, 0, sign - *envp);
-		data = ft_strdup(sign + 1);
+		key = ft_substr(*envp, 0, ft_strchr(*envp, '=') - *envp);
+		data = ft_strdup(ft_strchr(*envp, '=') + 1);
 		set_env(&env, key, data);
-		free((void *)key);
-		free((void *)data);
+		free_2str((void *)key, (void *)data);
 		envp++;
 	}
 	return (env);

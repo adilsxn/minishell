@@ -39,7 +39,6 @@ int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
 	return (len);
 }
 
-
 char	*init_expand(char **str, char ***str1)
 {
 	if ((*str)[0] == 39)
