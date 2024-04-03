@@ -25,7 +25,7 @@ static bool	parse_noninteractive(t_tool *shell, char **ni_input)
     while (ni_input[++i])
     {
         tmp = ft_strdup(ni_input[i]);
-        shell->arg = ft_strtrim(tmp, " ");
+        shell->arg = ft_strtrim(tmp, "b");
         free(tmp);
         shell->lexer = lexer(shell->arg, shell->lexer, shell);
         if (shell->lexer)

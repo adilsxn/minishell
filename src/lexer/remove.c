@@ -66,12 +66,8 @@ void	del_1(t_lexer *lst)
 		return ;
 	if (lst->next)
 		lst->next->prev = lst->prev;
-	else if (lst->prev)
-		lst->prev->next = NULL;
 	if (lst->prev)
 		lst->prev->next = lst->next;
-	else if (lst->next)
-		lst->next->prev = NULL;
 	clear_one(&lst);
 }
 
