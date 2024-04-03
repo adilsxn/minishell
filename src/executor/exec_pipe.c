@@ -16,7 +16,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		return (cmd_error(cmd->args[0], cmd->path));
+		return (cmd_error(cmd));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
@@ -88,7 +88,7 @@ void	exec_pipe(t_tool *data)
 	int		proc_fd[2];
 	t_ppe	*proc;
 
-	signal_handler(sig_new_prompt, SIGINT);
+	signal_handler(sig_hdoc_parent, SIGINT);
 	std_fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	std_fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	proc_fd[STDIN_FILENO] = dup(STDIN_FILENO);

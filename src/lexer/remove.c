@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/12 19:54:05 by matilde          ###   ########.fr       */
+/*   Updated: 2024/03/05 18:50:23 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 void	*clear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
-		ft_free((void **)&(*lst)->str);
+    {
+		ft_free((void **)&(*lst)->str); 
+		ft_free((void **)&(*lst)->str2);
+    }
 	ft_free((void **)&*lst);
 	return (NULL);
 }
@@ -91,6 +94,7 @@ void	lst_clear(t_lexer **lst)
 	{
 		tmp = (*lst)->next;
 		ft_free((void **)&(*lst)->str);
+		ft_free((void **)&(*lst)->str2);
 		ft_free((void **)&*lst);
 		*lst = tmp;
 	}

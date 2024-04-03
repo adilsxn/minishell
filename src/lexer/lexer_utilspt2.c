@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utilspt2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/21 13:10:16 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:00:28 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,49 +22,79 @@ int	sub(t_var *var, t_lexer **lexer, t_tool *tool)
 	return (var->count);
 }
 
-t_lexer	*lex_check(t_lexer *lexer)
+t_lexer	*begin_end(t_lexer *lexer)
 {
 	t_lexer	*lex;
+	char	*tmp;
 
 	lex = lexer;
-	while (lex->next)
-		lex = lex->next;
-	if (lex->token != 0 && lex->token != 1)
+	if (lex && lex->token && lex->token == 1)
 	{
-		ft_err("Syntax error", "token at end of commands", NULL, 2);
+		tmp = syntax_error(lex->token);
+		ft_err(NULL, tmp, NULL, 2);
+		ft_free((void **)&tmp);
+		lst_clear(&lexer);
+		return (NULL);
+	}
+	while (lex && lex->next)
+		lex = lex->next;
+	if (lex && lex->token != 0)
+	{
+		tmp = syntax_error(lex->token);
+		ft_err(NULL, tmp, NULL, 2);
+		ft_free((void **)&tmp);
 		lst_clear(&lexer);
 		return (NULL);
 	}
 	return (lexer);
 }
 
+// void	lex_del(t_lexer **lexer)
+// {
+// 	t_lexer	*lex;
+
+// 	lex = *lexer;
+// 	while (lex != NULL)
+// 	{
+// 		if (lex->str)
+// 		{
+// 			if (lex->str[0] == 0)
+// 			{
+// 				del_one(lexer, lex->i);
+// 				lex = *lexer;
+// 			}
+// 		}
+// 		lex = lex->next;
+// 	}
+// }
 void	lex_del(t_lexer **lexer)
 {
 	t_lexer	*lex;
+	t_lexer	*next_lex;
 
 	lex = *lexer;
-	while (lex)
+	while (lex != NULL)
 	{
-		if (lex->str)
-		{
-			if (lex->str[0] == 0)
-			{
-				del_one(lexer, lex->i);
-				lex = *lexer;
-			}
-		}
-		lex = lex->next;
+		next_lex = lex->next;
+
+		if (lex->str && lex->str[0] == '\0')
+			del_one(lexer, lex->i);
+		lex = next_lex;
 	}
 }
 
 int	token_help(int i, char *str, int *trig, t_lexer **lexi)
 {
+	char	*tmp;
+
 	*trig = 1;
 	if (str[i + 2] && str[i + 3])
 	{
-		if (check_token(str[i + 2], str[i + 3] != 0))
+		if (che_tok(str[i + 2], str[i + 3]) != 0)
 		{
-			ft_err("Double token", "Syntax error", NULL, 2);
+			tmp = syntax_error(che_tok(str[i + 2], str[i + 3]));
+			ft_err(NULL, tmp, NULL, 2);
+			ft_free((void **)&tmp);
 			lst_clear(lexi);
 			return (-1);
 		}
@@ -74,17 +104,27 @@ int	token_help(int i, char *str, int *trig, t_lexer **lexi)
 
 int	lex_check_again(t_lexer *lex)
 {
+	char	*tmp;
 	t_lexer	*lexi;
 
 	lexi = lex;
-	while (lexi->next != NULL)
+	while (lexi != NULL && lexi->next != NULL)
 	{
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{
-			ft_err("Space between tokens or different tokens not allowed", \
-				"Syntax error", NULL, 2);
-			lst_clear(&lex);
-			return (-1);
+			if (lexi->token == 1 && lexi->next->token == 2)
+			{
+				lexi = lexi->next;
+				continue ;
+			}
+			else
+			{
+				tmp = syntax_error(lexi->token);
+				ft_err(NULL, tmp, NULL, 2);
+				ft_free((void **)&tmp);
+				lst_clear(&lex);
+				return (-1);
+			}
 		}
 		lexi = lexi->next;
 	}

@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/14 15:08:53 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/26 18:44:59 by acuva-nu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +20,6 @@ int	loopin(t_env **env2, char **str3, char *tmp, int i)
 	*env2 = NULL;
 	*str3 = NULL;
 	return (i);
-}
-
-void	loop_help1(t_env *env2, char **str3)
-{
-	if (env2 != NULL)
-		*str3 = (char *)env2->value;
 }
 
 int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
@@ -42,6 +37,18 @@ int	initialize_expander(t_env **env2, int *i, char **str2, char **str1)
 	else
 		return (-1);
 	return (len);
+}
+
+
+char	*init_expand(char **str, char ***str1)
+{
+	if ((*str)[0] == 39)
+	{
+		del_quote(*str, '\'');
+		return (*str);
+	}
+	*str1 = ft_split2(*str, '$');
+	return (NULL);
 }
 
 char	*expander(t_env *env, char *str)
@@ -64,7 +71,7 @@ char	*expander(t_env *env, char *str)
 			if (env1_func(&env1->env2, env, &env1->str3, env1->tmp) == 1)
 				loop_help2(&env1, &env1->str2, env1->str3, str1);
 			else
-				checker(env1->env2, &env1->str2, env1->i);
+				checker(env1, -1, str1);
 		}
 		else
 			env1->str2 = expander_help1(env1->len, &env1->str2, str1, env1->i);
@@ -78,6 +85,8 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	t_lexer	*lex;
 
 	lex = lexi;
+	if (!env)
+		return (lexi);
 	while (lex)
 	{
 		if (lex->str)

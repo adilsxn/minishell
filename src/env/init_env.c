@@ -24,6 +24,13 @@ t_env	*init_env(char **envp)
 	key = NULL;
 	data = NULL;
 	sign = NULL;
+    if (*envp == NULL)
+    {
+        data = getcwd(NULL, 0);
+        set_env(&env, "PWD", data);
+        ft_free((void **)&data);
+        return(env);
+    }
 	while (*envp != NULL)
 	{
 		sign = ft_strchr(*envp, '=');

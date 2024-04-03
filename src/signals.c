@@ -32,8 +32,12 @@ void	sig_hdoc_child(int sig)
 
 void	sig_hdoc_parent(int sig)
 {
-	(void)sig;
-	rl_redisplay();
+    if (sig == SIGINT)
+    {
+        (void)sig;
+		ft_putchar_fd('\n', 1);
+        rl_redisplay();
+    }
 }
 
 void	sig_new_prompt(int sig)

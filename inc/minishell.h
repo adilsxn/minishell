@@ -6,7 +6,7 @@
 /*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/14 16:46:48 by matilde          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:49:03 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef enum s_token
 typedef struct s_lexer
 {
 	char			*str;
+    char            *str2;
 	t_token			token;
 	int				i;
 	struct s_lexer	*next;
@@ -82,6 +83,7 @@ typedef struct s_rdr
 {
 	t_token			type;
 	char			*value;
+    char            *value2;
 	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;
@@ -93,6 +95,7 @@ typedef struct s_cmd
 	char			**args;
 	t_rdr			*rdir;
 	bool			io;
+	bool			path_on;
 }					t_cmd;
 
 typedef struct s_ppe
@@ -110,7 +113,7 @@ typedef struct s_tool
 	t_lexer			*lexer;
 	t_ppe			*pipes;
 	t_env			*env;
-	t_rdr			*hdoc;
+	bool			ninter;
 	int				reset;
 	t_var			*var;
 }					t_tool;
@@ -136,19 +139,20 @@ int					msh_export(char **args, t_tool *data);
 int					msh_pwd(char **args, t_tool *data);
 int					msh_unset(char **args, t_tool *data);
 
+void				printin(t_lexer *lex);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
 int					new_node(char *str, int token, t_lexer **lexer_list,
 						t_tool *tool);
 int					len_quote(int i, char *str, char quote);
-t_token				check_token(int c1, int c2);
+t_token				che_tok(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list,
 						t_tool *tool);
 char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 void				lexer_redux(t_lexer **lexer);
-t_lexer				*lex_check(t_lexer *lexer);
+t_lexer				*begin_end(t_lexer *lexer);
 int					sub(t_var *var, t_lexer **lexer, t_tool *tool);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer);
@@ -161,6 +165,8 @@ int					reti(int trig);
 int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
 int					node_help(int in, t_tool *tool);
+char				*syntax_error(int i);
+int					err_special_char(t_lexer *lex, int i);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
@@ -187,7 +193,7 @@ void				parse_heredoc(t_lexer *lexer, t_env *env);
 char				*get_key(char *str);
 int					env1_func(t_env **env2, t_env *env, char **str3, char *tmp);
 char				*tmpcheck(char **tmp, char **str1, int i);
-void				checker(t_env *env2, char **str2, int i);
+void				checker(t_env1 *env1, int j, char **str1);
 char				*expander_help1(int len, char **str2, char **str1, int i);
 void				loop_help2(t_env1 **ex, char **str2, char *str3,
 						char **str1);
@@ -202,7 +208,7 @@ char				*freer(t_env1 **ex, char *str, char **str1);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
-int					cmd_error(char *cmd, char *cmd_path);
+int					cmd_error(t_cmd *cmd);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);

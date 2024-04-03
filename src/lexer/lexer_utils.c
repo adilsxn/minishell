@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+       +#+        */
+/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:06:19 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/21 17:21:29 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:22:56 by matilde          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,21 @@ int	len_quote(int i, char *str, char quote)
 	int	count;
 
 	count = 0;
-	if (str != NULL && i + count < (int)ft_strlen(str) && str[i + count] == quote)
+	if (str != NULL && i + count < (int)ft_strlen(str) \
+		&& str[i + count] == quote)
 	{
 		count++;
 		while (str[i + count] != '\0' && str[i + count] != quote)
 			count++;
+		if (str[i + count] == '\0' && str[i + count -1] != quote \
+			&& i + count -1 != 0)
+			return (0);
 		count++;
 	}
 	return (count);
 }
 
-t_token	check_token(int c1, int c2)
+t_token	che_tok(int c1, int c2)
 {
 	if (c1 == '<' && c2 == '<')
 		return (LESS_LESS);
@@ -78,4 +82,4 @@ int	reti(int trig)
 	if (trig == 1)
 		return (2);
 	return (1);
-}	
+}
