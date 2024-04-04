@@ -88,8 +88,16 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 	while (i < tkn_nbr)
 	{
 		if (it->token == PIPE)
-			break ;
-		build_av_helper(&i, &j, av, it);
+			break ; 
+        if (it->token == 0 && it->str != NULL)
+        {
+            if (ft_strchr(it->str, ' '))
+                j = get_mixed_cmd(av, it, &i);
+            if (j)
+                av[i] = ft_strdup(it->str);
+            i++;
+        }
+        it = it->next;
 	}
 	av[tkn_nbr] = NULL;
 	return (av);

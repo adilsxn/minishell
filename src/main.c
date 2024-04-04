@@ -12,19 +12,9 @@
 
 #include "../inc/minishell.h"
 
-/*if (ac == 3 && ft_strequ(av[1], "-c") && av[2])
-{
-    ni_arg = ft_split(av[2], ';');
-    if (!ni_arg)
-        exit(EXIT_FAILURE);
-    shell.env = init_env(envp);
-    shell.reset = 0;
-    shell.ninter = true;
-    parse_noninteractive(&shell, ni_arg);
-    clean_data(&shell, true);
-    free_array(ni_arg);
-    return (g_last_ret_code);
-}
+// if (ac != 1)
+// 	ft_err("Non interative mode not available", NULL, NULL, 1);
+
 
 static bool	parse_noninteractive(t_tool *shell, char **ni_input)
 {
@@ -35,7 +25,7 @@ static bool	parse_noninteractive(t_tool *shell, char **ni_input)
     while (ni_input[++i])
     {
         tmp = ft_strdup(ni_input[i]);
-        shell->arg = ft_strtrim(tmp, " ");
+        shell->arg = ft_strtrim(tmp, "b");
         free(tmp);
         shell->lexer = lexer(shell->arg, shell->lexer, shell);
         if (shell->lexer)
@@ -55,8 +45,8 @@ static bool	parse_noninteractive(t_tool *shell, char **ni_input)
         shell->reset = 1;
     }
     return (true);
-}
-*/
+} 
+
 
 volatile int	g_last_ret_code = 0;
 
@@ -102,12 +92,23 @@ static void	minishell_loop(t_tool *shell)
 int	main(int ac, char **av, char **envp)
 {
 	t_tool	shell;
+    char **ni_arg;
 
-	(void)av;
-	if (ac != 2)
-		ft_err("Non interative mode not available", NULL, NULL, 1);
-	ft_bzero(&shell, sizeof(t_tool));
-	shell = (t_tool){NULL, NULL, NULL, NULL, false, 0, NULL};
+    ft_bzero(&shell, sizeof(t_tool));
+    shell = (t_tool){NULL, NULL, NULL, NULL, false, 0, NULL};
+    if (ac == 3 && ft_strequ(av[1], "-c") && av[2])
+    {
+        ni_arg = ft_split(av[2], ';');
+        if (!ni_arg)
+            exit(EXIT_FAILURE);
+        shell.env = init_env(envp);
+        shell.reset = 0;
+        shell.ninter = true;
+        parse_noninteractive(&shell, ni_arg);
+        clean_data(&shell, true);
+        free_array(ni_arg);
+        return (g_last_ret_code);
+    }
 	shell.reset = 0;
 	shell.env = init_env(envp);
 	minishell_loop(&shell);

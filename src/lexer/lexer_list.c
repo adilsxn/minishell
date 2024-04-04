@@ -34,6 +34,7 @@ int	new_node(char *str, int token, t_lexer **lexer_list, t_tool *tool)
 	in = node_help(in, tool);
 	new_node->i = in++;
 	new_node->next = NULL;
+    new_node->prev = NULL;
 	if (*lexer_list == NULL)
 		*lexer_list = new_node;
 	else
