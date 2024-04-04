@@ -13,7 +13,6 @@
 
 #include "../../inc/minishell.h"
 
-
 void	lst_clear(t_lexer **lst)
 {
 	t_lexer	*tmp;

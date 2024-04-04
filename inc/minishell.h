@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 14:04:20 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:12:17 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ t_lexer				*begin_end(t_lexer *lexer);
 int					sub(t_var *var, t_lexer **lexer);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer, int i, int j);
-void				del_1(t_lexer *lex);
 void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
 int					reti(int trig);

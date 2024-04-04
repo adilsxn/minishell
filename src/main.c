@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:16:54 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 14:02:39 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:11:53 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static bool	parse_noninteractive(t_tool *shell, char **ni_input)
         shell->lexer = lexer(shell->arg, shell->lexer, shell);
         if (shell->lexer)
         {
-            //lexer_redux(&shell->lexer);
             shell->lexer = expander2(shell->env, shell->lexer);
             quote_help(shell->lexer);
             parse_heredoc(shell->lexer, shell->env);
@@ -43,7 +42,6 @@ static bool	parse_noninteractive(t_tool *shell, char **ni_input)
     }
     return (true);
 } 
-
 
 volatile int	g_last_ret_code = 0;
 
@@ -63,7 +61,6 @@ static bool	parse_input(t_tool *shell)
 	shell->lexer = lexer(shell->arg, shell->lexer, shell);
 	if (shell->lexer)
 	{
-		//lexer_redux(&shell->lexer);
 		shell->lexer = expander2(shell->env, shell->lexer);
 		quote_help(shell->lexer);
 		parse_heredoc(shell->lexer, shell->env);
@@ -73,16 +70,6 @@ static bool	parse_input(t_tool *shell)
 			return (exec_cmd(shell), false);
 	}
 	return (true);
-}
-
-static void	minishell_loop(t_tool *shell)
-{
-	while (1)
-	{
-		if (parse_input(shell) == true)
-			exec_pipe(shell);
-		clean_data(shell, false);
-	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -105,6 +92,11 @@ int	main(int ac, char **av, char **envp)
         return (g_last_ret_code);
     }
 	shell.env = init_env(envp);
-	minishell_loop(&shell);
+	while (1)
+	{
+		if (parse_input(&shell) == true)
+			exec_pipe(&shell);
+		clean_data(&shell, false);
+	}
 	return (0);
 }
