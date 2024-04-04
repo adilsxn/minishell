@@ -62,18 +62,17 @@ void	lex_del(t_lexer **lexer, int i, int j)
 		i++;
 		lexi = lexi->next;
 	}
+	lexer_redux(lexer);
 	while (lex != NULL)
 	{
 		next_lex = lex->next;
 		if (ft_strlen(lex->str) == 0 && lex->token == 0)
 		{
 			j++;
-			del_1(lex);
+			del_one(lexer, lex->i);
 		}
 		lex = next_lex;
 	}
-	if (j == i)
-		*lexer = NULL;
 }
 
 int	token_help(int i, char *str, int *trig, t_lexer **lexi)
@@ -101,7 +100,7 @@ int	lex_check_again(t_lexer *lex)
 	t_lexer	*lexi;
 
 	lexi = lex;
-	while (lexi && (lexi->next != NULL))
+	while (lexi && lexi->next != NULL)
 	{
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{

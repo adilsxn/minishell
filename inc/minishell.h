@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 13:32:52 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:04:20 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ t_lexer				*begin_end(t_lexer *lexer);
 int					sub(t_var *var, t_lexer **lexer);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
 void				lex_del(t_lexer **lexer, int i, int j);
-// void				del_first(t_lexer **lst);
 void				del_1(t_lexer *lex);
 void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
@@ -163,6 +162,7 @@ int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
 char				*syntax_error(int i);
 int					err_special_char(t_lexer *lex, int i);
+void				del_one(t_lexer **lst, int i);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
@@ -212,7 +212,6 @@ void				get_exit_code(int wstatus);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
-char				*ft_strtrim1(char const *s1, char const *set);
 
 // cleanup
 void				clean_data(t_tool *data, bool has_history);
