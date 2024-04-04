@@ -12,12 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-int	sub(t_var *var, t_lexer **lexer, t_tool *tool)
+int	sub(t_var *var, t_lexer **lexer)
 {
 	char	*tmp;
 
 	tmp = ft_substr(var->str, var->i, var->count);
-	new_node(tmp, 0, lexer, tool);
+	new_node(tmp, 0, lexer);
 	ft_free((void **)&tmp);
 	return (var->count);
 }
@@ -49,37 +49,31 @@ t_lexer	*begin_end(t_lexer *lexer)
 	return (lexer);
 }
 
-// void	lex_del(t_lexer **lexer)
-// {
-// 	t_lexer	*lex;
-
-// 	lex = *lexer;
-// 	while (lex != NULL)
-// 	{
-// 		if (lex->str)
-// 		{
-// 			if (lex->str[0] == 0)
-// 			{
-// 				del_one(lexer, lex->i);
-// 				lex = *lexer;
-// 			}
-// 		}
-// 		lex = lex->next;
-// 	}
-// }
-void	lex_del(t_lexer **lexer)
+void	lex_del(t_lexer **lexer, int i, int j)
 {
 	t_lexer	*lex;
 	t_lexer	*next_lex;
+	t_lexer	*lexi;
 
 	lex = *lexer;
+	lexi = *lexer;
+	while (lexi)
+	{
+		i++;
+		lexi = lexi->next;
+	}
 	while (lex != NULL)
 	{
 		next_lex = lex->next;
-		if (ft_strlen(lex->str) == 0  && lex->token == 0)
+		if (ft_strlen(lex->str) == 0 && lex->token == 0)
+		{
+			j++;
 			del_1(lex);
+		}
 		lex = next_lex;
 	}
+	if (j == i)
+		*lexer = NULL;
 }
 
 int	token_help(int i, char *str, int *trig, t_lexer **lexi)
@@ -107,7 +101,7 @@ int	lex_check_again(t_lexer *lex)
 	t_lexer	*lexi;
 
 	lexi = lex;
-	while (lexi != NULL && lexi->next != NULL)
+	while (lexi && (lexi->next != NULL))
 	{
 		if (lexi->token != 0 && lexi->next->token != 0)
 		{

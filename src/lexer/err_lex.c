@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_lex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 12:12:20 by matilde           #+#    #+#             */
-/*   Updated: 2024/02/27 14:17:07 by matilde          ###   ########.fr       */
+/*   Updated: 2024/04/04 12:50:12 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,12 @@ void	printin(t_lexer *lex)
 	printf("------printin---------\n");
 	while (lexi)
 	{
-		printf("str: %s\n", lexi->str);
-		printf("token: %d\n", lexi->token);
-		printf("i: %d\n", lexi->i);
+		if (lexi->str)
+			printf("str: .%s.\n", lexi->str);
+		if (lexi->token)
+			printf("token: %d\n", lexi->token);
+		if (lexi->i)
+			printf("i: %d\n", lexi->i);
 		lexi = lexi->next;
 	}
 	printf("------printin---------\n");
