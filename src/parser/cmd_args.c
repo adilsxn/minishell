@@ -28,7 +28,7 @@ int	count_token(t_lexer *lexi)
 			break ;
 		if (!it->token && it->str && ft_strchr(it->str, ' '))
 			if (!ft_strchr(it->str2, '\'') && !ft_strchr(it->str2, '"')
-				&& ft_strchr(it->str, '-'))
+					&& ft_strchr(it->str, '-'))
 				i++;
 		if (it->token == 0 && it->str)
 			i++;
@@ -44,7 +44,7 @@ int	get_mixed_cmd(char **av, t_lexer *it, int *tkn_nbr)
 
 	i = 0;
 	if (ft_strchr(it->str2, '\'') || ft_strchr(it->str2, '"')
-		|| !ft_strchr(it->str, '-'))
+			|| !ft_strchr(it->str, '-'))
 		return (1);
 	tmp_av = ft_split(it->str, ' ');
 	while (i < ft_wordcount(it->str, ' '))
@@ -88,16 +88,16 @@ char	**build_av(t_lexer *lexi, int tkn_nbr)
 	while (i < tkn_nbr)
 	{
 		if (it->token == PIPE)
-			break ; 
-        if (it->token == 0 && it->str != NULL)
-        {
-            if (ft_strchr(it->str, ' '))
-                j = get_mixed_cmd(av, it, &i);
-            if (j)
-                av[i] = ft_strdup(it->str);
-            i++;
-        }
-        it = it->next;
+			break ;
+		if (it->token == 0 && it->str != NULL)
+		{
+			if (ft_strchr(it->str, ' '))
+				j = get_mixed_cmd(av, it, &i);
+			if (j)
+				av[i] = ft_strdup(it->str);
+			i++;
+		}
+		it = it->next;
 	}
 	av[tkn_nbr] = NULL;
 	return (av);

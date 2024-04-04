@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   remove.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:02:59 by matilde           #+#    #+#             */
@@ -13,7 +13,20 @@
 
 #include "../../inc/minishell.h"
 
-// free because str is malloced
+void	lst_clear(t_lexer **lst)
+{
+	t_lexer	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_free((void **)&(*lst)->str);
+		ft_free((void **)&(*lst)->str2);
+		ft_free((void **)&*lst);
+		*lst = tmp;
+	}
+}
+
 void	*clear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
@@ -25,7 +38,7 @@ void	*clear_one(t_lexer **lst)
 	return (NULL);
 }
 
-/* void	del_first(t_lexer **lst)
+void	del_first(t_lexer **lst)
 {
 	t_lexer	*node;
 	t_lexer	*node1;
@@ -57,30 +70,53 @@ static void	del_one1(t_lexer *prev, t_lexer *node)
 		prev = current;
 		current = current->next;
 	}
-} */
+}
+
 // update the prev->next pointer to skip the node deleted
 // update lst, pointing to start
-void	del_1(t_lexer *lst)
+void	del_one(t_lexer **lst, int i)
 {
-	if (!lst)
-		return ;
-	if (lst->next)
-		lst->next->prev = lst->prev;
-	if (lst->prev)
-		lst->prev->next = lst->next;
-	clear_one(&lst);
-}
+	t_lexer	*node;
+	t_lexer	*prev;
+	t_lexer	*start;
 
-void	lst_clear(t_lexer **lst)
-{
-	t_lexer	*tmp;
-
-	while (*lst)
+	start = *lst;
+	node = start;
+	if ((*lst)->i == i)
 	{
-		tmp = (*lst)->next;
-		ft_free((void **)&(*lst)->str);
-		ft_free((void **)&(*lst)->str2);
-		ft_free((void **)&*lst);
-		*lst = tmp;
+		del_first(lst);
+		return ;
 	}
+	while (node && node->i != i)
+	{
+		prev = node;
+		node = node->next;
+	}
+	if (node->next)
+		del_one1(prev, node);
+	else
+		prev->next = NULL;
+	clear_one(&node);
+	*lst = start;
 }
+
+// void	del_1(t_lexer *lst)
+// {
+// 	if (!lst)
+// 		return ;
+// 	if (lst->next)
+// 		lst->next->prev = lst->prev;
+// 	if (lst->prev)
+// 		lst->prev->next = lst->next;
+// 	else if (lst->next && !lst->prev)
+// 		lst->next->next = NULL;
+// 	if (lst->str)
+// 	{
+// 		free(lst->str);
+// 		free(lst->str2);
+// 		lst->str = NULL;
+// 		lst->str2 = NULL;
+// 	}
+// 	free(lst);
+// 	lst = NULL;
+// }

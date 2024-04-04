@@ -27,8 +27,8 @@ int	len_quote(int i, char *str, char quote)
 	int	count;
 
 	count = 0;
-	if (str != NULL && i + count < (int)ft_strlen(str)
-        && str[i + count] == quote)
+	if (str != NULL && i + count < (int)ft_strlen(str) && str[i
+		+ count] == quote)
 	{
 		count++;
 		while (str[i + count] != '\0' && str[i + count] != quote)

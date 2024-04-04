@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:14:49 by acuva-nu          #+#    #+#             */

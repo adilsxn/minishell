@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:48:49 by acuva-nu          #+#    #+#             */

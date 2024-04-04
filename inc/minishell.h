@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/29 15:49:03 by matilde          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:27:36 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum s_token
 typedef struct s_lexer
 {
 	char			*str;
-    char            *str2;
+    char			*str2;
 	t_token			token;
 	int				i;
 	struct s_lexer	*next;
@@ -83,7 +83,7 @@ typedef struct s_rdr
 {
 	t_token			type;
 	char			*value;
-    char            *value2;
+    char			*value2;
 	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;
@@ -114,7 +114,6 @@ typedef struct s_tool
 	t_ppe			*pipes;
 	t_env			*env;
 	bool			ninter;
-	int				reset;
 	t_var			*var;
 }					t_tool;
 
@@ -143,8 +142,7 @@ void				printin(t_lexer *lex);
 // lexer
 int					ft_isspace(int c);
 int					count_spaces(char *str, int i);
-int					new_node(char *str, int token, t_lexer **lexer_list,
-						t_tool *tool);
+int					new_node(char *str, int token, t_lexer **lexer_list);
 int					len_quote(int i, char *str, char quote);
 t_token				che_tok(int c1, int c2);
 int					len_word(int i, char *str, t_lexer **lexer_list,
@@ -153,20 +151,18 @@ char				*del_quote(char *str, char c);
 t_lexer				*lexer(char *str, t_lexer *lexer, t_tool *tool);
 void				lexer_redux(t_lexer **lexer);
 t_lexer				*begin_end(t_lexer *lexer);
-int					sub(t_var *var, t_lexer **lexer, t_tool *tool);
+int					sub(t_var *var, t_lexer **lexer);
 int					token_help(int i, char *str, int *trig, t_lexer **lex);
-void				lex_del(t_lexer **lexer);
-void				*clear_one(t_lexer **lst);
-// void				del_first(t_lexer **lst);
-void				del_1(t_lexer *lex);
+void				lex_del(t_lexer **lexer, int i, int j);
 void				lst_clear(t_lexer **lst);
 int					lex_check_again(t_lexer *lex);
 int					reti(int trig);
 int					quote_assist(char *str, int q);
 void				quote_help(t_lexer *shell);
-int					node_help(int in, t_tool *tool);
 char				*syntax_error(int i);
 int					err_special_char(t_lexer *lex, int i);
+void				del_one(t_lexer **lst, int i);
+void				renumber(t_lexer **lst);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);
@@ -216,7 +212,6 @@ void				get_exit_code(int wstatus);
 void				exec_bin(t_cmd *cmd);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
-char				*ft_strtrim1(char const *s1, char const *set);
 
 // cleanup
 void				clean_data(t_tool *data, bool has_history);

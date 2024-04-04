@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_redux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 22:31:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/29 15:31:01 by matilde          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:59:40 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	renumber(t_lexer **lst)
+void	renumber(t_lexer **lst)
 {
 	int		i;
 	t_lexer	*it;
@@ -49,16 +49,6 @@ void	lexer_redux(t_lexer **lexer)
 		it = it->next;
 	}
 	renumber(lexer);
-}
-
-int	node_help(int in, t_tool *tool)
-{
-	if (tool->reset == 1)
-	{
-		in = 0;
-		tool->reset = 0;
-	}
-	return (in);
 }
 
 void	quote_help(t_lexer *shell)

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 12:41:54 by matilde           #+#    #+#             */
@@ -90,7 +90,7 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	{
 		if (lex->str)
 		{
-			if (lex->i == 0 || (lex->i > 0 && (!lex->prev->token
+			if ((lex->i == 0 && lex->token != 5) || (lex->i > 0 && (!lex->prev->token
 						|| lex->prev->token != 5)))
 			{
 				lex->str = expander(env, lex->str);

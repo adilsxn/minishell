@@ -1,0 +1,1 @@
+error: file specified in --core (-c) option doesn't exist: 'export HELLO'WORLD'=a'
