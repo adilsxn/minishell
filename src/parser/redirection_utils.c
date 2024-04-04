@@ -22,7 +22,8 @@ int	handle_input(t_rdr *rdr)
 	rdr->type = LESS;
 	fmode = O_RDONLY;
 	tmp = ft_strchr(rdr->value2, '$');
-    tmp++;
+	if (tmp)
+		tmp++;
 	if (!(rdr->value) && tmp)
 		return (ft_err(tmp, "Ambiguous redirect", NULL, 1), -1);
 	if (ft_strequ("\"\"", rdr->value) == 1)
@@ -42,7 +43,8 @@ int	handle_output(t_rdr *rdr)
 	rdr->type = GREAT;
 	fmode = O_WRONLY | O_CREAT | O_TRUNC;
 	tmp = ft_strchr(rdr->value2, '$');
-    tmp++;
+	if (tmp)
+		tmp++;
 	if (!(rdr->value) && tmp)
 		return (ft_err(tmp, "Ambiguous redirect", NULL, 1), -1);
 	if (ft_strequ("\"\"", rdr->value) == 1)
@@ -75,7 +77,8 @@ int	handle_append(t_rdr *rdr)
 	rdr->type = GREAT_GREAT;
 	fmode = O_WRONLY | O_CREAT | O_APPEND;
 	tmp = ft_strchr(rdr->value2, '$');
-    tmp++;
+	if (tmp)
+		tmp++;
 	if (!(rdr->value) && tmp)
 		return (ft_err(tmp, "Ambiguous redirect", NULL, 1), -1);
 	if (ft_strequ("\"\"", rdr->value) == 1)
