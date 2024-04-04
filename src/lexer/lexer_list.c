@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+      
+/*   By: acuva-nu <acuva-nu@student.42lisboa.com>    +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:03:23 by matilde           #+#    #+#             */
@@ -18,13 +18,13 @@ void	new_node2(t_lexer *new_node, int token)
 	new_node->token = token;
 	new_node->i = 0;
 	new_node->next = NULL;
-    new_node->prev = NULL;
+	new_node->prev = NULL;
 }
 
 int	new_node(char *str, int token, t_lexer **lexer_list)
 {
-	t_lexer		*new_node;
-	t_lexer		*last_node;
+	t_lexer	*new_node;
+	t_lexer	*last_node;
 
 	new_node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new_node)

@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 14:59:11 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:06:48 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum s_token
 typedef struct s_lexer
 {
 	char			*str;
-    char            *str2;
+    char			*str2;
 	t_token			token;
 	int				i;
 	struct s_lexer	*next;
@@ -83,7 +83,7 @@ typedef struct s_rdr
 {
 	t_token			type;
 	char			*value;
-    char            *value2;
+    char			*value2;
 	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;
