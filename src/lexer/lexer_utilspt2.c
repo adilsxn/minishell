@@ -62,7 +62,7 @@ void	lex_del(t_lexer **lexer, int i, int j)
 		i++;
 		lexi = lexi->next;
 	}
-	lexer_redux(lexer);
+	renumber(lexer);
 	while (lex != NULL)
 	{
 		next_lex = lex->next;

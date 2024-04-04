@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 14:12:17 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:59:11 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void				quote_help(t_lexer *shell);
 char				*syntax_error(int i);
 int					err_special_char(t_lexer *lex, int i);
 void				del_one(t_lexer **lst, int i);
+void				renumber(t_lexer **lst);
 // parser
 bool				is_builtin(char *str);
 void				free_arr(char **arr);

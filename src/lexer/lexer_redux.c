@@ -6,13 +6,13 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 22:31:48 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 12:57:07 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:59:40 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	renumber(t_lexer **lst)
+void	renumber(t_lexer **lst)
 {
 	int		i;
 	t_lexer	*it;
