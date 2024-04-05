@@ -89,7 +89,7 @@ int	msh_exit(char **args, t_tool *data)
 	if (alone)
 		ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
-		g_last_ret_code = 0;
+		g_last_ret_code = 2;
 	else
 	{
 		g_last_ret_code = get_code(args[1], &error);
