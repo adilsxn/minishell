@@ -84,22 +84,23 @@ int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
 	bool	alone;
+    int exit_;
 
 	error = false;
 	alone = is_exit_alone(data);
 	if (alone)
 		ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
-		g_last_ret_code = 2;
+		exit_ = 2;
 	else
 	{
-		g_last_ret_code = get_code(args[1], &error);
+		exit_ = get_code(args[1], &error);
 		if (error == true)
-			ft_err(args[1], "exit: numeric argument required", NULL, 2);
+			ft_err("exit", args[1], "numeric argument required", 2);
 		else if (args[2])
 			return(ft_err("exit: too many arguments", NULL, NULL, 1), 1);
 	}
 	clean_fds();
 	clean_data(data, true);
-	exit(g_last_ret_code);
+	exit(exit_);
 }
