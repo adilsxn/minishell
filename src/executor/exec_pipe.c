@@ -12,11 +12,11 @@
 
 #include "../../inc/minishell.h"
 
-static int	exec_bin_pipe(t_cmd *cmd)
+static int	exec_bin_pipe(t_cmd *cmd, t_tool *data)
 {
 	if (cmd->path == NULL && cmd->rdir == NULL)
 	{
-		return (cmd_error(cmd));
+		return (cmd_error(cmd, data));
 	}
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
@@ -37,7 +37,7 @@ static void	exec_pipe_child(t_ppe *proc, int proc_fd[2], t_tool *data)
 	if ((is_builtin(proc->cmd->args[0]) != 0))
 		proc->exit_code = exec_bi(proc->cmd, data);
 	else
-		proc->exit_code = exec_bin_pipe(proc->cmd);
+		proc->exit_code = exec_bin_pipe(proc->cmd, data);
 	exit(proc->exit_code);
 }
 

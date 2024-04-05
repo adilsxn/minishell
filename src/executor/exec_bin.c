@@ -23,7 +23,7 @@ static void	signal_handler_nonin(void (*handler)(int), int signal)
 	sigaction(signal, &event, NULL);
 }
 
-int	cmd_error(t_cmd *cmd)
+int	cmd_error(t_cmd *cmd, t_tool *data)
 {
 	struct stat	var;
 
@@ -32,6 +32,8 @@ int	cmd_error(t_cmd *cmd)
 	stat(cmd->path, &var);
 	if (ft_strequ(cmd->args[0], "."))
 		return (ft_err(cmd->args[0], NULL, DOT_MSG, 2), 2);
+	else if (ft_strequ(cmd->args[0], "..") && !get_env(data->env, "PATH"))
+		return (ft_err(cmd->args[0], NULL, "command not found", 126), 126);
 	else if (ft_strequ(cmd->args[0], ".."))
 		return (ft_err(cmd->args[0], NULL, "command not found", 127), 127);
 	else if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on
@@ -71,12 +73,12 @@ void	get_exit_code(int wstatus)
 		g_last_ret_code = WTERMSIG(wstatus) + 128;
 }
 
-void	exec_bin(t_cmd *cmd)
+void	exec_bin(t_cmd *cmd, t_tool *data)
 {
 	int	pid;
 	int	status;
 
-	g_last_ret_code = cmd_error(cmd);
+	g_last_ret_code = cmd_error(cmd, data);
 	if (g_last_ret_code > 120 || g_last_ret_code == 2)
 		return ;
 	pid = fork();

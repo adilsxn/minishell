@@ -205,12 +205,12 @@ char				*freer(t_env1 **ex, char *str, char **str1);
 int					count_token(t_lexer *lexi);
 char				**build_av(t_lexer *lexi, int tkn_nbr);
 char				*cmd_finder(t_env *env, char *cmd);
-int					cmd_error(t_cmd *cmd);
+int					cmd_error(t_cmd *cmd, t_tool *data);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);
 int					exec_bi(t_cmd *cmd, t_tool *data);
 void				get_exit_code(int wstatus);
-void				exec_bin(t_cmd *cmd);
+void				exec_bin(t_cmd *cmd, t_tool *data);
 int					exec_rdr(t_rdr *rdr);
 void				exec_pipe(t_tool *data);
 
