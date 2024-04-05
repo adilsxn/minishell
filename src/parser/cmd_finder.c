@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <sys/stat.h>
 
 /*Code adapted from github.com/adilsxn/pipex*/
 
