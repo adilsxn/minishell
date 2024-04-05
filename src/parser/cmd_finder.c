@@ -51,17 +51,17 @@ static char	**useful_paths(char *path)
 
 char	*cmd_finder(t_env *env, char *cmd)
 {
-    struct stat s;
-	char	**paths;
-	char	*path;
-	int		i;
+	struct stat	s;
+	char		**paths;
+	char		*path;
+	int			i;
 
 	if (!cmd)
 		return (NULL);
 	i = -1;
 	path = NULL;
 	paths = NULL;
-    stat(cmd, &s);
+	stat(cmd, &s);
 	if (ft_strequ(cmd, ".."))
 		return (NULL);
 	if (ft_strchr(cmd, '/'))

@@ -54,7 +54,6 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 	ft_free((void **)&str);
 }
 
-
 void	ft_err2(char *message, char *detail, char *errorstr)
 {
 	char	*str;

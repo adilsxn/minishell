@@ -90,8 +90,8 @@ t_lexer	*expander2(t_env *env, t_lexer *lexi)
 	{
 		if (lex->str)
 		{
-			if ((lex->i == 0 && lex->token != 5) || (lex->i > 0 && (!lex->prev->token
-						|| lex->prev->token != 5)))
+			if ((lex->i == 0 && lex->token != 5) || (lex->i > 0
+					&& (!lex->prev->token || lex->prev->token != 5)))
 			{
 				lex->str = expander(env, lex->str);
 			}

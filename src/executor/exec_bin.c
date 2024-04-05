@@ -37,7 +37,7 @@ int	cmd_error(t_cmd *cmd, t_tool *data)
 	else if (ft_strequ(cmd->args[0], ".."))
 		return (ft_err(cmd->args[0], NULL, "command not found", 127), 127);
 	else if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on
-				&& ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
+            && ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
 		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
 	else if (access(cmd->path, F_OK) != 0)
 		return (ft_err(cmd->args[0], NULL, strerror(errno), 127), 127);

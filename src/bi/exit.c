@@ -15,16 +15,16 @@
 
 static bool	is_exit_alone(t_tool *shell)
 {
-    if (shell->pipes)
-        return (false);
-    else
-        return (true);
+	if (shell->pipes)
+		return (false);
+	else
+		return (true);
 }
 
 static bool	overflow(bool *error, int sinal, unsigned long long res)
 {
-	if ((sinal == 1 && res > LONG_MAX) || (sinal == -1 && res >
-			-(unsigned long)LONG_MIN))
+	if ((sinal == 1 && res > LONG_MAX) || (sinal == -1
+            && res > -(unsigned long)LONG_MIN))
 		*error = true;
 	return (*error);
 }
@@ -84,7 +84,7 @@ int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
 	bool	alone;
-    int exit_;
+	int		exit_;
 
 	error = false;
 	alone = is_exit_alone(data);
@@ -96,15 +96,15 @@ int	msh_exit(char **args, t_tool *data)
 	{
 		exit_ = get_code(args[1], &error);
 		if (error == true)
-        {
+		{
 			ft_err2("exit", args[1], "numeric argument required");
-            exit_ = 2;
-        }
+			exit_ = 2;
+		}
 		else if (args[2])
-			return(ft_err2("exit: too many arguments", NULL, NULL), 1);
+			return (ft_err2("exit: too many arguments", NULL, NULL), 1);
 	}
 	clean_fds();
 	clean_data(data, true);
 	exit(exit_);
-    return (2);
+	return (2);
 }
