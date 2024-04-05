@@ -30,8 +30,10 @@ int	cmd_error(t_cmd *cmd)
 	if (!cmd->path)
 		cmd->path = ft_strdup("");
 	stat(cmd->path, &var);
-	if (ft_strequ(cmd->args[0], ".."))
-		return (ft_err(cmd->args[0], NULL, "Is a directory", 126), 126);
+	if (ft_strequ(cmd->args[0], "."))
+		return (ft_err(cmd->args[0], NULL, DOT_MSG, 2), 2);
+	else if (ft_strequ(cmd->args[0], ".."))
+		return (ft_err(cmd->args[0], NULL, "command not found", 127), 127);
 	else if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on
 				&& ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
 		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
@@ -57,7 +59,7 @@ static void	child_proc(t_cmd *cmd)
 		exit(0);
 	clean_fds();
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno), NULL, 1);
+		ft_err2("execve failed", strerror(errno), NULL);
 	exit(1);
 }
 
@@ -75,13 +77,12 @@ void	exec_bin(t_cmd *cmd)
 	int	status;
 
 	g_last_ret_code = cmd_error(cmd);
-	if (g_last_ret_code > 120)
+	if (g_last_ret_code > 120 || g_last_ret_code == 2)
 		return ;
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_err("fork failed", strerror(errno), NULL, 1);
-		g_last_ret_code = 1;
+		ft_err2("fork failed", strerror(errno), NULL);
 	}
 	else if (pid == 0)
 		child_proc(cmd);
@@ -90,7 +91,7 @@ void	exec_bin(t_cmd *cmd)
 		signal_handler_nonin(sig_hdoc_parent, SIGINT);
 		signal_handler_nonin(sig_hdoc_parent, SIGQUIT);
 		if (waitpid(pid, &status, 0) == -1)
-			ft_err("waitpid failed", strerror(errno), NULL, 1);
+			ft_err2("waitpid failed", strerror(errno), NULL);
 		get_exit_code(status);
 	}
 }

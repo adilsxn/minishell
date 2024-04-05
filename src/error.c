@@ -54,6 +54,25 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 	ft_free((void **)&str);
 }
 
+
+void	ft_err2(char *message, char *detail, char *errorstr)
+{
+	char	*str;
+
+	str = ft_strdup("minishell: ");
+	str = join_str(str, message);
+	if (detail != NULL)
+		str = join_str(str, ": ");
+	str = join_str(str, detail);
+	if (errorstr != NULL)
+	{
+		str = join_str(str, ": ");
+		str = join_str(str, errorstr);
+	}
+	ft_putendl_fd(str, STDERR_FILENO);
+	ft_free((void **)&str);
+}
+
 char	*syntax_error(int i)
 {
 	char	*str1;

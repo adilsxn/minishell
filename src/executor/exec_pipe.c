@@ -26,7 +26,7 @@ static int	exec_bin_pipe(t_cmd *cmd)
 	if (cmd->path == NULL)
 		return (0);
 	if (execve(cmd->path, cmd->args, NULL) == ERROR)
-		ft_err("execve failed", strerror(errno), NULL, 1);
+		ft_err2("execve failed", strerror(errno), NULL);
 	return (errno);
 }
 

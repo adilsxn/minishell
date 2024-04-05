@@ -98,5 +98,5 @@ int	main(int ac, char **av, char **envp)
 			exec_pipe(&shell);
 		clean_data(&shell, false);
 	}
-	return (0);
+	return (g_last_ret_code);
 }

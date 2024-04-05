@@ -35,7 +35,7 @@ int	exec_bi(t_cmd *cmd, t_tool *data)
 	builtin = get_bi(cmd->args[0]);
 	if (builtin == NULL)
 	{
-		ft_err(cmd->args[0], "could not execute builtin", NULL, 1);
+		ft_err2(cmd->args[0], "could not execute builtin", NULL);
 		return (2);
 	}
 	return_code = builtin(cmd->args, data);
