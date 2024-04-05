@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matilde <matilde@student.42.fr>            +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:49:56 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/22 11:05:36 by matilde          ###   ########.fr       */
+/*   Updated: 2024/04/05 21:52:04 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 		str = join_str(str, ": ");
 		str = join_str(str, errorstr);
 	}
-	ft_putendl_fd(str, STDERR_FILENO);
+	str = join_str(str, "\n");
+	perror(str);
 	g_last_ret_code = ret_code;
 	ft_free((void **)&str);
 }
