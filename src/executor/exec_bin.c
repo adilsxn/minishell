@@ -23,11 +23,11 @@ int	cmd_error(t_cmd *cmd)
 			""))
 		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
 	else if (access(cmd->path, F_OK) != 0)
-		return (ft_err(cmd->args[0], "", strerror(errno), 127), 127);
+		return (ft_err(cmd->args[0], NULL, strerror(errno), 127), 127);
 	else if (S_ISDIR(var.st_mode))
-		return (ft_err(cmd->args[0], "", "Is a directory", 126), 126);
+		return (ft_err(cmd->args[0], NULL, "Is a directory", 126), 126);
 	else if (access(cmd->path, F_OK | X_OK) != 0)
-		return (ft_err(cmd->args[0], "", strerror(errno), 126), 126);
+		return (ft_err(cmd->args[0], NULL, strerror(errno), 126), 126);
 	return (EXIT_SUCCESS);
 }
 

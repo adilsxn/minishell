@@ -13,6 +13,13 @@
 
 #include "../../inc/minishell.h"
 
+// static bool is_exit_alone(char **args)
+// {
+//     if (args[1])
+//         return (false);
+//     return (true);
+// }
+
 static int	ft_atol(char *str, bool *error)
 {
 	int					sinal;
@@ -70,6 +77,7 @@ int	msh_exit(char **args, t_tool *data)
 	bool	error;
 
 	error = false;
+    ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
 		g_last_ret_code = 2;
 	else
@@ -78,9 +86,8 @@ int	msh_exit(char **args, t_tool *data)
 		if (error == true)
 			ft_err(args[1], "exit: numeric argument required", NULL, 2);
 		else if (args[2])
-			ft_err("exit: too many arguments", NULL, NULL, 1);
+			ft_err("exit: too many arguments", NULL, NULL, 2);
 	}
-	ft_putendl_fd("exit", 1);
 	clean_fds();
 	clean_data(data, true);
 	exit(g_last_ret_code);
