@@ -70,21 +70,17 @@ void	build_av_helper(int *i, int *j, char **av, t_lexer *it)
 	it = it->next;
 }
 
-char	**build_av(t_lexer *lexi, int tkn_nbr)
+char	**build_av(t_lexer *lexi, int tkn_nbr, int i, int j)
 {
-	int		i;
-	int		j;
 	t_lexer	*it;
 	char	**av;
 
 	it = lexi;
-	j = 1;
 	if (tkn_nbr == 0)
 		return (NULL);
 	av = (char **)malloc(sizeof(char *) * (tkn_nbr + 1));
 	if (av == NULL)
 		return (NULL);
-	i = 0;
 	while (i < tkn_nbr)
 	{
 		if (it->token == PIPE)

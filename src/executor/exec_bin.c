@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acuva-nu <acuva-nu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 21:12:28 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/02/03 19:36:56 by acuva-nu         ###   ########.fr       */
+/*   Updated: 2024/04/05 21:22:11 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	cmd_error(t_cmd *cmd, t_tool *data)
 	else if (ft_strequ(cmd->args[0], ".."))
 		return (ft_err(cmd->args[0], NULL, "command not found", 127), 127);
 	else if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on
-            && ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
+			&& ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
 		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
 	else if (access(cmd->path, F_OK) != 0)
 		return (ft_err(cmd->args[0], NULL, strerror(errno), 127), 127);

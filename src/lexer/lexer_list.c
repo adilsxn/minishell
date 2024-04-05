@@ -92,8 +92,8 @@ int	len_word(int i, char *str, t_lexer **lexer, t_tool *tool)
 		if (str && i + tool->var->count < (int)ft_strlen(str)
 			&& ft_isspace(str[i + tool->var->count]) == 1)
 			return (sub(tool->var, lexer));
-		if (str && i + tool->var->count < (int)ft_strlen(str) && che_tok(str[i
-				+ tool->var->count], 0))
+		if (str && i + tool->var->count < (int)ft_strlen(str)
+			&& che_tok(str[i + tool->var->count], 0))
 			return (sub(tool->var, lexer) - 1);
 		if (i + tool->var->count < (int)ft_strlen(str))
 			tool->var->count++;
