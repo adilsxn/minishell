@@ -15,7 +15,7 @@
 
 static bool	is_exit_alone(char **args)
 {
-	if (args[1])
+	if (args[1] != NULL)
 		return (false);
 	return (true);
 }
