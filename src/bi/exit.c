@@ -13,12 +13,20 @@
 
 #include "../../inc/minishell.h"
 
-// static bool is_exit_alone(char **args)
-// {
-//     if (args[1])
-//         return (false);
-//     return (true);
-// }
+static bool	is_exit_alone(char **args)
+{
+	if (args[1])
+		return (false);
+	return (true);
+}
+
+static bool	overflow(bool *error, int sinal, unsigned long long res)
+{
+	if ((sinal == 1 && res > LONG_MAX) || (sinal == -1 && res >
+			-(unsigned long)LONG_MIN))
+		*error = true;
+	return (*error);
+}
 
 static int	ft_atol(char *str, bool *error)
 {
@@ -28,22 +36,21 @@ static int	ft_atol(char *str, bool *error)
 	res = 0;
 	sinal = 1;
 	while (*str == ' ' || (9 <= *str && *str <= 13))
+		str++;
+	if (*str == '+')
+		str++;
+	if (*str == '-')
 	{
+		sinal = -sinal;
 		str++;
 	}
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sinal = -sinal;
-		str++;
-	}
-	while ('0' <= *str && *str <= '9')
+	while (*str && '0' <= *str && *str <= '9')
 	{
 		res = res * 10 + (*str - '0');
+		if (overflow(error, sinal, res))
+			break ;
 		str++;
 	}
-	if (res > LONG_MAX)
-		*error = true;
 	return ((int)(res * sinal));
 }
 
@@ -75,9 +82,12 @@ static int	get_code(char *str, bool *error)
 int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
+	bool	alone;
 
 	error = false;
-    ft_putendl_fd("exit", 1);
+	alone = is_exit_alone(args);
+	if (alone)
+		ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
 		g_last_ret_code = 2;
 	else

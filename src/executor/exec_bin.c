@@ -12,6 +12,18 @@
 
 #include "../../inc/minishell.h"
 
+
+static void	signal_handler_nonin(void (*handler)(int), int signal)
+{
+	struct sigaction	event;
+
+	ft_bzero(&event, sizeof(struct sigaction));
+	event.sa_handler = handler;
+	event.sa_flags = SA_SIGINFO | SA_RESTART;
+	sigemptyset(&event.sa_mask);
+	sigaction(signal, &event, NULL);
+}
+
 int	cmd_error(t_cmd *cmd)
 {
 	struct stat	var;
@@ -34,6 +46,7 @@ int	cmd_error(t_cmd *cmd)
 static void	child_proc(t_cmd *cmd)
 {
 	signal_handler(sig_new_prompt, SIGINT);
+    signal_handler_nonin(sig_new_prompt, SIGQUIT);
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -73,7 +86,8 @@ void	exec_bin(t_cmd *cmd)
 		child_proc(cmd);
 	else
 	{
-		signal_handler(sig_hdoc_parent, SIGINT);
+		signal_handler_nonin(sig_hdoc_parent, SIGINT); 
+		signal_handler_nonin(sig_hdoc_parent, SIGQUIT);
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno), NULL, 1);
 		get_exit_code(status);
