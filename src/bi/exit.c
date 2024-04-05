@@ -17,10 +17,6 @@ static bool	is_exit_alone(t_tool *shell)
 {
     if (shell->pipes)
         return (false);
-    else if (shell->lexer->next)
-        return (false);
-    else if (shell->pipes->cmd->argc > 1)
-        return (false);
     else
         return (true);
 }
