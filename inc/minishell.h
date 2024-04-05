@@ -31,7 +31,7 @@
 
 # define HD_W "warning: here-document delimited by end-of-file"
 # define HD_FILE "/tmp/heredoc_"
-
+# define DOT_MSG "filename argument required"
 # define ERROR -3
 // lexer
 typedef enum s_token
@@ -169,6 +169,7 @@ void				free_arr(char **arr);
 void				ft_free(void **ptr);
 void				ft_err(char *message, char *detail, char *errorstr,
 						int ret_code);
+void				ft_err2(char *message, char *detail, char *errorstr);
 void				free_rdr(t_rdr **rdir);
 t_rdr				*build_rdr(t_lexer *lexi, t_cmd *cmd);
 void				free_cmd(t_cmd **cmd);
