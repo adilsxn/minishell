@@ -49,24 +49,20 @@ static char	**useful_paths(char *path)
 	return (paths);
 }
 
-char	*cmd_finder(t_env *env, char *cmd)
+char	*cmd_finder(t_env *env, char *cmd, int i, char *path)
 {
 	struct stat	s;
 	char		**paths;
-	char		*path;
-	int			i;
 
 	if (!cmd)
 		return (NULL);
-	i = -1;
-	path = NULL;
 	paths = NULL;
 	stat(cmd, &s);
 	if (ft_strequ(cmd, ".."))
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	if (!access(cmd, X_OK) && S_ISREG(s.st_mode))
+	if (!access(cmd, X_OK) && S_ISREG(s.st_mode) && !get_env(env, "PATH"))
 		return (ft_strjoin("./", cmd));
 	paths = useful_paths(get_env(env, "PATH"));
 	while (paths != NULL && paths[++i] != NULL)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matilde <matilde@student.42.fr>            +#+  +:+       +#+         #
+#    By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 12:35:24 by acuva-nu          #+#    #+#              #
-#    Updated: 2024/02/27 12:13:19 by matilde          ###   ########.fr        #
+#    Updated: 2024/04/05 21:23:58 by matde-je         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ INCS 	   = inc/
 NAME       = minishell
 
 CC         = cc
-CFLAGS     = -g3 -Wall -Wextra -Werror -fsanitize=address,undefined
+CFLAGS     = -g3 -Wall -Wextra -Werror #-fsanitize=address,undefined
 
 LDFLAGS	   = -L./libft -lft -lreadline
 RM         = rm -rf

@@ -6,7 +6,7 @@
 /*   By: matde-je <matde-je@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:14:55 by acuva-nu          #+#    #+#             */
-/*   Updated: 2024/04/04 15:27:36 by matde-je         ###   ########.fr       */
+/*   Updated: 2024/04/05 21:10:39 by matde-je         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum s_token
 typedef struct s_lexer
 {
 	char			*str;
-    char			*str2;
+	char			*str2;
 	t_token			token;
 	int				i;
 	struct s_lexer	*next;
@@ -83,7 +83,7 @@ typedef struct s_rdr
 {
 	t_token			type;
 	char			*value;
-    char			*value2;
+	char			*value2;
 	int				fd;
 	struct s_rdr	*next;
 }					t_rdr;
@@ -203,8 +203,8 @@ char				*freer(t_env1 **ex, char *str, char **str1);
 
 // minishell loop
 int					count_token(t_lexer *lexi);
-char				**build_av(t_lexer *lexi, int tkn_nbr);
-char				*cmd_finder(t_env *env, char *cmd);
+char				**build_av(t_lexer *lexi, int tkn_nbr, int i, int j);
+char				*cmd_finder(t_env *env, char *cmd, int i, char *path);
 int					cmd_error(t_cmd *cmd, t_tool *data);
 void				exec_cmd(t_tool *data);
 t_bi				*get_bi(char *cmd);

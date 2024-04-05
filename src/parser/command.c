@@ -78,7 +78,7 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 	if (!cmd)
 		return (NULL);
 	cmd->argc = count_token(lexer);
-	cmd->args = build_av(lexer, cmd->argc);
+	cmd->args = build_av(lexer, cmd->argc, 0, 1);
 	cmd->rdir = build_rdr(lexer, cmd);
 	cmd->path_on = false;
 	if (get_env(env, "PATH"))
@@ -92,6 +92,6 @@ t_cmd	*mk_cmd(t_lexer *lexer, t_env *env)
 		return (cmd);
 	}
 	if (cmd->args != NULL && is_builtin(cmd->args[0]) == false)
-		cmd->path = cmd_finder(env, cmd->args[0]);
+		cmd->path = cmd_finder(env, cmd->args[0], -1, NULL);
 	return (cmd);
 }

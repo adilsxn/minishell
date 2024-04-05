@@ -24,7 +24,7 @@ static bool	is_exit_alone(t_tool *shell)
 static bool	overflow(bool *error, int sinal, unsigned long long res)
 {
 	if ((sinal == 1 && res > LONG_MAX) || (sinal == -1
-            && res > -(unsigned long)LONG_MIN))
+			&& res > -(unsigned long)LONG_MIN))
 		*error = true;
 	return (*error);
 }
