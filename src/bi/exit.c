@@ -13,6 +13,22 @@
 
 #include "../../inc/minishell.h"
 
+static bool	is_exit_alone(t_tool *shell)
+{
+    if (shell->pipes)
+        return (false);
+    else
+        return (true);
+}
+
+static bool	overflow(bool *error, int sinal, unsigned long long res)
+{
+	if ((sinal == 1 && res > LONG_MAX) || (sinal == -1 && res >
+			-(unsigned long)LONG_MIN))
+		*error = true;
+	return (*error);
+}
+
 static int	ft_atol(char *str, bool *error)
 {
 	int					sinal;
@@ -21,22 +37,21 @@ static int	ft_atol(char *str, bool *error)
 	res = 0;
 	sinal = 1;
 	while (*str == ' ' || (9 <= *str && *str <= 13))
+		str++;
+	if (*str == '+')
+		str++;
+	if (*str == '-')
 	{
+		sinal = -sinal;
 		str++;
 	}
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sinal = -sinal;
-		str++;
-	}
-	while ('0' <= *str && *str <= '9')
+	while (*str && '0' <= *str && *str <= '9')
 	{
 		res = res * 10 + (*str - '0');
+		if (overflow(error, sinal, res))
+			break ;
 		str++;
 	}
-	if (res > LONG_MAX)
-		*error = true;
 	return ((int)(res * sinal));
 }
 
@@ -68,8 +83,12 @@ static int	get_code(char *str, bool *error)
 int	msh_exit(char **args, t_tool *data)
 {
 	bool	error;
+	bool	alone;
 
 	error = false;
+	alone = is_exit_alone(data);
+	if (alone)
+		ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
 		g_last_ret_code = 2;
 	else
@@ -78,9 +97,8 @@ int	msh_exit(char **args, t_tool *data)
 		if (error == true)
 			ft_err(args[1], "exit: numeric argument required", NULL, 2);
 		else if (args[2])
-			ft_err("exit: too many arguments", NULL, NULL, 1);
+			return(ft_err("exit: too many arguments", NULL, NULL, 1), 1);
 	}
-	ft_putendl_fd("exit", 1);
 	clean_fds();
 	clean_data(data, true);
 	exit(g_last_ret_code);

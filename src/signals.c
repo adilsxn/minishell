@@ -32,23 +32,18 @@ void	sig_hdoc_child(int sig)
 
 void	sig_hdoc_parent(int sig)
 {
-	if (sig == SIGINT)
-	{
-		(void)sig;
-		ft_putchar_fd('\n', 1);
-		rl_redisplay();
-	}
+    (void)sig;
+    ft_putchar_fd('\n', 1);
+    rl_redisplay();
 }
 
 void	sig_new_prompt(int sig)
 {
-	if (sig == SIGINT)
-	{
-		ft_putchar_fd('\n', 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+    (void)sig;
+    ft_putchar_fd('\n', 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }
 
 void	signal_handler(void (*handler)(int), int signal)
