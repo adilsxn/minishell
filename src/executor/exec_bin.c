@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-
 static void	signal_handler_nonin(void (*handler)(int), int signal)
 {
 	struct sigaction	event;
@@ -31,12 +30,14 @@ int	cmd_error(t_cmd *cmd)
 	if (!cmd->path)
 		cmd->path = ft_strdup("");
 	stat(cmd->path, &var);
-	if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on && ft_strequ(cmd->path,
-			"")) || ft_strequ(cmd->args[0], ""))
+	if (ft_strequ(cmd->args[0], ".."))
+		return (ft_err(cmd->args[0], NULL, "Is a directory", 126), 126);
+	else if ((!ft_strchr(cmd->args[0], '/') && cmd->path_on
+				&& ft_strequ(cmd->path, "")) || ft_strequ(cmd->args[0], ""))
 		return (ft_err(cmd->args[0], "command not found", NULL, 127), 127);
 	else if (access(cmd->path, F_OK) != 0)
 		return (ft_err(cmd->args[0], NULL, strerror(errno), 127), 127);
-	else if (S_ISDIR(var.st_mode))
+	else if (S_ISDIR(var.st_mode) || ft_strequ(cmd->args[0], ".."))
 		return (ft_err(cmd->args[0], NULL, "Is a directory", 126), 126);
 	else if (access(cmd->path, F_OK | X_OK) != 0)
 		return (ft_err(cmd->args[0], NULL, strerror(errno), 126), 126);
@@ -46,7 +47,7 @@ int	cmd_error(t_cmd *cmd)
 static void	child_proc(t_cmd *cmd)
 {
 	signal_handler(sig_new_prompt, SIGINT);
-    signal_handler_nonin(sig_new_prompt, SIGQUIT);
+	signal_handler_nonin(sig_new_prompt, SIGQUIT);
 	if (cmd->rdir != NULL && (exec_rdr(cmd->rdir) == -1))
 	{
 		perror("minishell");
@@ -86,7 +87,7 @@ void	exec_bin(t_cmd *cmd)
 		child_proc(cmd);
 	else
 	{
-		signal_handler_nonin(sig_hdoc_parent, SIGINT); 
+		signal_handler_nonin(sig_hdoc_parent, SIGINT);
 		signal_handler_nonin(sig_hdoc_parent, SIGQUIT);
 		if (waitpid(pid, &status, 0) == -1)
 			ft_err("waitpid failed", strerror(errno), NULL, 1);
