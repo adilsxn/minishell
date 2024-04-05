@@ -39,9 +39,9 @@ void	ft_err(char *message, char *detail, char *errorstr, int ret_code)
 {
 	char	*str;
 
-	str = ft_strdup("minishell ");
+	str = ft_strdup("minishell: ");
 	str = join_str(str, message);
-	if (detail != NULL && message != NULL)
+	if (detail != NULL)
 		str = join_str(str, ": ");
 	str = join_str(str, detail);
 	if (errorstr != NULL)

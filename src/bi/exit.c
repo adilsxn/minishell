@@ -13,11 +13,16 @@
 
 #include "../../inc/minishell.h"
 
-static bool	is_exit_alone(char **args)
+static bool	is_exit_alone(t_tool *shell)
 {
-	if (args[1] != NULL)
-		return (false);
-	return (true);
+    if (shell->pipes)
+        return (false);
+    else if (shell->lexer->next)
+        return (false);
+    else if (shell->pipes->cmd->argc > 1)
+        return (false);
+    else
+        return (true);
 }
 
 static bool	overflow(bool *error, int sinal, unsigned long long res)
@@ -85,7 +90,7 @@ int	msh_exit(char **args, t_tool *data)
 	bool	alone;
 
 	error = false;
-	alone = is_exit_alone(args);
+	alone = is_exit_alone(data);
 	if (alone)
 		ft_putendl_fd("exit", 1);
 	if (!args || !args[1])
@@ -96,7 +101,7 @@ int	msh_exit(char **args, t_tool *data)
 		if (error == true)
 			ft_err(args[1], "exit: numeric argument required", NULL, 2);
 		else if (args[2])
-			ft_err("exit: too many arguments", NULL, NULL, 2);
+			return(ft_err("exit: too many arguments", NULL, NULL, 1), 1);
 	}
 	clean_fds();
 	clean_data(data, true);
